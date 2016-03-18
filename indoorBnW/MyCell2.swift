@@ -14,10 +14,8 @@ class MyCell2: UITableViewCell {
     var lab3:UILabel = UILabel()
     var textView:UITextView = UITextView()
     var imgView:UIImageView = UIImageView()
+    let view:UIView = UIView()
     
-    
-    var i = 0
-    var j = 0
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -47,6 +45,13 @@ class MyCell2: UITableViewCell {
         
         self.addSubview(textView)
         
+        
+        view.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width, 100)
+        view.backgroundColor = UIColor.redColor()
+        view.alpha = 0.1
+        self.addSubview(view)
+        
+        
         textView.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width, 100)
         imgView.frame = CGRectMake(self.frame.size.width, 10, 90, 90)
         lab1.frame = CGRectMake(self.frame.size.width, 10, self.frame.size.width - 100, 30)
@@ -60,6 +65,7 @@ class MyCell2: UITableViewCell {
         lab3.frame = CGRectMake(110, 60, self.frame.size.width, 30)
         imgView.frame = CGRectMake(10, 10, 90, 90)
         textView.frame = CGRectMake(10, 110, self.frame.size.width, 100)
+        view.frame = CGRectMake(10, 110, self.frame.size.width, 100)
         UIView.commitAnimations()
         
         
@@ -72,7 +78,7 @@ class MyCell2: UITableViewCell {
     //準備被拿出來重用
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+        view.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width, 100)
         textView.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width, 100)
         imgView.frame = CGRectMake(self.frame.size.width, 10, 90, 90)
         lab1.frame = CGRectMake(self.frame.size.width, 10, self.frame.size.width - 100, 30)
@@ -86,21 +92,13 @@ class MyCell2: UITableViewCell {
         lab3.frame = CGRectMake(110, 60, self.frame.size.width, 30)
         imgView.frame = CGRectMake(10, 10, 90, 90)
         textView.frame = CGRectMake(10, 110, self.frame.size.width, 100)
+        view.frame = CGRectMake(10, 110, self.frame.size.width, 100)
         UIView.commitAnimations()
     }
     override func setSelected(selected: Bool, animated: Bool) {
         
         super.setSelected(selected, animated: animated)
-        //print(j++)
-//        UIView.beginAnimations("MOveobjmati", context: nil)
-//        UIView.setAnimationDuration(5)
-//        
-//        
-//        lab2.frame = CGRectMake(110, 40, self.frame.size.width - 100, 30)
-//        
-//        
-//        
-//        UIView.commitAnimations()
+        
     }
     
 
