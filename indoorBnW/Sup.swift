@@ -30,6 +30,9 @@ class Sup: NSObject {
     struct User {
         static var user:String = ""
         static var IconBadgeNumber:Int = 0 //Icon通知數字
+        static var storeDic:Dictionary<String,String> = Dictionary<String,String>()
+        static var storeName:String = ""
+        static var storeID:String = ""
     }
     //新增Btn
     static func addBtn(VC:UIViewController,frame:CGRect,str:String,tag:Int) -> UIButton{

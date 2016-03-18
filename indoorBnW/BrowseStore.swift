@@ -10,12 +10,13 @@ import UIKit
 
 class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDelegate {
     var scroller:UIScrollView = UIScrollView()
+    var browseProduct:BrowseProduct?
     var json = []
     var btnAry:[UIButton] = [UIButton]()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.blueColor()
-        self.navigationItem.title = "瀏覽商品"
+        self.navigationItem.title = "瀏覽商店"
         
         scroller = Sup.addScrollerView(self, frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) , contentSize: CGSizeMake(self.view.frame.width, 1000))
         scroller.backgroundColor = UIColor.blackColor()
@@ -48,8 +49,13 @@ class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDel
     func onBtnAction(sender:UIButton){
         print(json[sender.tag])
         //把資料丟給Sup裡面 然後跳去product那一頁並且把該store的資料撈下來呈現
-        //user全貼過去 再丟兩個.swift黨
-        //研究一下git怎麼用
+        if browseProduct == nil{
+            browseProduct = BrowseProduct()
+        }
+        self.navigationController?.pushViewController(browseProduct!, animated: true)
+        Sup.User.storeDic = json[sender.tag] as! Dictionary<String, String>
+        Sup.User.storeID = json[sender.tag]["storeID"] as! String
+        Sup.User.storeName = json[sender.tag]["storeName"] as! String
     }
 
     func downloadStore(){
