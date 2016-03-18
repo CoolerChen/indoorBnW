@@ -12,6 +12,7 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
     var scroller:UIScrollView = UIScrollView()
     var json = []
     var btnAry:[UIButton] = [UIButton]()
+    var productDetail:ProductDetail?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,13 +22,6 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         scroller = Sup.addScrollerView(self, frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) , contentSize: CGSizeMake(self.view.frame.width, 1000))
         scroller.backgroundColor = UIColor.blackColor()
         self.view.addSubview(scroller)
-        
-        downloadProduct()
-//        print(Sup.User.storeDic)
-//        print(Sup.User.storeID)
-//        print(Sup.User.storeName)
-        
-
     }
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
         do{
@@ -39,13 +33,18 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         }
         
         for var i = 0  ; i < json.count ; i++ {//json[i]["storeName"] as! String
-            btnAry.append(Sup.addBtn(self, frame: CGRectMake(10, 20 + 140 * CGFloat(i), self.view.frame.size.width - 20, 130), str: "", tag: i))
+            btnAry.append(Sup.addBtn(self, frame: CGRectMake(10, 20 + 120 * CGFloat(i), self.view.frame.size.width - 20, 100), str: "", tag: i))
             btnAry[i].backgroundColor = UIColor.yellowColor()
             scroller.addSubview(btnAry[i])
-            scroller.addSubview(Sup.addLabel(CGRectMake(15, 10 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店名稱: \(json[i]["productName"] as! String)" ))
-            scroller.addSubview(Sup.addLabel(CGRectMake(15, 40 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店分類: \(json[i]["productType"] as! String)"))
-            scroller.addSubview(Sup.addLabel(CGRectMake(15, 70 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店slogan: \(json[i]["productInfo"] as! String)"))
-            scroller.addSubview(Sup.addLabel(CGRectMake(15, 100 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str: "商店logo: \(json[i]["productPrice"] as! String)"))
+            scroller.addSubview(Sup.addLabel(CGRectMake(90, 10 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品名稱: \(json[i]["productName"] as! String)" ))
+            scroller.addSubview(Sup.addLabel(CGRectMake(90, 40 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品分類: \(json[i]["productType"] as! String)"))
+            scroller.addSubview(Sup.addLabel(CGRectMake(90, 70 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品價格: \(json[i]["productPrice"] as! String)"))
+            
+            
+            let imageView:UIImageView  = Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60), img: Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[i]["productID"] as! String).jpg"))
+            
+            scroller.addSubview(imageView)
+            
             
         }
         scroller.contentSize = CGSizeMake(self.view.frame.size.width, (btnAry.last?.frame.origin.y)! + 170)
@@ -56,7 +55,13 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/product.php", submitBody: "productByStore=\(Sup.User.storeID)")
     }
     func onBtnAction(sender:UIButton){
-        
+        Sup.Supervisor.productID = json[sender.tag].objectForKey("productID") as! String
+        if productDetail == nil{
+            productDetail = ProductDetail()
+        }
+        Sup.Supervisor.productDic = json[sender.tag] as! Dictionary<String, String>
+        Sup.Supervisor.product = json[sender.tag].objectForKey("productName") as! String
+        self.navigationController?.pushViewController(productDetail!, animated: true)
     }
     
 

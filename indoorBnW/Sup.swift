@@ -68,7 +68,7 @@ class Sup: NSObject {
     }
     //彈跳視窗
     static func showAlert(VC:UIViewController,str:String){
-        let alertController = UIAlertController(title: str, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = MyAlert(title: str, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
         let cancelAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
         alertController.addAction(cancelAction)
         VC.presentViewController(alertController, animated: true, completion: nil)

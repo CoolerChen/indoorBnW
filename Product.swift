@@ -53,16 +53,36 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
         let kDisplayCell_ID:String = "Cell"// 實作看得到幾項的次數 用來分類標籤 只有一個標籤就沒差
         //設置cell為可選型態 因為該ID可用元件未必存在
         //詢問是否有可以覆用的cell   問有沒有kDisplayCell_ID這個標籤的cell可以用
-        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(kDisplayCell_ID) as UITableViewCell!
+        var cell = tableView.dequeueReusableCellWithIdentifier(kDisplayCell_ID) as! MyCell2!
         if cell == nil { //剛生成畫面的第一次都是nil  reuseIdentifier重複使用標籤
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
+            cell = MyCell2(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
             cell!.selectionStyle = UITableViewCellSelectionStyle.Blue //點選後改變的顏色
             //cell!.showsReorderControl = true  //是否可以排序
         }
-        cell?.textLabel?.text = json[indexPath.row].objectForKey("productName") as? String //主標題
-        cell?.detailTextLabel?.text = "介紹 : \(json[indexPath.row].objectForKey("productInfo") as! String)價格 : \(json[indexPath.row].objectForKey("productPrice") as! String) 元" //副標題
+        cell!.lab1.text = json[indexPath.row].objectForKey("productName") as? String //主標題
+        cell!.lab2.text = "價格: \(json[indexPath.row].objectForKey("productPrice") as! String)"
+        cell!.lab3.text = "我是史丹利"
+        cell!.textView.text = "介紹: \(json[indexPath.row].objectForKey("productInfo") as! String)"
+        
+        
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+            let Img:UIImage = Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[indexPath.row].objectForKey("productID") as! String).jpg")
+            
+            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                cell.imgView.image = Img
+            
+            })
+            
+        })
+//
+        
+        
+        
+        
+        
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator//右邊的 >
-        //cell?.imageView?.image = UIImage(named: "123")//左邊圖片
+        
         
         return cell!
     }
@@ -122,7 +142,7 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
         }
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80.0
+        return 220.0
     }
     
     override func viewDidDisappear(animated: Bool) {
