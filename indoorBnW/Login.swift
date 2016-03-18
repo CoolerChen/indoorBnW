@@ -18,6 +18,8 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
     var bing:Bing!
     var VC:UIViewController?
     
+    let segm:UISegmentedControl = UISegmentedControl(items: ["會員","商家"])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bing = Bing(del: self)
@@ -37,24 +39,28 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         
         let btnW:CGFloat = 300;
         let btnH:CGFloat = 40;
-        let btnStr = ["登入","註冊會員","註冊商家","訪客"]
-        for var i:CGFloat = 0;i < 4;i++ {
-            btnAry.append(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-btnW/2, 45.0 * i + 250.0, btnW, btnH), str: btnStr[Int(i)], tag: Int(i)))
-            self.view.addSubview(btnAry[Int(i)])
+    
+        btnAry.append(Sup.addBtn(self, frame: CGRectMake(-300, self.view.frame.size.height, 10, 10), str: "登入", tag: 0))
+        btnAry.append(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width, self.view.frame.size.height, 10, 10), str: "註冊會員", tag: 1))
+        btnAry.append(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width, -60, 10, 10), str: "註冊商家", tag: 2))
+        btnAry.append(Sup.addBtn(self, frame: CGRectMake(-300, -60, 10, 10), str: "訪客", tag: 3))
+        for var i = 0 ; i < btnAry.count ; i++ {
+            self.view.addSubview(btnAry[i])
         }
         
-        let textFieldStr = ["帳號","密碼"]
-        for var i:CGFloat = 0;i < 2;i++ {
-            textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-btnW / 2, 55.0 * i + 85.0, btnW, btnH), placeholdString: textFieldStr[Int(i)]))
-            self.view.addSubview(textFieldAry[Int(i)])
-        }
+        textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height, btnW, btnH), placeholdString: "帳號"))
+        textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2,-60, btnW, btnH), placeholdString: "密碼"))
+        
+        self.view.addSubview(textFieldAry[0])
+        self.view.addSubview(textFieldAry[1])
+        
         textFieldAry[1].secureTextEntry = true
         textFieldAry[0].text = "Bing"
         textFieldAry[1].text = "Bing"
         
         
-        let segm:UISegmentedControl = UISegmentedControl(items: ["會員","商家"])
-        segm.frame = CGRectMake(self.view.frame.size.width/2-btnW / 2, 200, btnW,btnH)
+        
+        segm.frame = CGRectMake(self.view.frame.size.width , 200, btnW,btnH)
         segm.selectedSegmentIndex = 0
         segm.addTarget(self, action: "onSegmAction:", forControlEvents: .ValueChanged)
         segm.tintColor = UIColor.blackColor()
@@ -144,6 +150,32 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
             textFieldAry[1].becomeFirstResponder()
         }
         return true
+    }
+    override func viewDidAppear(animated: Bool) {
+        
+        UIView.beginAnimations("MOveobjmati", context: nil)
+        UIView.setAnimationDuration(1)
+        for var i = 0 ; i < btnAry.count ; i++ {
+            btnAry[i].frame = CGRectMake(self.view.frame.size.width/2-300/2, 70.0 * CGFloat(i) + 250.0, 300, 60)
+        }
+        for var i = 0 ; i < textFieldAry.count ; i++ {
+            textFieldAry[i].frame = CGRectMake(self.view.frame.size.width/2-300 / 2, 55.0 * CGFloat(i) + 85.0, 300, 40)
+        }
+        segm.frame = CGRectMake(self.view.frame.size.width/2-300 / 2, 200, 300,40)
+        UIView.commitAnimations()
+        
+        
+        
+//        for var i:CGFloat = 0;i < 4;i++ {
+//            btnAry.append(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-btnW/2, 70.0 * i + 250.0, btnW, 60), str: btnStr[Int(i)], tag: Int(i)))
+//            self.view.addSubview(btnAry[Int(i)])
+//        }
+//        
+//        let textFieldStr = ["帳號","密碼"]
+//        for var i:CGFloat = 0;i < 2;i++ {
+//            textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-btnW / 2, 55.0 * i + 85.0, btnW, btnH), placeholdString: textFieldStr[Int(i)]))
+//            self.view.addSubview(textFieldAry[Int(i)])
+//        }
     }
     // 判斷有無登入與會員或商家
     //    func check(){

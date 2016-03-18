@@ -22,13 +22,6 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         scroller = Sup.addScrollerView(self, frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) , contentSize: CGSizeMake(self.view.frame.width, 1000))
         scroller.backgroundColor = UIColor.blackColor()
         self.view.addSubview(scroller)
-        
-        downloadProduct()
-//        print(Sup.User.storeDic)
-//        print(Sup.User.storeID)
-//        print(Sup.User.storeName)
-        
-
     }
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
         do{
@@ -48,24 +41,8 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 70 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品價格: \(json[i]["productPrice"] as! String)"))
             
             
+            let imageView:UIImageView  = Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60), img: Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[i]["productID"] as! String).jpg"))
             
-            
-            var imageView:UIImageView = UIImageView()
-            
-            
-            
-            
-            
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
-                let Img:UIImage = Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[i].objectForKey("productID") as! String).jpg")
-                
-                dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                    imageView = Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60), img: Img)
-                    
-                })
-                
-            })
             scroller.addSubview(imageView)
             
             

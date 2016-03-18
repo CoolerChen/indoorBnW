@@ -57,7 +57,7 @@ class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDel
         Sup.User.storeID = json[sender.tag]["storeID"] as! String
         Sup.User.storeName = json[sender.tag]["storeName"] as! String
         Sup.Supervisor.storeDic = json[sender.tag] as! Dictionary<String, String>
-        
+        browseProduct?.downloadProduct()
     }
 
     func downloadStore(){
