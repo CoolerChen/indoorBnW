@@ -65,8 +65,24 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
         cell!.textView.text = "介紹: \(json[indexPath.row].objectForKey("productInfo") as! String)"
         
         
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+            let Img:UIImage = Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[indexPath.row].objectForKey("productID") as! String).jpg")
+            
+            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                cell.imgView.image = Img
+            
+            })
+            
+        })
+//
+        
+        
+        
+        
+        
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator//右邊的 >
-        //cell?.imageView?.image = UIImage(named: "123")//左邊圖片
+        
         
         return cell!
     }

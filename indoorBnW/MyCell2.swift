@@ -26,7 +26,7 @@ class MyCell2: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         
-        imgView.backgroundColor = UIColor.redColor()
+        //imgView.image = UIImage(named: "ball.png")
         self.addSubview(imgView)
         
         
