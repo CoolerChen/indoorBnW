@@ -476,22 +476,23 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
                     
                     //test
                     let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+                    dateFormatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
             //        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
             //        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-                    let prepareTime = (dateFormatter.stringFromDate(NSDate())).stringByReplacingOccurrencesOfString(" ", withString: "_")
+                    let prepareTime = dateFormatter.stringFromDate(NSDate())
                     
                     let prepareStore    = json[0].objectForKey("messageStore")!
                     let prepareTitle    = json[0].objectForKey("messageTitle")!
                     let prepareSubtitle = json[0].objectForKey("messageSubtitle")!
                     let prepareContent  = json[0].objectForKey("messageContent")!
-                    let prepareImage    = "\(prepareTime).jpg"
+                    let prepareImage    = prepareTime.stringByReplacingOccurrencesOfString(":", withString: "-") + ".jpg"
                     
                     //寫入手機sqlite資料庫
                     let db = SQLiteDB.sharedInstance()
                     let data = db.query("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
-//                    print("SQLiteDB query test")
+//                    print("_ _ _SQLiteDB query test _ _ _")
 //                    print("=-=-=-=-=-=-=-=-=-= \(data) =-=-=-=-=-=-=-=-=-=")
+                    print("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
                     
 //                    let asdf:UIScrollView = UIScrollView(frame: CGRectMake(0,0,100,100))
                 }

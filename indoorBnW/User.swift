@@ -109,6 +109,8 @@ class User: UIViewController {
             print("\(Sup.User.user)")
             if browseMessageLocal == nil {
                 browseMessageLocal = BrowseMessageLocal()
+            } else {
+                browseMessageLocal?.viewDidLoad()
             }
             self.navigationController?.pushViewController(browseMessageLocal!, animated: true)
             
