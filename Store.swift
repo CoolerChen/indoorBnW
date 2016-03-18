@@ -63,14 +63,17 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
         let kDisplayCell_ID:String = "Cell"// 實作看得到幾項的次數 用來分類標籤 只有一個標籤就沒差
         //設置cell為可選型態 因為該ID可用元件未必存在
         //詢問是否有可以覆用的cell   問有沒有kDisplayCell_ID這個標籤的cell可以用
-        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(kDisplayCell_ID) as UITableViewCell!
+        var cell = tableView.dequeueReusableCellWithIdentifier(kDisplayCell_ID) as! MyCell1!
         if cell == nil { //剛生成畫面的第一次都是nil  reuseIdentifier重複使用標籤
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
+            cell = MyCell1(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
             cell!.selectionStyle = UITableViewCellSelectionStyle.Blue //點選後改變的顏色
             //cell!.showsReorderControl = true  //是否可以排序
         }
-        cell?.textLabel?.text = json[indexPath.row].objectForKey("storeName") as? String //主標題
-        cell?.detailTextLabel?.text = json[indexPath.row].objectForKey("storeSlogan") as? String //副標題
+        cell!.lab1.text = json[indexPath.row].objectForKey("storeName") as? String //主標題
+        cell!.lab2.text = json[indexPath.row].objectForKey("storeSlogan") as? String
+        cell!.lab3.text = json[indexPath.row].objectForKey("storeLogo") as? String
+        
+        
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator//右邊的 >
         //cell?.imageView?.image = UIImage(named: "123")//左邊圖片
         
@@ -116,7 +119,7 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     }
     //列表高度   會依據列表數決定觸發次數
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80.0
+        return 100
     }
     
     override func didReceiveMemoryWarning() {

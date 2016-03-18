@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37188A001C9BE77E00116338 /* MyCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371889FF1C9BE77E00116338 /* MyCell1.swift */; };
+		37188A021C9BE78600116338 /* MyCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A011C9BE78600116338 /* MyCell2.swift */; };
+		37188A041C9BE78D00116338 /* MyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A031C9BE78D00116338 /* MyAlert.swift */; };
+		37188A061C9BE8D900116338 /* ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 37188A051C9BE8D900116338 /* ball.png */; };
 		B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E72EB1C98E97800923F7E /* AppDelegate.swift */; };
 		B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F21C98E97800923F7E /* Assets.xcassets */; };
 		B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F41C98E97800923F7E /* LaunchScreen.storyboard */; };
@@ -42,6 +46,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		371889FF1C9BE77E00116338 /* MyCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCell1.swift; sourceTree = "<group>"; };
+		37188A011C9BE78600116338 /* MyCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCell2.swift; sourceTree = "<group>"; };
+		37188A031C9BE78D00116338 /* MyAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAlert.swift; sourceTree = "<group>"; };
+		37188A051C9BE8D900116338 /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
 		B33E72E81C98E97800923F7E /* indoorBnW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = indoorBnW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33E72EB1C98E97800923F7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B33E72F21C98E97800923F7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -92,6 +100,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		371889FE1C9BE75A00116338 /* MyClass */ = {
+			isa = PBXGroup;
+			children = (
+				37188A051C9BE8D900116338 /* ball.png */,
+				37188A031C9BE78D00116338 /* MyAlert.swift */,
+				37188A011C9BE78600116338 /* MyCell2.swift */,
+				371889FF1C9BE77E00116338 /* MyCell1.swift */,
+			);
+			name = MyClass;
+			sourceTree = "<group>";
+		};
 		B33E72DF1C98E97800923F7E = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +131,7 @@
 		B33E72EA1C98E97800923F7E /* indoorBnW */ = {
 			isa = PBXGroup;
 			children = (
+				371889FE1C9BE75A00116338 /* MyClass */,
 				B33E72EB1C98E97800923F7E /* AppDelegate.swift */,
 				B34FCDF41C9AAA090080D09F /* BingDelegate.swift */,
 				B33E73261C98F56B00923F7E /* Setting.swift */,
@@ -244,6 +264,7 @@
 			files = (
 				B3F2A0361C9B904C00779AE5 /* messagelocal.db in Resources */,
 				B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */,
+				37188A061C9BE8D900116338 /* ball.png in Resources */,
 				B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,6 +278,7 @@
 			files = (
 				B33E73121C98EBAA00923F7E /* Store.swift in Sources */,
 				B34FCE041C9AFC630080D09F /* String-Extras.swift in Sources */,
+				37188A021C9BE78600116338 /* MyCell2.swift in Sources */,
 				B33E73021C98EB8300923F7E /* Sup.swift in Sources */,
 				B33E73111C98EBAA00923F7E /* Supervisor.swift in Sources */,
 				B33E73291C98F5B000923F7E /* beacon.swift in Sources */,
@@ -266,9 +288,11 @@
 				B33E731A1C98EBAA00923F7E /* RegisteredSupervisor.swift in Sources */,
 				B33E731F1C98EBC000923F7E /* User.swift in Sources */,
 				B34FCDFD1C9AF6AB0080D09F /* SQLiteDB.swift in Sources */,
+				37188A001C9BE77E00116338 /* MyCell1.swift in Sources */,
 				B3F2A03A1C9B92AD00779AE5 /* BrowseProduct.swift in Sources */,
 				B3F2A0391C9B92AD00779AE5 /* BrowseStore.swift in Sources */,
 				B33E73151C98EBAA00923F7E /* CreateStore.swift in Sources */,
+				37188A041C9BE78D00116338 /* MyAlert.swift in Sources */,
 				B33E73041C98EB8800923F7E /* UploadImage.swift in Sources */,
 				B33E73131C98EBAA00923F7E /* EditStore.swift in Sources */,
 				B34FCDF51C9AAA090080D09F /* BingDelegate.swift in Sources */,
