@@ -11,6 +11,7 @@ import CoreLocation
 
 let defaults=NSUserDefaults.standardUserDefaults()
 var getWhatData = ""
+var jsons = []
 var json = []
 var backScrollView:UIScrollView!
 var isShow = false
@@ -26,9 +27,11 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         
         print("setupBeacon")
         locationManager.delegate = self
+//        locationManager2.delegate = self
         
         // Enter Your iBeacon UUID
         let uuid = NSUUID(UUIDString: "F34A1A1F-500F-48FB-AFAA-9584D641D7B1")!
+        let uuid2 = NSUUID(UUIDString: "F34A1A1F-500F-48FB-AFAA-9584D641D7B2")!
         
         // Use identifier like your company name or website
         let identifier = "com.appcoda.beacondemo"
@@ -50,7 +53,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         beaconRegion1.notifyEntryStateOnDisplay = true
         
 //        //第二個beaconRegion
-        beaconRegion2 = CLBeaconRegion(proximityUUID: uuid, major: Major2, minor: Minor2, identifier: identifier2)
+        beaconRegion2 = CLBeaconRegion(proximityUUID: uuid2, major: Major2, minor: Minor2, identifier: identifier2)
         // called delegate when Enter iBeacon Range
         beaconRegion2.notifyOnEntry = true
         // called delegate when Exit iBeacon Range
@@ -66,6 +69,10 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         locationManager.startMonitoringForRegion(beaconRegion2)
         // ci: In order to make sure that iOS doesn’t stop location updates when the app is idle for some time and is in background, we should set this property as false.
         locationManager.pausesLocationUpdatesAutomatically = false
+        
+//        locationManager2.requestAlwaysAuthorization()
+//        locationManager2.startMonitoringForRegion(beaconRegion2)
+//        locationManager2.pausesLocationUpdatesAutomatically = false
     }
     
     
@@ -76,6 +83,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         case .AuthorizedAlways:
             // Starts the generation of updates that report the user’s current location.
             locationManager.startUpdatingLocation()
+//            locationManager2.startUpdatingLocation()
             
         case .Restricted:
             
@@ -117,13 +125,17 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
 //        else if region == beaconRegion2 {
 //            locationManager.requestStateForRegion(region)
 //        }
-        locationManager.requestStateForRegion(region)
+//        if (region as! CLBeaconRegion).proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1" {
+            locationManager.requestStateForRegion(region)
+//        } else if (region as! CLBeaconRegion).proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B2" {
+//            locationManager2.requestStateForRegion(region)
+//        }
     }
     
     func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion)
     {
         //        locationManager
-        print("which region : \(region.description)")
+//        print("which region : \(region.description)")
         
         // Tells the delegate that the user entered in iBeacon range or area.
         
@@ -177,8 +189,14 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
 //            else if region == beaconRegion2 {
 //                locationManager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
 //            }
-            locationManager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
             
+//            if (region as! CLBeaconRegion).proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1" {
+                locationManager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
+//                print("beacon.swift: startRanging1")
+//            } else if (region as! CLBeaconRegion).proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B2" {
+//                locationManager2.startRangingBeaconsInRegion(region as! CLBeaconRegion)
+//                print("beacon.swift: startRanging2")
+//            }
             print("beacon.swift: startRanging")
             
             break
@@ -192,8 +210,15 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
 //            else if region == beaconRegion2 {
 //                locationManager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
 //            }
-            locationManager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
             
+//            print("region uuid: \((region as! CLBeaconRegion).proximityUUID.UUIDString)")
+//            if (region as! CLBeaconRegion).proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1" {
+                locationManager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
+//                print("beacon.swift: stopRanging1")
+//            } else if (region as! CLBeaconRegion).proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B2" {
+//                locationManager2.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
+//                print("beacon.swift: stopRanging2")
+//            }
             print("beacon.swift: stopRanging")
             
             break
@@ -206,90 +231,147 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
     
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion)
     {
-        // Tells the delegate that one or more beacons are in range.
+        //1.
+//        if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1"
+//        {
+//            let foundBeacons = beacons
+//            if foundBeacons.count > 0 {
+//                if let closestBeacon = foundBeacons[0] as? CLBeacon {
+//                    var proximityMessage: String!
+//                    if lastStage != closestBeacon.proximity {
+//                        lastStage = closestBeacon.proximity
+//                        switch lastStage {
+//                            case .Immediate:
+//                                proximityMessage = "Very close"
+//                                print("beacon.swift: Very close1 ==========")
+//                                self.view.backgroundColor = UIColor.greenColor()
+//                                showNotificationWhenEnter()
+//                            case .Near:
+//                                proximityMessage = "Near"
+//                                print("beacon.swift: Near1")
+//                            
+//                            case .Far:
+//                                proximityMessage = "Far"
+//                            default:
+//                                proximityMessage = "Where's the beacon?"
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        else if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B2"
+//        {
+//            let foundBeacons = beacons
+//            if foundBeacons.count > 0 {
+//                if let closestBeacon = foundBeacons[0] as? CLBeacon {
+//                    var proximityMessage: String!
+//                    if lastStage2 != closestBeacon.proximity {
+//                        lastStage2 = closestBeacon.proximity
+//                        switch lastStage2 {
+//                        case .Immediate:
+//                            proximityMessage = "Very close"
+//                            print("beacon.swift: Very close2 ==========")
+//                            self.view.backgroundColor = UIColor.greenColor()
+//                            showNotificationWhenCloseProduct()
+//                        case .Near:
+//                            proximityMessage = "Near"
+//                            print("beacon.swift: Near2")
+//                        case .Far:
+//                            proximityMessage = "Far"
+//                        default:
+//                            proximityMessage = "Where's the beacon?"
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        
+        //2.
+        //==================== Tells the delegate that one or more beacons are in range. ====================
         let foundBeacons = beacons
         
         if foundBeacons.count > 0 {
-            
             if let closestBeacon = foundBeacons[0] as? CLBeacon
             {
-//                print("regionUUID: \(region.proximityUUID)")
 //                print(closestBeacon.accuracy*100)
-                var proximityMessage: String!
-                if lastStage != closestBeacon.proximity {
-                    
-                    lastStage = closestBeacon.proximity
-                    
-                    switch  lastStage {
+                if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1"
+                {
+                    var proximityMessage: String!
+                    if lastStage1 != closestBeacon.proximity {
+                        lastStage1 = closestBeacon.proximity
                         
-                    case .Immediate:
-                        proximityMessage = "Very close"
-//                        if region == beaconRegion1 {
-//                            print("beacon.swift: Very close1")
-//                            self.view.backgroundColor = UIColor.greenColor()
-//                            showNotificationWhenEnter()
-//                        } else if region == beaconRegion2 {
-//                            print("beacon.swift: Very close2")
-//                            self.view.backgroundColor = UIColor.greenColor()
-//                            showNotificationWhenCloseProduct()
-//                        }
-                        if region.minor == 1 {
-                            print("beacon.swift: Very close1 ==========")
-                            self.view.backgroundColor = UIColor.greenColor()
-                            showNotificationWhenEnter()
-                        } else if region.minor == 2 {
-                            print("beacon.swift: Very close2 ==========")
-                            self.view.backgroundColor = UIColor.greenColor()
-                            showNotificationWhenCloseProduct()
+                        switch  lastStage1 {
+                            
+                            case .Immediate:
+                                proximityMessage = "Very close"
+                                print("beacon.swift: Very close.1 ==========")
+                                self.view.backgroundColor = UIColor.greenColor()
+                                showNotificationWhenEnter()
+                                
+                            case .Near:
+                                proximityMessage = "Near"
+                                self.view.backgroundColor = UIColor.lightGrayColor()
+                                print("beacon.swift: Near.1")
+                                
+                            case .Far:
+                                proximityMessage = "Far"
+                                self.view.backgroundColor = UIColor.blackColor()
+                                print("beacon.swift: Far.1")
+                            
+                            default:
+                                proximityMessage = "Where's the beacon?"
+                                self.view.backgroundColor = UIColor.redColor()
+                                print("beacon.swift: Where's the beacon.1")
                         }
-                        
-                        
-                    case .Near:
-                        proximityMessage = "Near"
-                        if region == beaconRegion1 {
-                            self.view.backgroundColor = UIColor.grayColor()
-                            print("beacon.swift: Near")
-                        }
-                        
-                        
-                    case .Far:
-                        proximityMessage = "Far"
-                        if region == beaconRegion1 {
-                            self.view.backgroundColor = UIColor.blackColor()
-                            print("beacon.swift: Far")
-                        }
-                        
-                        
-                    default:
-                        proximityMessage = "Where's the beacon?"
-                        if region == beaconRegion1 {
-                            self.view.backgroundColor = UIColor.redColor()
-                            print("beacon.swift: Where's the beacon")
-                        }
-                        
-                        
                     }
-                    //                    var makeString = "Beacon Details:\n"
-                    //                    makeString += "UUID = \(closestBeacon.proximityUUID.UUIDString)\n"
-                    //                    makeString += "Identifier = \(region.identifier)\n"
-                    //                    makeString += "Major Value = \(closestBeacon.major.intValue)\n"
-                    //                    makeString += "Minor Value = \(closestBeacon.minor.intValue)\n"
-                    //                    makeString += "Distance From iBeacon = \(proximityMessage)"
-                    
-                    //                    self.beaconStatus.text = makeString
                 }
+                else if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B2"
+                {
+                    var proximityMessage: String!
+                    if lastStage2 != closestBeacon.proximity {
+                        lastStage2 = closestBeacon.proximity
+                        
+                        switch  lastStage2 {
+                            
+                            case .Immediate:
+                                proximityMessage = "Very close"
+                                
+                                print("beacon.swift: Very close.2 ==========")
+                                self.view.backgroundColor = UIColor.greenColor()
+                                showNotificationWhenCloseProduct()
+                                
+                            case .Near:
+                                proximityMessage = "Near"
+                                self.view.backgroundColor = UIColor.lightGrayColor()
+                                print("beacon.swift: Near.2")
+                                
+                            case .Far:
+                                proximityMessage = "Far"
+                                self.view.backgroundColor = UIColor.blackColor()
+                                print("beacon.swift: Far.2")
+                                
+                            default:
+                                proximityMessage = "Where's the beacon?"
+                                self.view.backgroundColor = UIColor.redColor()
+                                print("beacon.swift: Where's the beacon.2")
+                        }
+                    }
+                }
+                
             }
         }
     }
     
     func showNotificationWhenEnter() {
-        //        print("showNotificationWhenVeryClose")
+//        print("showNotificationWhenVeryClose")
         let localNotification:UILocalNotification = UILocalNotification()
-        localNotification.alertAction = "Testing"
+        localNotification.alertAction = "開啟"
         localNotification.alertBody = "indoorBnW，歡迎光臨!"
-        localNotification.category = "XXX"
+        localNotification.category = "EnterMarket"
         localNotification.soundName = UILocalNotificationDefaultSoundName; //聲音
         //localNotification.soundName = "sound.caf";
+        Sup.User.IconBadgeNumber += 1
+        localNotification.applicationIconBadgeNumber = Sup.User.IconBadgeNumber
         localNotification.fireDate = NSDate(timeIntervalSinceNow: 0)
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         
@@ -301,14 +383,16 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         }
     }
     func showNotificationWhenCloseProduct() {
-        //        print("showNotificationWhenVeryClose")
+//        print("showNotificationWhenVeryClose")
         let localNotification:UILocalNotification = UILocalNotification()
-        localNotification.alertAction = "Testing"
+        localNotification.alertAction = "開啟"
         localNotification.alertBody = "indoorBnW，商品大特價!"
-        localNotification.category = "XXX"
+        localNotification.category = "CloseProduct"
         localNotification.soundName = UILocalNotificationDefaultSoundName; //聲音
         //localNotification.soundName = "sound.caf";
         localNotification.fireDate = NSDate(timeIntervalSinceNow: 0)
+        Sup.User.IconBadgeNumber += 1
+        localNotification.applicationIconBadgeNumber = Sup.User.IconBadgeNumber
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         
         if getWhatData != "getMessageData" {
@@ -317,6 +401,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         } else {
             print("-------------------------------------------")
         }
+        
     }
     
     func getMessageData() {
@@ -328,7 +413,8 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: url!)
         
         let submitBody: String =
-        "bySupervisor=Leo" +
+        "returnMessageType=EnterMarket" +
+        "&bySupervisor=Leo" +
         "&byStore=Leo-001"
         print("下載訊息 => http://bing0112.100hub.net/bing/MessageLoad.php?\(submitBody)")
         
@@ -352,7 +438,8 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: url!)
         
         let submitBody: String =
-        "bySupervisor=Leo" +
+        "returnMessageType=CloseProductA" +
+        "&bySupervisor=Leo" +
         "&byStore=Leo-004"
         print("下載訊息 => http://bing0112.100hub.net/bing/MessageLoad.php?\(submitBody)")
         
@@ -378,155 +465,47 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
             do {
                 let resp = String(data: NSData(contentsOfURL: location)!, encoding: NSUTF8StringEncoding)
                 if resp! == "[{}]" {
-                    print("    db沒有資料")
+//                    print("    db沒有資料")
                     
                 } else {
-                    print("    db有資料")
+//                    print("    db有資料")
                     json = try NSJSONSerialization.JSONObjectWithData(NSData(contentsOfURL: location)!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
                     
-                    print("=== json.count= \(json.count) ===========================")
-                    //                    showData()
+                    print("=-=-=-=-=-=-=-=-= json[0].objectForKey(messageType) = \(json[0].objectForKey("messageType")!)")
+                    
+                    
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                    dateFormatter.timeStyle = NSDateFormatterStyle.FullStyle
+                    
+                    let nowString = dateFormatter.stringFromDate(NSDate())
+                    
+                    
+                    let prepareStore    = json[0].objectForKey("messageStore")!
+                    let prepareTitle    = json[0].objectForKey("messageTitle")!
+                    let prepareSubtitle = json[0].objectForKey("messageSubtitle")!
+                    let prepareContent  = json[0].objectForKey("messageContent")!
+                    let prepareImage    = ".jpg"
+                    
+                    //測試
+                    let db = SQLiteDB.sharedInstance()
+                    let data = db.query("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(nowString)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
+                    print("SQLiteDB query test")
+                    
                 }
                 
-            }catch {
-                print("beacon.swift: There is an error.")
+            }catch let error as NSError {
+                print("beacon.swift: There is an error. \(error)")
             }
             
         default:
             print("beacon.swift: default")
         }
     }
-//    func showData() {
-//        print("beacon.swift: showData")
-//        //        print("enter")
-//        //        if !isShow {
-//        //            print("exit")
-//        //            return
-//        //        }
-//        if backScrollView == nil {
-//            print("beacon.swift: showData - set backScrollView")
-//            backScrollView = UIScrollView(frame: CGRectMake(0, 0, //x, y
-//                self.view.frame.width, self.view.frame.height*1.0)) //w, h
-//            backScrollView.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
-//            self.view.addSubview(backScrollView)
-//            
-//            //            backScrollView.alpha = 0.0
-//            backScrollView.transform = CGAffineTransformMakeScale(0.1, 0.1);
-//            //            backScrollView.hidden = true
-//            
-//            //內ScrollView
-//            let scrollView = UIScrollView(frame: CGRectMake(
-//                (self.view.frame.width - self.view.frame.width*0.9)/2, //x
-//                ((self.view.frame.height-64) - (self.view.frame.height-64)*0.85)/2 + 64, //y
-//                self.view.frame.width*0.9, (self.view.frame.height-64)*0.85)) //w, h
-//            scrollView.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.58, alpha: 1)
-//            scrollView.layer.cornerRadius = 10
-//            scrollView.layer.masksToBounds = true
-//            backScrollView.addSubview(scrollView)
-//            
-//            //標題
-//            let titleLabel = UILabel(frame: CGRectMake(
-//                (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
-//                10, //y
-//                scrollView.frame.width*0.9, 35)) //w, h
-//            titleLabel.backgroundColor = UIColor.lightGrayColor()
-//            titleLabel.text = json[0].objectForKey("messageTitle") as? String
-//            scrollView.addSubview(titleLabel)
-//            
-//            //副標題
-//            let subtitleLabel = UILabel(frame: CGRectMake(
-//                (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
-//                55, //y
-//                scrollView.frame.width*0.9, 35)) //w, h
-//            subtitleLabel.backgroundColor = UIColor.lightGrayColor()
-//            subtitleLabel.text = json[0].objectForKey("messageSubtitle") as? String
-//            scrollView.addSubview(subtitleLabel)
-//            
-//            //內容
-//            let contentTextView = UITextView(frame: CGRectMake(
-//                (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
-//                100, //y
-//                scrollView.frame.width*0.9, 70)) //w, h
-//            contentTextView.backgroundColor = UIColor.lightGrayColor()
-//            contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 17) //改變textview字型大小
-//            contentTextView.text = json[0].objectForKey("messageContent") as? String
-//            scrollView.addSubview(contentTextView)
-//            
-//            let imageImageView = UIImageView(frame: CGRectMake(
-//                (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
-//                180, //y
-//                scrollView.frame.width*0.9, 200)) //w, h
-//            //        imageImageView.backgroundColor = UIColor.lightGrayColor()
-//            imageImageView.userInteractionEnabled = false
-//            let tempData = NSData(contentsOfURL: NSURL(string: "http://bing0112.100hub.net/bing/MessageImage/Sample.jpg")!)
-//            if tempData != nil {
-//                imageImageView.image = UIImage(data: tempData!)
-//            } else {
-//                imageImageView.backgroundColor = UIColor.redColor()
-//            }
-//            scrollView.addSubview(imageImageView)
-//            
-//            //scrollView contenntSize
-//            scrollView.contentSize = CGSizeMake(scrollView.frame.width, imageImageView.frame.origin.y + imageImageView.frame.height + 210)
-//            
-//            //add event
-//            let tapGesture = UITapGestureRecognizer(target: self, action: "scrollViewTouch")
-//            backScrollView.addGestureRecognizer(tapGesture)
-//            
-//            
-//            json = []
-//            
-//            
-//            UIView.transitionWithView(backScrollView, duration: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-//                backScrollView.transform = CGAffineTransformMakeScale(1.1, 1.1);
-//                
-//                }, completion: { (finished: Bool) -> Void in
-//                    //
-//                    UIView.transitionWithView(backScrollView, duration: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-//                        backScrollView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-//                        
-//                        }, completion: { (finished: Bool) -> Void in
-//                            //
-//                            
-//                            print("beacon.swift: 縮小1.0")
-//                    })
-//                    print("beacon.swift: 放大1.1")
-//            })
-//        }
-//        print("beacon.swift: show data end")
-//    }
-//    
-//    func scrollViewTouch() {
-//        print("beacon.swift: scrollViewTouch")
-//        if backScrollView != nil {
-//            backScrollView.hidden = !backScrollView.hidden
-//        }
-//        backScrollView = nil
-//    }
-//    
-//    func setShow() {
-//        print("set json.count(\(json.count)) Show=\(isShow) ========== ")
-//        if json.count > 0 {
-//            //            isShow = true
-//            //            showData()
-//        }
-//    }
-    
-//    func appMovedToBackground() {
-//        //        print("-beacon.swift:  App moved to background!")
-//        //        locationManager.stopMonitoringForRegion(beaconRegion)
-//        //        locationManager.startMonitoringForRegion(beaconRegion)
-//    }
-//    func appMoveToForeground() {
-//        //        print("-beacon.swift:  App moved to foreground!")
-//        //        if json.count > 0 {
-//        ////            self.performSelector(Selector("showData"), withObject: nil, afterDelay: 0.0)
-//        ////            showData()
-//        //        }
-//    }
     
     func getJsonCount() -> Int {
         return json.count
     }
+    
 }
 

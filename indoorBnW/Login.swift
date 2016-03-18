@@ -8,26 +8,32 @@
 
 import UIKit
 
-class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate {
-    var user:User?
+class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,BingDelegate {
     var passer:Passer?
-    var supervisor:Supervisor?
     var registeredUser:RegisteredUser?
     var registeredSupervisor:RegisteredSupervisor?
     var btnAry:[UIButton] = [UIButton]()
     var textFieldAry:[UITextField] = [UITextField]()
     
+    var bing:Bing!
+    var VC:UIViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        bing = Bing(del: self)
         Sup.login = self
+        
         self.navigationItem.hidesBackButton = true //隱藏返回鍵
+    }
+    func gotowhere() -> UIViewController {
+        return VC!
     }
     
     func refreshWithFrame(frame:CGRect){
         self.view.frame = frame
         self.view.backgroundColor = UIColor.lightGrayColor()
         self.navigationItem.title = "indoor B&W"
-        print(NSHomeDirectory())
+//        print(NSHomeDirectory())
         
         let btnW:CGFloat = 300;
         let btnH:CGFloat = 40;
@@ -57,29 +63,30 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate {
     
     func onBtnAction(sender:UIButton){
         switch sender.tag {
-            case 0:
-                if textFieldAry[1].text == "" || textFieldAry[0].text == "" {
-                    Sup.showAlert(self, str: "資料請填寫完成")
-                    return
-                }
-                Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/login.php", submitBody: "where=\(Sup.userOrSupervisor)&Acc=\(textFieldAry[0].text!)&Pwd=\(textFieldAry[1].text!)")
-            case 1:
-                if registeredUser == nil{
-                    registeredUser = RegisteredUser()
-                }
-                self.navigationController?.pushViewController(registeredUser!, animated: true)
-            case 2:
-                if registeredSupervisor == nil{
-                    registeredSupervisor = RegisteredSupervisor()
-                }
-                self.navigationController?.pushViewController(registeredSupervisor!, animated: true)
-            case 3:
-                if passer == nil{
-                    passer = Passer()
-                }
-                self.navigationController?.pushViewController(passer!, animated: true)
-            default:
-                break
+        case 0:
+            if textFieldAry[1].text == "" || textFieldAry[0].text == "" {
+                Sup.showAlert(self, str: "資料請填寫完成")
+                return
+            }
+            Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/login.php", submitBody: "where=\(Sup.userOrSupervisor)&Acc=\(textFieldAry[0].text!)&Pwd=\(textFieldAry[1].text!)")
+        case 1:
+            if registeredUser == nil{
+                registeredUser = RegisteredUser()
+            }
+            self.navigationController?.pushViewController(registeredUser!, animated: true)
+        case 2:
+            if registeredSupervisor == nil{
+                registeredSupervisor = RegisteredSupervisor()
+            }
+            self.navigationController?.pushViewController(registeredSupervisor!, animated: true)
+        case 3:
+            if passer == nil{
+                passer = Passer()
+            }
+            self.navigationController?.pushViewController(passer!, animated: true)
+            
+        default:
+            break
         }
     }
     func onSegmAction(sender:UISegmentedControl){
@@ -102,23 +109,16 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate {
             Sup.showAlert(self, str: "密碼錯誤")
         }else if resp! == "帳號密碼正確"{
             //再判斷要去管理者或使用者
-            if Sup.userOrSupervisor == "supervisor"{
-                if supervisor == nil{
-                    supervisor = Supervisor()
-                }
-                Sup.Supervisor.supervisor = textFieldAry[0].text!//設定是哪個suprevisor
-                textFieldAry[0].text = ""
-                textFieldAry[1].text = ""
-                self.navigationController?.pushViewController(supervisor!, animated: true)
-
-
-            }else if Sup.userOrSupervisor == "user"{
-                if user == nil{
-                    user = User()
-                }
+            if Sup.userOrSupervisor == "user"{
+                VC = User()
                 Sup.User.user = textFieldAry[0].text!
-                self.navigationController?.pushViewController(user!, animated: true)
+            }else if Sup.userOrSupervisor == "supervisor"{
+                VC = Supervisor()
+                Sup.Supervisor.supervisor = textFieldAry[0].text!//設定是哪個suprevisor
             }
+            textFieldAry[0].text = ""
+            textFieldAry[1].text = ""
+            bing.go()
         }else if resp! == ""{
             Sup.showAlert(self, str: "請區分大小寫")
         }else{
@@ -146,16 +146,16 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate {
         return true
     }
     // 判斷有無登入與會員或商家
-//    func check(){
-//        let defaults=NSUserDefaults.standardUserDefaults()
-//        if defaults.objectForKey("loginUser") != nil{
-//            m_checkStr = (defaults.objectForKey("who")) as! String
-//            
-//        }else{
-//            print("尚未登入")
-//        }
-//    }
-
-
+    //    func check(){
+    //        let defaults=NSUserDefaults.standardUserDefaults()
+    //        if defaults.objectForKey("loginUser") != nil{
+    //            m_checkStr = (defaults.objectForKey("who")) as! String
+    //
+    //        }else{
+    //            print("尚未登入")
+    //        }
+    //    }
+    
+    
 }
 

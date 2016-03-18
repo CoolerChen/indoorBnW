@@ -30,6 +30,14 @@
 		B33E73271C98F56B00923F7E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E73261C98F56B00923F7E /* Setting.swift */; };
 		B33E73291C98F5B000923F7E /* beacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E73281C98F5B000923F7E /* beacon.swift */; };
 		B33E732B1C98FB4600923F7E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B33E732A1C98FB4600923F7E /* MessageUI.framework */; };
+		B34FCDF11C9A9C980080D09F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B34FCDF01C9A9C980080D09F /* libsqlite3.tbd */; };
+		B34FCDF51C9AAA090080D09F /* BingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDF41C9AAA090080D09F /* BingDelegate.swift */; };
+		B34FCDFD1C9AF6AB0080D09F /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */; };
+		B34FCDFE1C9AF6AB0080D09F /* SQLTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */; };
+		B34FCE041C9AFC630080D09F /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCE031C9AFC630080D09F /* String-Extras.swift */; };
+		B3F2A0361C9B904C00779AE5 /* messagelocal.db in Resources */ = {isa = PBXBuildFile; fileRef = B34FCE051C9B0DDC0080D09F /* messagelocal.db */; };
+		B3F2A0391C9B92AD00779AE5 /* BrowseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F2A0371C9B92AD00779AE5 /* BrowseStore.swift */; };
+		B3F2A03A1C9B92AD00779AE5 /* BrowseProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F2A0381C9B92AD00779AE5 /* BrowseProduct.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +66,15 @@
 		B33E73261C98F56B00923F7E /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		B33E73281C98F5B000923F7E /* beacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = beacon.swift; sourceTree = "<group>"; };
 		B33E732A1C98FB4600923F7E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		B34FCDF01C9A9C980080D09F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		B34FCDF41C9AAA090080D09F /* BingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingDelegate.swift; sourceTree = "<group>"; };
+		B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDB.swift; sourceTree = "<group>"; };
+		B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLTable.swift; sourceTree = "<group>"; };
+		B34FCDFF1C9AF70C0080D09F /* indoorBnW-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "indoorBnW-Bridging-Header.h"; sourceTree = "<group>"; };
+		B34FCE031C9AFC630080D09F /* String-Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-Extras.swift"; sourceTree = "<group>"; };
+		B34FCE051C9B0DDC0080D09F /* messagelocal.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = messagelocal.db; sourceTree = "<group>"; };
+		B3F2A0371C9B92AD00779AE5 /* BrowseStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseStore.swift; sourceTree = "<group>"; };
+		B3F2A0381C9B92AD00779AE5 /* BrowseProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseProduct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B34FCDF11C9A9C980080D09F /* libsqlite3.tbd in Frameworks */,
 				B33E732B1C98FB4600923F7E /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +93,7 @@
 		B33E72DF1C98E97800923F7E = {
 			isa = PBXGroup;
 			children = (
+				B34FCE051C9B0DDC0080D09F /* messagelocal.db */,
 				B33E72EA1C98E97800923F7E /* indoorBnW */,
 				B33E72E91C98E97800923F7E /* Products */,
 			);
@@ -92,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				B33E72EB1C98E97800923F7E /* AppDelegate.swift */,
+				B34FCDF41C9AAA090080D09F /* BingDelegate.swift */,
 				B33E73261C98F56B00923F7E /* Setting.swift */,
 				B33E72FD1C98EB6100923F7E /* Login.swift */,
 				B33E72FF1C98EB7E00923F7E /* Passer.swift */,
@@ -132,6 +152,8 @@
 			children = (
 				B33E731D1C98EBC000923F7E /* User.swift */,
 				B33E731E1C98EBC000923F7E /* RegisteredUser.swift */,
+				B3F2A0371C9B92AD00779AE5 /* BrowseStore.swift */,
+				B3F2A0381C9B92AD00779AE5 /* BrowseProduct.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -147,7 +169,12 @@
 		B33E732C1C98FC2E00923F7E /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				B34FCDFF1C9AF70C0080D09F /* indoorBnW-Bridging-Header.h */,
+				B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */,
+				B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */,
+				B34FCE031C9AFC630080D09F /* String-Extras.swift */,
 				B33E732A1C98FB4600923F7E /* MessageUI.framework */,
+				B34FCDF01C9A9C980080D09F /* libsqlite3.tbd */,
 			);
 			name = Framework;
 			path = ..;
@@ -212,6 +239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3F2A0361C9B904C00779AE5 /* messagelocal.db in Resources */,
 				B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */,
 				B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */,
 			);
@@ -225,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B33E73121C98EBAA00923F7E /* Store.swift in Sources */,
+				B34FCE041C9AFC630080D09F /* String-Extras.swift in Sources */,
 				B33E73021C98EB8300923F7E /* Sup.swift in Sources */,
 				B33E73111C98EBAA00923F7E /* Supervisor.swift in Sources */,
 				B33E73291C98F5B000923F7E /* beacon.swift in Sources */,
@@ -233,10 +262,15 @@
 				B33E73161C98EBAA00923F7E /* Product.swift in Sources */,
 				B33E731A1C98EBAA00923F7E /* RegisteredSupervisor.swift in Sources */,
 				B33E731F1C98EBC000923F7E /* User.swift in Sources */,
+				B34FCDFD1C9AF6AB0080D09F /* SQLiteDB.swift in Sources */,
+				B3F2A03A1C9B92AD00779AE5 /* BrowseProduct.swift in Sources */,
+				B3F2A0391C9B92AD00779AE5 /* BrowseStore.swift in Sources */,
 				B33E73151C98EBAA00923F7E /* CreateStore.swift in Sources */,
 				B33E73041C98EB8800923F7E /* UploadImage.swift in Sources */,
 				B33E73131C98EBAA00923F7E /* EditStore.swift in Sources */,
+				B34FCDF51C9AAA090080D09F /* BingDelegate.swift in Sources */,
 				B33E72FE1C98EB6100923F7E /* Login.swift in Sources */,
+				B34FCDFE1C9AF6AB0080D09F /* SQLTable.swift in Sources */,
 				B33E73201C98EBC000923F7E /* RegisteredUser.swift in Sources */,
 				B33E73191C98EBAA00923F7E /* ProductDetail.swift in Sources */,
 				B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */,
@@ -348,11 +382,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = indoorBnW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "indoorBnW-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -360,11 +397,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = indoorBnW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "indoorBnW-Bridging-Header.h";
 			};
 			name = Release;
 		};

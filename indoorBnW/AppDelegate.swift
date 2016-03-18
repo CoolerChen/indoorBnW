@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//import sqlite3
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var backScrollView:UIView!
     var scrollView:UIScrollView!
     var usedY:CGFloat = 0
+    
+    var mydb:COpaquePointer=nil
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -42,6 +45,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //設定beacon通知
         application.registerUserNotificationSettings(UIUserNotificationSettings (forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil))
+        
+        //db file
+        let fmgr: NSFileManager = NSFileManager()
+        let src: String = NSBundle.mainBundle().pathForResource("messagelocal", ofType: "db")!
+        let dst: String = "\(NSHomeDirectory())/Documents/messagelocal.db"
+            //首次執行
+        if !fmgr.fileExistsAtPath(dst) {
+            do {
+                try fmgr.copyItemAtPath(src, toPath: dst)
+            } catch let error as NSError {
+                print(error)
+            }
+        }
+            //建立連線
+        if sqlite3_open(dst, &mydb) != SQLITE_OK {
+            print("sql is not connect")
+        }
+        
+        //test
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+//        print((dateFormatter.stringFromDate(NSDate())).replace)
         
         return true
     }
@@ -202,8 +228,13 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
         //ScrollView ContentSize
         scrollView.contentSize = CGSizeMake(scrollView.frame.width, usedY)
         
+        
 //        print("AppDelegate: json = \(json)")
         json = [] //顯示訊息後清空，避免重複顯示
+        Sup.User.IconBadgeNumber -= 1
+//        UIApplication.sharedApplication().applicationIconBadgeNumber -= 1
+//        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        
         
         scrollView.transform = CGAffineTransformMakeScale(0.1, 0.1)
         UIView.transitionWithView(scrollView, duration: 0.35, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
@@ -227,7 +258,7 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
     }
     
     func viewTouch(sender: UITapGestureRecognizer) {
-        print("viewTouch \(sender)")
+//        print("viewTouch \(sender)")
         
         scrollView.hidden = true
 //        scrollView = nil
@@ -235,5 +266,24 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
 //        backScrollView = nil
         
     }
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        print("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+//        print(notification.category!)
+        switch notification.category! {
+            case "EnterMarket":
+                print("EnterMarket")
+            
+            case "CloseProduct":
+                print("CloseProduct")
+            
+            
+            default:
+                print("default")
+        }
+        
+        UIApplication.sharedApplication().cancelLocalNotification(notification)
+    }
+
 }
 

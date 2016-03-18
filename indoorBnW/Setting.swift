@@ -16,8 +16,10 @@ class Setting: UIViewController, CBPeripheralManagerDelegate {
     var supervisor:Supervisor?
 
     let locationManager = CLLocationManager()
+//    let locationManager2 = CLLocationManager()
     let myBTManager = CBPeripheralManager()
-    var lastStage = CLProximity.Unknown
+    var lastStage1 = CLProximity.Unknown
+    var lastStage2 = CLProximity.Unknown
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +46,7 @@ class Setting: UIViewController, CBPeripheralManagerDelegate {
                 login = Login()
                 login?.refreshWithFrame(self.view.frame)
             }
-            self.navigationController?.pushViewController(login!, animated: true)
+            self.navigationController?.pushViewController(login!, animated: false)
         }
     }
 

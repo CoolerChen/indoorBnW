@@ -29,6 +29,7 @@ class Sup: NSObject {
     }
     struct User {
         static var user:String = ""
+        static var IconBadgeNumber:Int = 0 //Icon通知數字
     }
     //新增Btn
     static func addBtn(VC:UIViewController,frame:CGRect,str:String,tag:Int) -> UIButton{
@@ -38,6 +39,10 @@ class Sup: NSObject {
         btn.addTarget(VC, action: Selector("onBtnAction:"), forControlEvents: UIControlEvents.TouchUpInside)
         btn.setTitle(str, forState: UIControlState.Normal)
         btn.tag = tag
+        
+        btn.layer.cornerRadius = 10;
+        btn.layer.masksToBounds = true;
+        
         return btn
     }
     //新增textFile
@@ -130,7 +135,7 @@ class Sup: NSObject {
         let lab:UILabel = UILabel()
         lab.text = str
         lab.frame = frame
-        lab.font = UIFont.boldSystemFontOfSize(20)
+        lab.font = UIFont.boldSystemFontOfSize(18)
         lab.adjustsFontSizeToFitWidth = true
         return lab
     }
