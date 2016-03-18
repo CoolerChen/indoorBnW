@@ -13,7 +13,7 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
     var registeredUser:RegisteredUser?
     var registeredSupervisor:RegisteredSupervisor?
     var btnAry:[UIButton] = [UIButton]()
-    var textFieldAry:[UITextField] = [UITextField]()
+//    var textFieldAry:[UITextField] = [UITextField]()
     
     var bing:Bing!
     var VC:UIViewController?
