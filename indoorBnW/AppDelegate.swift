@@ -63,12 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("sql is not connect")
         }
         
-        //test
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-//        print((dateFormatter.stringFromDate(NSDate())).replace)
-        
         return true
     }
 

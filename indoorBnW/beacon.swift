@@ -471,27 +471,29 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
 //                    print("    db有資料")
                     json = try NSJSONSerialization.JSONObjectWithData(NSData(contentsOfURL: location)!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
                     
-                    print("=-=-=-=-=-=-=-=-= json[0].objectForKey(messageType) = \(json[0].objectForKey("messageType")!)")
+//                    print("=-=-=-=-=-=-=-=-= json[0].objectForKey(messageType) = \(json[0].objectForKey("messageType")!)")
                     
                     
+                    //test
                     let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-                    dateFormatter.timeStyle = NSDateFormatterStyle.FullStyle
-                    
-                    let nowString = dateFormatter.stringFromDate(NSDate())
-                    
+                    dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+            //        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+            //        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+                    let prepareTime = (dateFormatter.stringFromDate(NSDate())).stringByReplacingOccurrencesOfString(" ", withString: "_")
                     
                     let prepareStore    = json[0].objectForKey("messageStore")!
                     let prepareTitle    = json[0].objectForKey("messageTitle")!
                     let prepareSubtitle = json[0].objectForKey("messageSubtitle")!
                     let prepareContent  = json[0].objectForKey("messageContent")!
-                    let prepareImage    = ".jpg"
+                    let prepareImage    = "\(prepareTime).jpg"
                     
-                    //測試
+                    //寫入手機sqlite資料庫
                     let db = SQLiteDB.sharedInstance()
-                    let data = db.query("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(nowString)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
-                    print("SQLiteDB query test")
+                    let data = db.query("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
+//                    print("SQLiteDB query test")
+//                    print("=-=-=-=-=-=-=-=-=-= \(data) =-=-=-=-=-=-=-=-=-=")
                     
+//                    let asdf:UIScrollView = UIScrollView(frame: CGRectMake(0,0,100,100))
                 }
                 
             }catch let error as NSError {
