@@ -82,8 +82,11 @@ import UIKit
 
 class User: UIViewController {
     var browseStore:BrowseStore?
+    var browseMessageLocal:BrowseMessageLocal?
+    
     var btnAry:[UIButton] = [UIButton]()
     var btnW:CGFloat = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,6 +107,11 @@ class User: UIViewController {
         case 0:
             print("瀏覽訊息")
             print("\(Sup.User.user)")
+            if browseMessageLocal == nil {
+                browseMessageLocal = BrowseMessageLocal()
+            }
+            self.navigationController?.pushViewController(browseMessageLocal!, animated: true)
+            
         case 1:
             print("收藏訊息")
         case 2:
