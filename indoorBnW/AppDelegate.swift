@@ -64,9 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //test
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+//        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
 //        print((dateFormatter.stringFromDate(NSDate())).replace)
         
         return true
