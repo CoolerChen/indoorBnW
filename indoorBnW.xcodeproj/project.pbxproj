@@ -39,7 +39,7 @@
 		B34FCDFD1C9AF6AB0080D09F /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */; };
 		B34FCDFE1C9AF6AB0080D09F /* SQLTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */; };
 		B34FCE041C9AFC630080D09F /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCE031C9AFC630080D09F /* String-Extras.swift */; };
-		B3F2A0361C9B904C00779AE5 /* messagelocal.db in Resources */ = {isa = PBXBuildFile; fileRef = B34FCE051C9B0DDC0080D09F /* messagelocal.db */; };
+		B37B62B11C9D9D6300059113 /* messagelocal.db in Resources */ = {isa = PBXBuildFile; fileRef = B37B62B01C9D95E700059113 /* messagelocal.db */; };
 		B3F2A0391C9B92AD00779AE5 /* BrowseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F2A0371C9B92AD00779AE5 /* BrowseStore.swift */; };
 		B3F2A03A1C9B92AD00779AE5 /* BrowseProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F2A0381C9B92AD00779AE5 /* BrowseProduct.swift */; };
 		B3F2A03C1C9BD65E00779AE5 /* BrowseMessageLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F2A03B1C9BD65E00779AE5 /* BrowseMessageLocal.swift */; };
@@ -81,7 +81,7 @@
 		B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLTable.swift; sourceTree = "<group>"; };
 		B34FCDFF1C9AF70C0080D09F /* indoorBnW-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "indoorBnW-Bridging-Header.h"; sourceTree = "<group>"; };
 		B34FCE031C9AFC630080D09F /* String-Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-Extras.swift"; sourceTree = "<group>"; };
-		B34FCE051C9B0DDC0080D09F /* messagelocal.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = messagelocal.db; sourceTree = "<group>"; };
+		B37B62B01C9D95E700059113 /* messagelocal.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = messagelocal.db; sourceTree = "<group>"; };
 		B3F2A0371C9B92AD00779AE5 /* BrowseStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseStore.swift; sourceTree = "<group>"; };
 		B3F2A0381C9B92AD00779AE5 /* BrowseProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseProduct.swift; sourceTree = "<group>"; };
 		B3F2A03B1C9BD65E00779AE5 /* BrowseMessageLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMessageLocal.swift; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 		B33E72DF1C98E97800923F7E = {
 			isa = PBXGroup;
 			children = (
-				B34FCE051C9B0DDC0080D09F /* messagelocal.db */,
+				B37B62B01C9D95E700059113 /* messagelocal.db */,
 				B33E72EA1C98E97800923F7E /* indoorBnW */,
 				B33E72E91C98E97800923F7E /* Products */,
 			);
@@ -235,7 +235,7 @@
 				TargetAttributes = {
 					B33E72E71C98E97800923F7E = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = C5DGZJU43C;
+						DevelopmentTeam = 482N23KZ42;
 					};
 				};
 			};
@@ -262,7 +262,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3F2A0361C9B904C00779AE5 /* messagelocal.db in Resources */,
+				B37B62B11C9D9D6300059113 /* messagelocal.db in Resources */,
 				B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */,
 				37188A061C9BE8D900116338 /* ball.png in Resources */,
 				B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */,
@@ -416,7 +416,7 @@
 				INFOPLIST_FILE = indoorBnW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnWb;
+				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "indoorBnW-Bridging-Header.h";
@@ -434,7 +434,7 @@
 				INFOPLIST_FILE = indoorBnW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnWb;
+				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "indoorBnW-Bridging-Header.h";

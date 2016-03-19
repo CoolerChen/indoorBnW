@@ -187,6 +187,33 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         let dataTask = session.downloadTaskWithRequest(request)
         dataTask.resume()
     }
+    func modifyMessage() {
+        scrollViewTouch() //若沒有加這行，鍵盤隱藏之後，下面又多一個ScrollView
+        
+        getWhatData = "uploadMessage"
+        //寫入資料至資料庫
+        let url = NSURL(string: "http://bing0112.100hub.net/bing/MessageUpload.php")
+        let request: NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+        
+        let submitBody: String =
+        "mode=\(uploadMode)" +
+            "&bySupervisor=\(Sup.Supervisor.supervisor)" +
+            "&byStore=\(Sup.Supervisor.storeID)" +
+            "&title=\(titleTextField.text!)" +
+            "&subtitle=\(subtitleTextField.text!)" +
+        "&content=\(contentTextView.text!)"
+        
+        //        print("xxx \(submitBody)")
+        
+        request.HTTPMethod = "POST"
+        request.HTTPBody = submitBody.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let sessionWithConfigure = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let session = NSURLSession(configuration: sessionWithConfigure, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        let dataTask = session.downloadTaskWithRequest(request)
+        dataTask.resume()
+    }
     //選擇圖片
     func selectPhoto() {
         scrollViewTouch()
@@ -510,39 +537,6 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         //        storeTableView.hidden = true
     }
     
-    func modifyMessage() {
-        scrollViewTouch() //若沒有加這行，鍵盤隱藏之後，下面又多一個ScrollView
-        
-        getWhatData = "uploadMessage"
-        //寫入資料至資料庫
-        let url = NSURL(string: "http://bing0112.100hub.net/bing/MessageUpload.php")
-        let request: NSMutableURLRequest = NSMutableURLRequest(URL: url!)
-        
-        let submitBody: String =
-        "mode=\(uploadMode)" +
-            "&bySupervisor=\(Sup.Supervisor.supervisor)" +
-            "&byStore=\(storeLabel.text!)" +
-            "&title=\(titleTextField.text!)" +
-            "&subtitle=\(subtitleTextField.text!)" +
-        "&content=\(contentTextView.text!)"
-        
-        //        print("xxx \(submitBody)")
-        
-        request.HTTPMethod = "POST"
-        request.HTTPBody = submitBody.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        let sessionWithConfigure = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session = NSURLSession(configuration: sessionWithConfigure, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
-        
-        let dataTask = session.downloadTaskWithRequest(request)
-        dataTask.resume()
-        
-        //        if imageImageView.image == nil {
-        //            print("nil")
-        //        } else {
-        //            print("not nil")
-        //        }
-    }
 }
 
 //MARK: - extension

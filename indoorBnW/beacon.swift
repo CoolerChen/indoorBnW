@@ -481,18 +481,28 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
             //        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
                     let prepareTime = dateFormatter.stringFromDate(NSDate())
                     
-                    let prepareStore    = json[0].objectForKey("messageStore")!
+                    let prepareStore    = json[0].objectForKey("messageStore")! //商店名稱
                     let prepareTitle    = json[0].objectForKey("messageTitle")!
                     let prepareSubtitle = json[0].objectForKey("messageSubtitle")!
                     let prepareContent  = json[0].objectForKey("messageContent")!
                     let prepareImage    = prepareTime.stringByReplacingOccurrencesOfString(":", withString: "-") + ".jpg"
+                    let imgUrl          = "http://bing0112.100hub.net/bing/MessageImage/"+String((json[0].objectForKey("messageImage"))!)
+//                    print(imgUrl)
+                    
+                    //圖片寫入Document
+                    let imgData = NSData(contentsOfURL: NSURL(string: imgUrl)!)
+                    if imgData != nil {
+                        let path = NSHomeDirectory() + "/Documents/images/msg/\(prepareImage)"
+                        imgData?.writeToFile(path, atomically: false)
+                        print("path: \(path)")
+                    }
                     
                     //寫入手機sqlite資料庫
                     let db = SQLiteDB.sharedInstance()
-                    let data = db.query("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
-//                    print("_ _ _SQLiteDB query test _ _ _")
+                    db.query("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage, addFavorite) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)','no') ")
+                    print("_ _ _SQLiteDB query test _ _ _")
 //                    print("=-=-=-=-=-=-=-=-=-= \(data) =-=-=-=-=-=-=-=-=-=")
-                    print("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
+//                    print("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
                     
 //                    let asdf:UIScrollView = UIScrollView(frame: CGRectMake(0,0,100,100))
                 }

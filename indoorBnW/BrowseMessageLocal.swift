@@ -15,11 +15,12 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
 //    var m_tableView:UITableView!
     var m_scrollerView:UIScrollView!
     var m_pageControl:UIPageControl!
+    var m_messageIndex:Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.lightGrayColor()
+        self.view.backgroundColor = UIColor(red: 209/255.0, green: 235/255.0, blue: 254/255.0, alpha: 1)
         self.automaticallyAdjustsScrollViewInsets = false
         
 //        m_tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
@@ -31,6 +32,9 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         
         loadMessageLocalData()
         refreshWithFrame(self.view.frame)
+        
+        if data?.count > 0 {m_messageIndex = 1}
+        self.navigationItem.title = "\(m_messageIndex)/\(String((data?.count)!))"
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -40,11 +44,25 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
 //        m_tableView.reloadData()
 //        refreshWithFrame(self.view.frame)
     }
+    override func viewWillDisappear(animated: Bool) {
+        for vc:UIView in self.view.subviews {
+            vc.removeFromSuperview()
+        }
+    }
     
     func loadMessageLocalData() {
         let db = SQLiteDB.sharedInstance()
         data = db.query("select * from messagelocal where 1=1")
-        print("BrowseMessageLocal: data count \(data!.count)")
+        /*
+            id             : 1
+            messageTime    :2016-03-18_14-11-09
+            messageStore   :商店名稱
+            messageTitle   :標題
+            messageSubtitle:副標題
+            messageContent :內容
+            messageImage   :圖片檔名.副檔名
+            addFavorite    :加入收藏
+        */
     }
 
 //    //MARK: - TableView
@@ -170,7 +188,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         //可視範圍 或容量 contentSize內容大小
         //m_scrollerView?.contentSize = CGSizeMake(frame.size.width, 10000)
         //m_scrollerView.contentOffset//容器的座標  往上拖10個單位 他就會往上10加10  如容量的對應位置
-        m_scrollerView.backgroundColor = UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
+//        m_scrollerView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         m_scrollerView.showsHorizontalScrollIndicator = true //水平的滾動指示
         m_scrollerView.showsVerticalScrollIndicator = false //垂直的滾動指示
         m_scrollerView.delegate = self
@@ -184,41 +202,60 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         
         var aryColor:[UIColor] = [UIColor.redColor(),UIColor.orangeColor(),UIColor.greenColor(),UIColor.blackColor(),UIColor.blueColor()]
         
-        for var i = 0 ; i < data!.count ; i++ {
-            pageView = UIView(frame: CGRectMake(0, h*CGFloat(i), w, h))
-//            print("pageView ori y= \(pageView.frame.origin.y)")
-            pageView.backgroundColor = aryColor[i%5]
-            
-            //載入資料
-            addObject(pageView, index: i)
-            
-            m_scrollerView.addSubview(pageView)//在scrollerView 上面掛載不同顏色的UIView
+        if data?.count > 0 {
+//            print("大於零")
+            for var i = 0 ; i < data?.count ; i++ {
+                pageView = UIView(frame: CGRectMake(0, h*CGFloat(i), w, h))
+    //            print("pageView ori y= \(pageView.frame.origin.y)")
+                pageView.backgroundColor = aryColor[i%5]
+                
+                //載入資料
+                addObject(pageView, index: i)
+                
+                m_scrollerView.addSubview(pageView)//在scrollerView 上面掛載不同顏色的UIView
+            }
+            //重新刷新寬高
+            m_scrollerView.contentSize = CGSizeMake(w, pageView.frame.origin.y + pageView.frame.size.height)
+        } else {
+//            print("小於等於零")
         }
-        //重新刷新寬高
-        m_scrollerView.contentSize = CGSizeMake(w, pageView.frame.origin.y + pageView.frame.size.height)
-        
     }
 
     func addObject(pView:UIView, index:Int) {
         var usedHeight:CGFloat = 0
-        let corRadius:CGFloat = 10
+        let corRadius:CGFloat = 5
         let interval:CGFloat = 10
+        
+        //商店
+        let storeLabel = UILabel(frame: CGRectMake(
+            (pView.frame.width - pView.frame.width*0.9)/2, //x
+            interval, //y
+            pView.frame.width*0.9, 35)) //w, h
+        storeLabel.backgroundColor = UIColor.lightGrayColor()
+        storeLabel.layer.cornerRadius = corRadius
+        storeLabel.layer.masksToBounds = true
+        if data?.count > 0 {storeLabel.text = data![index].objectForKey("messageStore") as? String}
+        pView.addSubview(storeLabel)
+        usedHeight += storeLabel.frame.origin.y + storeLabel.frame.height + interval
+        
+        let alignX = (pView.frame.width - pView.frame.width*0.9)/2
+        
         //標題
         let titleLabel = UILabel(frame: CGRectMake(
-            (pView.frame.width - pView.frame.width*0.9)/2, //x
-            10, //y
+            alignX, //x
+            usedHeight, //y
             pView.frame.width*0.9, 35)) //w, h
         titleLabel.backgroundColor = UIColor.lightGrayColor()
         titleLabel.layer.cornerRadius = corRadius
         titleLabel.layer.masksToBounds = true
         if data?.count > 0 {titleLabel.text = data![index].objectForKey("messageTitle") as? String}
         pView.addSubview(titleLabel)
-        usedHeight += titleLabel.frame.origin.y + titleLabel.frame.height + interval
+        usedHeight += titleLabel.frame.height + interval
 //        print("2 \(usedHeight)")
         
         //副標題
         let subtitleLabel = UILabel(frame: CGRectMake(
-            titleLabel.frame.origin.x, //x
+            alignX, //x
             usedHeight, //y
             pView.frame.width*0.9, 35)) //w, h
         subtitleLabel.backgroundColor = UIColor.lightGrayColor()
@@ -231,7 +268,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         
         //內容
         let contentTextView = UITextView(frame: CGRectMake(
-            titleLabel.frame.origin.x, //x
+            alignX, //x
             usedHeight, //y
             pView.frame.width*0.9, 70)) //w, h
         contentTextView.backgroundColor = UIColor.lightGrayColor()
@@ -244,9 +281,42 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         usedHeight += contentTextView.frame.height + interval
 //        print("4 \(usedHeight)")
         
+        //圖片 ImageView
+        let imageImageView = UIImageView(frame: CGRectMake(
+            alignX, //x
+            usedHeight, //y
+            pView.frame.width*0.9, 200)) //w, h
+        imageImageView.userInteractionEnabled = false
+        let imageName = NSHomeDirectory() + "/Documents/images/" + (data![index].objectForKey("messageImage") as? String)!
+//        print("\(imageName) ========================...")
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+            let tempData = NSData(contentsOfFile: imageName)
+
+            dispatch_async(dispatch_get_main_queue(),{
+                if tempData != nil {
+                    imageImageView.image = UIImage(data: tempData!)
+                } else {
+                    imageImageView.backgroundColor = UIColor.whiteColor()
+                }
+            })
+        })
+        pView.addSubview(imageImageView)
+        usedHeight += imageImageView.frame.height + interval
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-//        print(scrollView.frame.origin.y)
+        let currentPage = scrollView.contentOffset.y / m_scrollerView.frame.size.height
+//        print("\(scrollView.contentOffset.y) _ \(m_scrollerView.frame.size.height)")
+//        print("\(currentPage) _ \(m_pageControl.currentPage)")
+        if Int(currentPage)+1 == m_messageIndex {
+            return
+        }
+        m_messageIndex = Int(currentPage)+1
+//        print(Int(currentPage))
+//        print(m_pageControl.currentPage)
+        
+        self.navigationItem.title = "\(m_messageIndex)/\((data?.count)!)"
+//        print("\((data?.count)!)則通知, 第\(m_pageControl.currentPage + 1)則")
+//        print("\(self.navigationItem.title) ==========================")
     }
 }

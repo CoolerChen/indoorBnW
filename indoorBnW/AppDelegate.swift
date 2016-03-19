@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //設定beacon通知
         application.registerUserNotificationSettings(UIUserNotificationSettings (forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil))
         
-        //db file
+        //設定資料庫
         let fmgr: NSFileManager = NSFileManager()
         let src: String = NSBundle.mainBundle().pathForResource("messagelocal", ofType: "db")!
         let dst: String = "\(NSHomeDirectory())/Documents/messagelocal.db"
@@ -61,6 +61,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //建立連線
         if sqlite3_open(dst, &mydb) != SQLITE_OK {
             print("sql is not connect")
+        }
+        
+        //建立images/msg資料夾
+        do {
+            print("準備建立msg資料夾")
+            if !fmgr.fileExistsAtPath(NSHomeDirectory()+"/Documents/images/msg/") {
+                print("建立images/msg資料夾")
+                try fmgr.createDirectoryAtPath(NSHomeDirectory()+"/Documents/images/msg/", withIntermediateDirectories: true, attributes: nil)
+            } else {
+                print("msg資料夾已存在")
+            }
+        } catch let error as NSError {
+            print("建立msg資料夾失敗：\(error)")
         }
         
         return true
