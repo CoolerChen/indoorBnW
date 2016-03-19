@@ -130,8 +130,11 @@ class User: UIViewController {
             }
             
             self.navigationController?.pushViewController(browseStore!, animated: true)
-        case 4:
-            print("Email")
+        case 4://Email
+            let mailURL = NSURL(string: "message://")!
+            if UIApplication.sharedApplication().canOpenURL(mailURL) {
+                UIApplication.sharedApplication().openURL(mailURL)
+            }
         case 5:
             self.navigationController?.popToViewController(Sup.login!, animated: true)
         default:

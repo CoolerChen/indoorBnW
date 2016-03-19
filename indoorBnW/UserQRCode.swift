@@ -18,9 +18,6 @@ class UserQRCode: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
         self.view.backgroundColor = UIColor.blackColor()
         
-        self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(0, self.view.frame.size.height-100, self.view.frame.width, 100), str: "開始掃描", tag: 0))
-    }
-    func onBtnAction(sneder:UIButton){
         captureSession = AVCaptureSession()
         
         let videoCaptureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
@@ -58,6 +55,7 @@ class UserQRCode: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         captureSession.startRunning();
     }
+    
     func failed() {
         let ac = UIAlertController(title: "Scanning not supported", message: "Your device does not support scanning a code from an item. Please use a device with a camera.", preferredStyle: .Alert)
         ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
@@ -67,6 +65,7 @@ class UserQRCode: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationItem.title = "掃描QRCode"
         
         if (captureSession?.running == false) {
             captureSession.startRunning();
@@ -111,10 +110,6 @@ class UserQRCode: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         //從QRCode跳轉過去會沒有detail
         //畫面回來取消QRCode 
-    }
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
