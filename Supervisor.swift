@@ -51,7 +51,7 @@ class Supervisor: UIViewController {
             }
             self.navigationController?.pushViewController(email!, animated: true)
         case 3:
-            print("QRCOde")
+            goStore(sender.tag)//QRCode
         case 4:
             print("登出")
             //登出
@@ -65,7 +65,13 @@ class Supervisor: UIViewController {
             store = Store()
         }
         store!.downloadStore()
-        Sup.Supervisor.clickMode = tag//進入store判斷要走什麼功能  瀏覽  訊息
+        Sup.Supervisor.clickMode = tag//進入store判斷要走什麼功能  0瀏覽  1訊息  3QRCode
+        if tag == 0 || tag == 1 {
+            store!.status = Sup.Status.Done
+        }else if tag == 3{
+            store!.status = Sup.Status.QRCode
+        }
+        
         self.navigationController?.pushViewController(store!, animated: true)
     }
     override func viewDidAppear(animated: Bool) {

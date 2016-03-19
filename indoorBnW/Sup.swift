@@ -15,6 +15,7 @@ class Sup: NSObject {
     enum Status { //列舉
         case Done
         case Edit
+        case QRCode
     }
     struct Supervisor { //結構
         static var supervisor:String = ""

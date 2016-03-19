@@ -139,6 +139,8 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
             Sup.Supervisor.productDic = json[indexPath.row] as! Dictionary<String, String>
             editProduct?.product = self
             self.navigationController?.pushViewController(editProduct!, animated: true)
+        case .QRCode:
+            print("QRCode")
         }
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

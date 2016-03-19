@@ -11,6 +11,7 @@
 		37188A021C9BE78600116338 /* MyCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A011C9BE78600116338 /* MyCell2.swift */; };
 		37188A041C9BE78D00116338 /* MyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A031C9BE78D00116338 /* MyAlert.swift */; };
 		37188A061C9BE8D900116338 /* ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 37188A051C9BE8D900116338 /* ball.png */; };
+		37188A281C9D2F8700116338 /* SupervisorStoreQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A271C9D2F8700116338 /* SupervisorStoreQRCode.swift */; };
 		B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E72EB1C98E97800923F7E /* AppDelegate.swift */; };
 		B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F21C98E97800923F7E /* Assets.xcassets */; };
 		B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F41C98E97800923F7E /* LaunchScreen.storyboard */; };
@@ -50,6 +51,7 @@
 		37188A011C9BE78600116338 /* MyCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCell2.swift; sourceTree = "<group>"; };
 		37188A031C9BE78D00116338 /* MyAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAlert.swift; sourceTree = "<group>"; };
 		37188A051C9BE8D900116338 /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
+		37188A271C9D2F8700116338 /* SupervisorStoreQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorStoreQRCode.swift; sourceTree = "<group>"; };
 		B33E72E81C98E97800923F7E /* indoorBnW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = indoorBnW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33E72EB1C98E97800923F7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B33E72F21C98E97800923F7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				B33E730E1C98EBAA00923F7E /* ProductDetail.swift */,
 				B33E730F1C98EBAA00923F7E /* RegisteredSupervisor.swift */,
 				B33E73101C98EBAA00923F7E /* Email.swift */,
+				37188A271C9D2F8700116338 /* SupervisorStoreQRCode.swift */,
 			);
 			name = Supervisor;
 			path = ..;
@@ -302,6 +305,7 @@
 				B33E73191C98EBAA00923F7E /* ProductDetail.swift in Sources */,
 				B3F2A03C1C9BD65E00779AE5 /* BrowseMessageLocal.swift in Sources */,
 				B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */,
+				37188A281C9D2F8700116338 /* SupervisorStoreQRCode.swift in Sources */,
 				B33E73181C98EBAA00923F7E /* CreateProduct.swift in Sources */,
 				B33E73271C98F56B00923F7E /* Setting.swift in Sources */,
 				B33E731B1C98EBAA00923F7E /* Email.swift in Sources */,

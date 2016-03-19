@@ -17,6 +17,7 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     var message:Message?
     var Btn:UIButton = UIButton()
     var status = Sup.Status.Done //判斷是編輯還是瀏覽
+    var supervisorStoreQRCode:SupervisorStoreQRCode?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,7 +84,7 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //判斷要去哪裡
         switch (Sup.Supervisor.clickMode){
-        case 0://瀏覽
+        case 0,3://瀏覽 或 QRCode
             
             switch status {
             case .Done:
@@ -103,6 +104,15 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
                 Sup.Supervisor.storeDic = json[indexPath.row] as! Dictionary<String, String>
                 editStore?.setStoreDictionary(json[indexPath.row] as! Dictionary<String, String>)
                 self.navigationController?.pushViewController(editStore!, animated: true)
+                
+            case .QRCode:
+                //supervisorStoreQRCode
+                if supervisorStoreQRCode == nil{
+                    supervisorStoreQRCode = SupervisorStoreQRCode()
+                }
+                //supervisorStoreQRCode?.store = self
+                Sup.Supervisor.storeDic = json[indexPath.row] as! Dictionary<String, String>
+                self.navigationController?.pushViewController(supervisorStoreQRCode!, animated: true)
             }
         case 1://訊息
             print("訊息")
@@ -140,11 +150,11 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     }
     override func viewDidAppear(animated: Bool) {
         self.navigationItem.title = "\(Sup.Supervisor.supervisor)的商店"
-        if Sup.Supervisor.clickMode != 1{
+        if Sup.Supervisor.clickMode == 0{
             let rightBtnItem:UIBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Done, target: self, action: Selector("OnSelectRightAction:"))
             self.navigationItem.rightBarButtonItem = rightBtnItem
         }
-        status = Sup.Status.Done
+        //status = Sup.Status.Done
     }
     override func viewDidDisappear(animated: Bool) {
         self.navigationItem.rightBarButtonItem = nil
