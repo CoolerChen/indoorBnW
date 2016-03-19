@@ -15,7 +15,7 @@ class EditStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.purpleColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         
         let textFieldW:CGFloat = 250
         let textFieldH:CGFloat = 30

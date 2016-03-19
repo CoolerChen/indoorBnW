@@ -20,7 +20,7 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.orangeColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "Email"
         
         let scrollerView = Sup.addScrollerView(self, frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), contentSize: CGSizeMake(self.view.frame.size.width, 10000))
@@ -46,6 +46,7 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         scrollerView.addSubview(imageView)
         
         scrollerView.contentSize = CGSizeMake(self.view.frame.size.width, imageView.frame.origin.y + textFieldW + 80)
+        scrollerView.backgroundColor = UIColor.blackColor()
     }
     func onBtnAction(sender:UIButton){
         switch sender.tag {

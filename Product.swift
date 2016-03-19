@@ -21,7 +21,7 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         
         let rightBtnItem:UIBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Done, target: self, action: Selector("OnSelectRightAction:"))
         self.navigationItem.rightBarButtonItem = rightBtnItem

@@ -33,7 +33,7 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
     
     func refreshWithFrame(frame:CGRect){
         self.view.frame = frame
-        self.view.backgroundColor = UIColor.lightGrayColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "indoor B&W"
 //        print(NSHomeDirectory())
         
@@ -63,7 +63,7 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         segm.frame = CGRectMake(self.view.frame.size.width , 200, btnW,btnH)
         segm.selectedSegmentIndex = 0
         segm.addTarget(self, action: "onSegmAction:", forControlEvents: .ValueChanged)
-        segm.tintColor = UIColor.blackColor()
+        segm.tintColor = UIColor.blueColor()
         self.view.addSubview(segm)
     }
     

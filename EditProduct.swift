@@ -19,7 +19,7 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.whiteColor()
 
         let textFieldW:CGFloat = 250
         let textFieldH:CGFloat = 40

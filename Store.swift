@@ -21,7 +21,7 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.whiteColor()
 
         
         m_tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))

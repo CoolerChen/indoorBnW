@@ -17,11 +17,11 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.brownColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "瀏覽商品"
         
         scroller = Sup.addScrollerView(self, frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) , contentSize: CGSizeMake(self.view.frame.width, 1000))
-        scroller.backgroundColor = UIColor.blackColor()
+        scroller.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(scroller)
     }
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
@@ -35,7 +35,7 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         
         for var i = 0  ; i < json.count ; i++ {//json[i]["storeName"] as! String
             btnAry.append(Sup.addBtn(self, frame: CGRectMake(10, 20 + 120 * CGFloat(i), self.view.frame.size.width - 20, 100), str: "", tag: i))
-            btnAry[i].backgroundColor = UIColor.yellowColor()
+            btnAry[i].backgroundColor = UIColor.blueColor()
             scroller.addSubview(btnAry[i])
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 10 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品名稱: \(json[i]["productName"] as! String)" ))
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 40 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品分類: \(json[i]["productType"] as! String)"))

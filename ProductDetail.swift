@@ -14,19 +14,20 @@ class ProductDetail: UIViewController,UIScrollViewDelegate {
     var labAry:[UILabel] = [UILabel]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.orangeColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         
         let imageviewW:CGFloat = 250
         scroll = Sup.addScrollerView(self, frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) , contentSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) )
         self.view.addSubview(scroll)
         let img:UIImage = UIImage()
         imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-imageviewW/2, 10, imageviewW, imageviewW), img: img)
-        imageView.backgroundColor =  UIColor.redColor()
+        imageView.backgroundColor =  UIColor.clearColor()
         scroll.addSubview(imageView)
         
         for var i = 0 ; i < 8 ; i++ {
-            labAry.append(Sup.addLabel(CGRectMake(0, imageView.frame.origin.y + imageviewW + CGFloat(i) * 50, self.view.frame.size.width, 50), str: ""))
+            labAry.append(Sup.addLabel(CGRectMake(5, imageView.frame.origin.y + imageviewW + CGFloat(i) * 50, self.view.frame.size.width, 50), str: ""))
             scroll.addSubview(labAry[i])
+            labAry[i].textColor = UIColor.blueColor()
         }
         
         scroll.contentSize = CGSizeMake(self.view.frame.size.width,imageView.frame.origin.y + imageviewW + CGFloat(8) * 50 )
