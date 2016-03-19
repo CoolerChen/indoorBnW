@@ -12,6 +12,7 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
     var scroller:UIScrollView = UIScrollView()
     var json = []
     var btnAry:[UIButton] = [UIButton]()
+    var imageAry:[UIImageView] = [UIImageView]()
     var productDetail:ProductDetail?
     
     override func viewDidLoad() {
@@ -40,16 +41,19 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 40 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品分類: \(json[i]["productType"] as! String)"))
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 70 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品價格: \(json[i]["productPrice"] as! String)"))
             
+            imageAry.append(Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60), img: Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[i]["productID"] as! String).jpg")))
             
-            let imageView:UIImageView  = Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60), img: Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[i]["productID"] as! String).jpg"))
             
-            scroller.addSubview(imageView)
+            scroller.addSubview(imageAry[i])
             
             
         }
         scroller.contentSize = CGSizeMake(self.view.frame.size.width, (btnAry.last?.frame.origin.y)! + 170)
     
     
+    }
+    override func viewDidAppear(animated: Bool) {
+        downloadProduct()
     }
     func downloadProduct(){
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/product.php", submitBody: "productByStore=\(Sup.User.storeID)")
@@ -63,7 +67,18 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         Sup.Supervisor.product = json[sender.tag].objectForKey("productName") as! String
         self.navigationController?.pushViewController(productDetail!, animated: true)
     }
-    
+    override func viewDidDisappear(animated: Bool) {
+        //離開畫面就要清掉
+        for var i = 0;i < btnAry.count;i++ {
+            btnAry[i].removeFromSuperview()
+        }
+        btnAry = []
+        for var i = 0 ; i < imageAry.count;i++ {
+            imageAry[i].removeFromSuperview()
+        }
+        imageAry = []
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

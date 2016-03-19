@@ -83,6 +83,7 @@ import UIKit
 class User: UIViewController {
     var browseStore:BrowseStore?
     var browseMessageLocal:BrowseMessageLocal?
+    var userQRCode:UserQRCode?
     
     var btnAry:[UIButton] = [UIButton]()
     var btnW:CGFloat = 0.0
@@ -93,7 +94,7 @@ class User: UIViewController {
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "首頁"
         
-        let btnStr = ["瀏覽訊息","收藏訊息","建立會員卡","瀏覽商品","Email","登出"]
+        let btnStr = ["瀏覽訊息","收藏訊息","QRCode","瀏覽商品","Email","登出"]
         btnW = self.view.frame.size.width/2 - 15
         
         for var i = 0; i < btnStr.count;i++ {
@@ -117,7 +118,11 @@ class User: UIViewController {
         case 1:
             print("收藏訊息")
         case 2:
-            print("建立會員卡")
+            //userQRCode
+            if userQRCode == nil {
+                userQRCode = UserQRCode()
+            }
+            self.navigationController?.pushViewController(userQRCode!, animated: true)
         case 3:
             print("瀏覽商品")
             if browseStore == nil{

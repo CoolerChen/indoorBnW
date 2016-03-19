@@ -31,7 +31,8 @@ class SupervisorStoreQRCode: UIViewController {
         
         
         let textField:UITextField = UITextField()
-        textField.text = Sup.Supervisor.storeDic["storeID"]!
+        
+        textField.text = "\(Sup.Supervisor.storeDic["storeID"]!)::\(Sup.Supervisor.storeDic["storeName"]!)::\(Sup.Supervisor.storeDic["storeSlogan"]!)::\(Sup.Supervisor.storeDic["storeLogo"]!)::\(Sup.Supervisor.storeDic["storeCategory"]!)".stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         
         let data = textField.text!.dataUsingEncoding(NSISOLatin1StringEncoding, allowLossyConversion: false)
         

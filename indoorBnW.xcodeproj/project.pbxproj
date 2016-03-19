@@ -12,6 +12,8 @@
 		37188A041C9BE78D00116338 /* MyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A031C9BE78D00116338 /* MyAlert.swift */; };
 		37188A061C9BE8D900116338 /* ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 37188A051C9BE8D900116338 /* ball.png */; };
 		37188A281C9D2F8700116338 /* SupervisorStoreQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A271C9D2F8700116338 /* SupervisorStoreQRCode.swift */; };
+		37188A2A1C9D3E4000116338 /* UserQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A291C9D3E4000116338 /* UserQRCode.swift */; };
+		37188A2C1C9D420C00116338 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37188A2B1C9D420C00116338 /* AVFoundation.framework */; };
 		B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E72EB1C98E97800923F7E /* AppDelegate.swift */; };
 		B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F21C98E97800923F7E /* Assets.xcassets */; };
 		B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F41C98E97800923F7E /* LaunchScreen.storyboard */; };
@@ -52,6 +54,8 @@
 		37188A031C9BE78D00116338 /* MyAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAlert.swift; sourceTree = "<group>"; };
 		37188A051C9BE8D900116338 /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
 		37188A271C9D2F8700116338 /* SupervisorStoreQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorStoreQRCode.swift; sourceTree = "<group>"; };
+		37188A291C9D3E4000116338 /* UserQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserQRCode.swift; sourceTree = "<group>"; };
+		37188A2B1C9D420C00116338 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B33E72E81C98E97800923F7E /* indoorBnW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = indoorBnW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33E72EB1C98E97800923F7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B33E72F21C98E97800923F7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37188A2C1C9D420C00116338 /* AVFoundation.framework in Frameworks */,
 				B34FCDF11C9A9C980080D09F /* libsqlite3.tbd in Frameworks */,
 				B33E732B1C98FB4600923F7E /* MessageUI.framework in Frameworks */,
 			);
@@ -179,6 +184,7 @@
 				B33E731E1C98EBC000923F7E /* RegisteredUser.swift */,
 				B3F2A0371C9B92AD00779AE5 /* BrowseStore.swift */,
 				B3F2A0381C9B92AD00779AE5 /* BrowseProduct.swift */,
+				37188A291C9D3E4000116338 /* UserQRCode.swift */,
 				B3F2A03B1C9BD65E00779AE5 /* BrowseMessageLocal.swift */,
 			);
 			name = User;
@@ -195,6 +201,7 @@
 		B33E732C1C98FC2E00923F7E /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				37188A2B1C9D420C00116338 /* AVFoundation.framework */,
 				B34FCDFF1C9AF70C0080D09F /* indoorBnW-Bridging-Header.h */,
 				B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */,
 				B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */,
@@ -287,6 +294,7 @@
 				B33E73291C98F5B000923F7E /* beacon.swift in Sources */,
 				B33E73141C98EBAA00923F7E /* Message.swift in Sources */,
 				B33E73001C98EB7E00923F7E /* Passer.swift in Sources */,
+				37188A2A1C9D3E4000116338 /* UserQRCode.swift in Sources */,
 				B33E73161C98EBAA00923F7E /* Product.swift in Sources */,
 				B33E731A1C98EBAA00923F7E /* RegisteredSupervisor.swift in Sources */,
 				B33E731F1C98EBC000923F7E /* User.swift in Sources */,
