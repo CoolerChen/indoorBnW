@@ -13,7 +13,7 @@ class CreateStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
     var store:Store?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "新增商店"
         
         let textFieldW:CGFloat = 250

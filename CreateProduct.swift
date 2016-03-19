@@ -17,7 +17,7 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
     var bol:Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.whiteColor()
 
         print("\(Sup.Supervisor.supervisor) 的 \(Sup.Supervisor.store) 商店" )
         

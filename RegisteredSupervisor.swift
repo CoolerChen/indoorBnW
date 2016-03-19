@@ -13,7 +13,7 @@ class RegisteredSupervisor: UIViewController,UITextFieldDelegate,NSURLSessionDow
     var superVisor:Supervisor?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.brownColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "商家註冊"
         let textFieldW:CGFloat = 250
         let textFieldH:CGFloat = 30

@@ -21,7 +21,7 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         
         let rightBtnItem:UIBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Done, target: self, action: Selector("OnSelectRightAction:"))
         self.navigationItem.rightBarButtonItem = rightBtnItem
@@ -139,6 +139,8 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
             Sup.Supervisor.productDic = json[indexPath.row] as! Dictionary<String, String>
             editProduct?.product = self
             self.navigationController?.pushViewController(editProduct!, animated: true)
+        case .QRCode:
+            print("QRCode")
         }
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

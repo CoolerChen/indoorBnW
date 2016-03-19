@@ -15,6 +15,7 @@ class Sup: NSObject {
     enum Status { //列舉
         case Done
         case Edit
+        case QRCode
     }
     struct Supervisor { //結構
         static var supervisor:String = ""
@@ -37,7 +38,7 @@ class Sup: NSObject {
     //新增Btn
     static func addBtn(VC:UIViewController,frame:CGRect,str:String,tag:Int) -> UIButton{
         let btn:UIButton = UIButton()
-        btn.backgroundColor = UIColor.grayColor()
+        btn.backgroundColor = UIColor.blueColor()
         btn.frame = frame
         btn.addTarget(VC, action: Selector("onBtnAction:"), forControlEvents: UIControlEvents.TouchUpInside)
         btn.setTitle(str, forState: UIControlState.Normal)
@@ -126,7 +127,7 @@ class Sup: NSObject {
         let scrollerView:UIScrollView = UIScrollView()
         scrollerView.frame = frame
         scrollerView.contentSize = contentSize
-        scrollerView.backgroundColor = UIColor.orangeColor()
+        scrollerView.backgroundColor = UIColor.whiteColor()
         scrollerView.showsHorizontalScrollIndicator = false //水平的滾動指示
         scrollerView.showsVerticalScrollIndicator = true //垂直的滾動指示
         scrollerView.delegate = VC
@@ -140,6 +141,7 @@ class Sup: NSObject {
         lab.frame = frame
         lab.font = UIFont.boldSystemFontOfSize(18)
         lab.adjustsFontSizeToFitWidth = true
+        lab.textColor = UIColor.whiteColor()
         return lab
     }
     //下載頭像
