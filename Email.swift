@@ -31,10 +31,7 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         let textFieldH:CGFloat = 40
         textField = Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 20, textFieldW, textFieldH), placeholdString: "標題")
         
-        let lab:UILabel = UILabel()
-        lab.text = "內文："
-        lab.frame = CGRectMake(10, textView.frame.origin.y + 65, 200, 30)
-        lab.font = UIFont.systemFontOfSize(textField.frame.size.height * 0.88)
+        let lab:UILabel = Sup.addLabel(CGRectMake(10, textView.frame.origin.y + 65, 200, 30), str: "內文：")
         scrollerView.addSubview(lab)
         let img:UIImage = UIImage()
         imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 160, textFieldW, textFieldW), img:img )
