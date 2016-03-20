@@ -31,12 +31,12 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
             textFieldAry[Int(i)].text = Fieldtext[Int(i)]
         }
         let img:UIImage = UIImage()
-        imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, (textFieldAry.last?.frame.origin.y)! + 55, textFieldW, textFieldW), img: img)
-        imageView.backgroundColor =  UIColor.clearColor()
+        //imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, (textFieldAry.last?.frame.origin.y)! + 55, textFieldW, textFieldW), img: img)
+        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, (textFieldAry.last?.frame.origin.y)! + 55, textFieldW, textFieldW), Taraget: self, img: img)
         self.view.addSubview(imageView)
         
         //選擇圖片
-        self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "選擇圖片", tag: 1))
+        //self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "選擇圖片", tag: 1))
         
         //送出
         self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 60, textFieldW, textFieldH), str: "送出", tag: 2))
@@ -46,10 +46,11 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
         
     }
     func onBtnAction(sender:UIButton){
-        if sender.tag == 1{//選擇圖片
-            Sup.PhotoLibrary(self)
-            productGoPhoto = true
-        }else if sender.tag == 2{//送出
+//        if sender.tag == 1{//選擇圖片
+//            Sup.PhotoLibrary(self)
+//            productGoPhoto = true
+//        }else
+        if sender.tag == 2{//送出
             //改變圖片資料
             Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/EditProduct.php", submitBody: "productBySupervisor=\(Sup.Supervisor.productDic["productBySupervisor"]!)&productByStore=\(Sup.Supervisor.productDic["productByStore"]!)&productName=\(textFieldAry[0].text!)&productType=熱褲&productInfo=\(textFieldAry[1].text!)&productPrice=\(textFieldAry[2].text!)&productImage=\(Sup.Supervisor.productID).jpg&oldProductName=\(Sup.Supervisor.productDic["productName"]!)")
             //上傳圖片
@@ -66,6 +67,17 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
             alertController.addAction(agreeAction)
             alertController.addAction(calAction)
             self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    //圖片被按下
+    func handleLongPressFrom(longPressRecognizer:UILongPressGestureRecognizer){
+        if longPressRecognizer.state == UIGestureRecognizerState.Began{
+            
+        }else if longPressRecognizer.state == UIGestureRecognizerState.Changed{
+            
+        }else if longPressRecognizer.state == UIGestureRecognizerState.Ended || longPressRecognizer.state == UIGestureRecognizerState.Cancelled{
+            Sup.PhotoLibrary(self)
+            productGoPhoto = true
         }
     }
     //取得echo回來的值

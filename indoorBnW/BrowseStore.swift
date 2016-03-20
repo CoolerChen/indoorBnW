@@ -41,7 +41,7 @@ class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDel
             scroller.addSubview(Sup.addLabel(CGRectMake(15, 10 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店名稱: \(json[i]["storeName"] as! String)" ))
             scroller.addSubview(Sup.addLabel(CGRectMake(15, 40 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店分類: \(json[i]["storeCategory"] as! String)"))
             scroller.addSubview(Sup.addLabel(CGRectMake(15, 70 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店slogan: \(json[i]["storeSlogan"] as! String)"))
-            scroller.addSubview(Sup.addLabel(CGRectMake(15, 100 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str: "商店logo: \(json[i]["storeLogo"] as! String)"))
+            scroller.addSubview(Sup.addLabel(CGRectMake(15, 100 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str: "商店簡介: \(json[i]["storeLogo"] as! String)"))
             
         }
         scroller.contentSize = CGSizeMake(self.view.frame.size.width, (btnAry.last?.frame.origin.y)! + 170)

@@ -70,9 +70,9 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
             cell!.selectionStyle = UITableViewCellSelectionStyle.Blue //點選後改變的顏色
             //cell!.showsReorderControl = true  //是否可以排序
         }
-        cell!.lab1.text = json[indexPath.row].objectForKey("storeName") as? String //主標題
-        cell!.lab2.text = json[indexPath.row].objectForKey("storeSlogan") as? String
-        cell!.lab3.text = json[indexPath.row].objectForKey("storeLogo") as? String
+        cell!.lab1.text = "店名:\(json[indexPath.row].objectForKey("storeName") as! String)" //主標題
+        cell!.lab2.text = "Slogan:\(json[indexPath.row].objectForKey("storeSlogan") as! String)"
+        cell!.lab3.text =  "簡介:\(json[indexPath.row].objectForKey("storeLogo") as! String)"
         
         
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator//右邊的 >
@@ -154,7 +154,10 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
             let rightBtnItem:UIBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Done, target: self, action: Selector("OnSelectRightAction:"))
             self.navigationItem.rightBarButtonItem = rightBtnItem
         }
-        //status = Sup.Status.Done
+        if status == Sup.Status.Done || status == Sup.Status.Edit{
+            status = Sup.Status.Done
+        }
+        
     }
     override func viewDidDisappear(animated: Bool) {
         self.navigationItem.rightBarButtonItem = nil

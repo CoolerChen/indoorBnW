@@ -20,7 +20,7 @@ class EditStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelega
         let textFieldW:CGFloat = 250
         let textFieldH:CGFloat = 30
         let Fieltext:[String] = [storeDic["storeName"]!,storeDic["storeCategory"]!,storeDic["storeSlogan"]!,storeDic["storeLogo"]!]
-        let textFieldtext:[String] = ["商店名稱","分類","Slogan","Logo"]
+        let textFieldtext:[String] = ["商店名稱","分類","Slogan","簡介"]
         for var i:CGFloat = 0;i < 4 ; i++ {
             textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 40.0 * i + 110.0, textFieldW, textFieldH), placeholdString: textFieldtext[Int(i)]))
             self.view.addSubview(textFieldAry[Int(i)])

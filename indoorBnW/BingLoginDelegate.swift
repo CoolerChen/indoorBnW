@@ -8,17 +8,17 @@
 
 import UIKit
 
-protocol BingDelegate{
+protocol BingLoginDelegate{
     func gotowhere() -> UIViewController
     
 }
 
 
 class Bing {
-    var delegate:BingDelegate?
+    var delegate:BingLoginDelegate?
     var me:UIViewController?
     var vc:UIViewController?
-    init(del:BingDelegate){
+    init(del:BingLoginDelegate){
         me = del as? UIViewController
         delegate = del
     }

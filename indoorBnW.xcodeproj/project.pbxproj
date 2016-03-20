@@ -14,6 +14,7 @@
 		37188A281C9D2F8700116338 /* SupervisorStoreQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A271C9D2F8700116338 /* SupervisorStoreQRCode.swift */; };
 		37188A2A1C9D3E4000116338 /* UserQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A291C9D3E4000116338 /* UserQRCode.swift */; };
 		37188A2C1C9D420C00116338 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37188A2B1C9D420C00116338 /* AVFoundation.framework */; };
+		37188A341C9ED31000116338 /* MyImageView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A331C9ED31000116338 /* MyImageView2.swift */; };
 		B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E72EB1C98E97800923F7E /* AppDelegate.swift */; };
 		B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F21C98E97800923F7E /* Assets.xcassets */; };
 		B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F41C98E97800923F7E /* LaunchScreen.storyboard */; };
@@ -38,7 +39,7 @@
 		B33E73291C98F5B000923F7E /* beacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E73281C98F5B000923F7E /* beacon.swift */; };
 		B33E732B1C98FB4600923F7E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B33E732A1C98FB4600923F7E /* MessageUI.framework */; };
 		B34FCDF11C9A9C980080D09F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B34FCDF01C9A9C980080D09F /* libsqlite3.tbd */; };
-		B34FCDF51C9AAA090080D09F /* BingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDF41C9AAA090080D09F /* BingDelegate.swift */; };
+		B34FCDF51C9AAA090080D09F /* BingLoginDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDF41C9AAA090080D09F /* BingLoginDelegate.swift */; };
 		B34FCDFD1C9AF6AB0080D09F /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */; };
 		B34FCDFE1C9AF6AB0080D09F /* SQLTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */; };
 		B34FCE041C9AFC630080D09F /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCE031C9AFC630080D09F /* String-Extras.swift */; };
@@ -56,6 +57,7 @@
 		37188A271C9D2F8700116338 /* SupervisorStoreQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorStoreQRCode.swift; sourceTree = "<group>"; };
 		37188A291C9D3E4000116338 /* UserQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserQRCode.swift; sourceTree = "<group>"; };
 		37188A2B1C9D420C00116338 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		37188A331C9ED31000116338 /* MyImageView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyImageView2.swift; sourceTree = "<group>"; };
 		B33E72E81C98E97800923F7E /* indoorBnW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = indoorBnW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33E72EB1C98E97800923F7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B33E72F21C98E97800923F7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,7 +84,7 @@
 		B33E73281C98F5B000923F7E /* beacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = beacon.swift; sourceTree = "<group>"; };
 		B33E732A1C98FB4600923F7E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		B34FCDF01C9A9C980080D09F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		B34FCDF41C9AAA090080D09F /* BingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingDelegate.swift; sourceTree = "<group>"; };
+		B34FCDF41C9AAA090080D09F /* BingLoginDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingLoginDelegate.swift; sourceTree = "<group>"; };
 		B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDB.swift; sourceTree = "<group>"; };
 		B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLTable.swift; sourceTree = "<group>"; };
 		B34FCDFF1C9AF70C0080D09F /* indoorBnW-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "indoorBnW-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				37188A051C9BE8D900116338 /* ball.png */,
+				37188A331C9ED31000116338 /* MyImageView2.swift */,
 				37188A031C9BE78D00116338 /* MyAlert.swift */,
 				37188A011C9BE78600116338 /* MyCell2.swift */,
 				371889FF1C9BE77E00116338 /* MyCell1.swift */,
@@ -140,7 +143,7 @@
 			children = (
 				371889FE1C9BE75A00116338 /* MyClass */,
 				B33E72EB1C98E97800923F7E /* AppDelegate.swift */,
-				B34FCDF41C9AAA090080D09F /* BingDelegate.swift */,
+				B34FCDF41C9AAA090080D09F /* BingLoginDelegate.swift */,
 				B33E73261C98F56B00923F7E /* Setting.swift */,
 				B33E72FD1C98EB6100923F7E /* Login.swift */,
 				B33E72FF1C98EB7E00923F7E /* Passer.swift */,
@@ -245,7 +248,7 @@
 				TargetAttributes = {
 					B33E72E71C98E97800923F7E = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 482N23KZ42;
+						DevelopmentTeam = C5DGZJU43C;
 					};
 				};
 			};
@@ -306,13 +309,14 @@
 				37188A041C9BE78D00116338 /* MyAlert.swift in Sources */,
 				B33E73041C98EB8800923F7E /* UploadImage.swift in Sources */,
 				B33E73131C98EBAA00923F7E /* EditStore.swift in Sources */,
-				B34FCDF51C9AAA090080D09F /* BingDelegate.swift in Sources */,
+				B34FCDF51C9AAA090080D09F /* BingLoginDelegate.swift in Sources */,
 				B33E72FE1C98EB6100923F7E /* Login.swift in Sources */,
 				B34FCDFE1C9AF6AB0080D09F /* SQLTable.swift in Sources */,
 				B33E73201C98EBC000923F7E /* RegisteredUser.swift in Sources */,
 				B33E73191C98EBAA00923F7E /* ProductDetail.swift in Sources */,
 				B3F2A03C1C9BD65E00779AE5 /* BrowseMessageLocal.swift in Sources */,
 				B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */,
+				37188A341C9ED31000116338 /* MyImageView2.swift in Sources */,
 				37188A281C9D2F8700116338 /* SupervisorStoreQRCode.swift in Sources */,
 				B33E73181C98EBAA00923F7E /* CreateProduct.swift in Sources */,
 				B33E73271C98F56B00923F7E /* Setting.swift in Sources */,
@@ -428,7 +432,7 @@
 				INFOPLIST_FILE = indoorBnW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnW;
+				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnWb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "indoorBnW-Bridging-Header.h";
@@ -446,7 +450,7 @@
 				INFOPLIST_FILE = indoorBnW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnW;
+				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnWb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "indoorBnW-Bridging-Header.h";
