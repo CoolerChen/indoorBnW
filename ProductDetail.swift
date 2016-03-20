@@ -42,14 +42,14 @@ class ProductDetail: UIViewController,UIScrollViewDelegate {
         var Str:[String] = [String]()
         Str.append("商店名稱:\(Sup.Supervisor.storeDic["storeName"]!)")
         Str.append("商店Slogan:\(Sup.Supervisor.storeDic["storeSlogan"]!)")
-        Str.append("商店Logo:\(Sup.Supervisor.storeDic["storeLogo"]!)")
+        Str.append("商店簡介:\(Sup.Supervisor.storeDic["storeLogo"]!)")
         Str.append("商店分類:\(Sup.Supervisor.storeDic["storeCategory"]!)")
         
         
         Str.append("商品名稱:\(Sup.Supervisor.productDic["productName"]!)")
         Str.append("商品Type:\(Sup.Supervisor.productDic["productType"]!)")
         Str.append("商品簡介:\(Sup.Supervisor.productDic["productInfo"]!)")
-        Str.append("商品價格:\(Sup.Supervisor.productDic["productPrice"]!)")
+        Str.append("商品價格:\(Sup.Supervisor.productDic["productPrice"]!)元")
         
         for var i = 0; i < Str.count;i++ {
             labAry[i].text = Str[i]
@@ -60,7 +60,7 @@ class ProductDetail: UIViewController,UIScrollViewDelegate {
 
     }
     override func viewDidDisappear(animated: Bool) {
-        let labTextAry:[String] = ["商店名稱:","商店Slogan:","商店Logo:","商店分類:","商品名稱:","商品Type:","商品簡介:","商品價格:"]
+        let labTextAry:[String] = ["商店名稱:","商店Slogan:","商店簡介:","商店分類:","商品名稱:","商品Type:","商品簡介:","商品價格:"]
         for var i  = 0 ; i < labAry.count ; i++ {
             labAry[i].text = labTextAry[i]
         }
