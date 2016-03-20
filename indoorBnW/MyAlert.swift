@@ -40,6 +40,7 @@ class MyAlert: UIAlertController {
     }
     func handleLongPressFrom(longPressRecognizer:UILongPressGestureRecognizer){
     
+        
         if longPressRecognizer.state == UIGestureRecognizerState.Began{
             if m_timer != nil{
                 m_timer.invalidate()
@@ -58,8 +59,6 @@ class MyAlert: UIAlertController {
             UIView.commitAnimations()
             self.performSelector(Selector("timer"), withObject: nil, afterDelay: 1)
         }
-        
-        
     }
     func moveImageView(longPressRecognizer:CGPoint){
         

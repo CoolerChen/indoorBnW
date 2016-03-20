@@ -163,4 +163,5 @@ class Sup: NSObject {
         UIGraphicsEndImageContext()
         return newImage
     }
+    
 }

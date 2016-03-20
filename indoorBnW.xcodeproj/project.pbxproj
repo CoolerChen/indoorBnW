@@ -38,7 +38,7 @@
 		B33E73291C98F5B000923F7E /* beacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E73281C98F5B000923F7E /* beacon.swift */; };
 		B33E732B1C98FB4600923F7E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B33E732A1C98FB4600923F7E /* MessageUI.framework */; };
 		B34FCDF11C9A9C980080D09F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B34FCDF01C9A9C980080D09F /* libsqlite3.tbd */; };
-		B34FCDF51C9AAA090080D09F /* BingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDF41C9AAA090080D09F /* BingDelegate.swift */; };
+		B34FCDF51C9AAA090080D09F /* BingLoginDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDF41C9AAA090080D09F /* BingLoginDelegate.swift */; };
 		B34FCDFD1C9AF6AB0080D09F /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */; };
 		B34FCDFE1C9AF6AB0080D09F /* SQLTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */; };
 		B34FCE041C9AFC630080D09F /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCE031C9AFC630080D09F /* String-Extras.swift */; };
@@ -82,7 +82,7 @@
 		B33E73281C98F5B000923F7E /* beacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = beacon.swift; sourceTree = "<group>"; };
 		B33E732A1C98FB4600923F7E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		B34FCDF01C9A9C980080D09F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		B34FCDF41C9AAA090080D09F /* BingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingDelegate.swift; sourceTree = "<group>"; };
+		B34FCDF41C9AAA090080D09F /* BingLoginDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingLoginDelegate.swift; sourceTree = "<group>"; };
 		B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDB.swift; sourceTree = "<group>"; };
 		B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLTable.swift; sourceTree = "<group>"; };
 		B34FCDFF1C9AF70C0080D09F /* indoorBnW-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "indoorBnW-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 			children = (
 				371889FE1C9BE75A00116338 /* MyClass */,
 				B33E72EB1C98E97800923F7E /* AppDelegate.swift */,
-				B34FCDF41C9AAA090080D09F /* BingDelegate.swift */,
+				B34FCDF41C9AAA090080D09F /* BingLoginDelegate.swift */,
 				B33E73261C98F56B00923F7E /* Setting.swift */,
 				B33E72FD1C98EB6100923F7E /* Login.swift */,
 				B33E72FF1C98EB7E00923F7E /* Passer.swift */,
@@ -306,7 +306,7 @@
 				37188A041C9BE78D00116338 /* MyAlert.swift in Sources */,
 				B33E73041C98EB8800923F7E /* UploadImage.swift in Sources */,
 				B33E73131C98EBAA00923F7E /* EditStore.swift in Sources */,
-				B34FCDF51C9AAA090080D09F /* BingDelegate.swift in Sources */,
+				B34FCDF51C9AAA090080D09F /* BingLoginDelegate.swift in Sources */,
 				B33E72FE1C98EB6100923F7E /* Login.swift in Sources */,
 				B34FCDFE1C9AF6AB0080D09F /* SQLTable.swift in Sources */,
 				B33E73201C98EBC000923F7E /* RegisteredUser.swift in Sources */,

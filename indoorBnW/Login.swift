@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,BingDelegate {
+class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,BingLoginDelegate {
     var passer:Passer?
     var registeredUser:RegisteredUser?
     var registeredSupervisor:RegisteredSupervisor?

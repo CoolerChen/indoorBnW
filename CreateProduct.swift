@@ -12,7 +12,7 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
     
     var textFieldAry:[UITextField] = [UITextField]()
     var product:Product?
-    var imageView:UIImageView = UIImageView()
+    var imageView:UIImageView!
     
     var bol:Bool = true
     override func viewDidLoad() {
@@ -34,6 +34,8 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
         scorll.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 45, textFieldW, textFieldH), str: "選擇圖片", tag: 0))
         let img:UIImage = UIImage()
         imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 90, textFieldW, textFieldW), img: img)
+    
+        imageView.backgroundColor = UIColor.blueColor()
         scorll.addSubview(imageView)
         
         
@@ -41,22 +43,18 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
         scorll.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "送出", tag: 1))
         scorll.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height+1)
     }
+    func touchMeTouchMe() {
+        print("yo")
+        Sup.PhotoLibrary(self)
+        bol = false
+    }
     func onBtnAction(sender:UIButton){
-        switch sender.tag {
-        case 0:
-            Sup.PhotoLibrary(self)
-            bol = false
-        case 1:
-            if textFieldAry[0].text == "" {
-                Sup.showAlert(self, str: "請輸入商品名稱")
-                return
-            }
-            Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/CreateProduct.php", submitBody: "productBySupervisor=\(Sup.Supervisor.supervisor)&productByStore=\(Sup.Supervisor.storeID)&productName=\(textFieldAry[0].text!)&productType=分類&productInfo=\(textFieldAry[1].text!)&productPrice=\(textFieldAry[2].text!)&productImage=圖")
-        default:
-            break
+    
+        if textFieldAry[0].text == "" {
+            Sup.showAlert(self, str: "請輸入商品名稱")
+            return
         }
-        
-        
+        Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/CreateProduct.php", submitBody: "productBySupervisor=\(Sup.Supervisor.supervisor)&productByStore=\(Sup.Supervisor.storeID)&productName=\(textFieldAry[0].text!)&productType=分類&productInfo=\(textFieldAry[1].text!)&productPrice=\(textFieldAry[2].text!)&productImage=圖")
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         bol = true
