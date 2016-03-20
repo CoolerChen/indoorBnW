@@ -110,13 +110,23 @@ class User: UIViewController {
             print("\(Sup.User.user)")
             if browseMessageLocal == nil {
                 browseMessageLocal = BrowseMessageLocal()
+                browseMessageLocal?.setPageSring("browse")
             } else {
+                browseMessageLocal?.setPageSring("browse")
                 browseMessageLocal?.viewDidLoad()
             }
             self.navigationController?.pushViewController(browseMessageLocal!, animated: true)
             
         case 1:
             print("收藏訊息")
+            if browseMessageLocal == nil {
+                browseMessageLocal = BrowseMessageLocal()
+                browseMessageLocal?.setPageSring("favorite")
+            } else {
+                browseMessageLocal?.setPageSring("favorite")
+                browseMessageLocal?.viewDidLoad()
+            }
+            self.navigationController?.pushViewController(browseMessageLocal!, animated: true)
         case 2:
             //userQRCode
             if userQRCode == nil {

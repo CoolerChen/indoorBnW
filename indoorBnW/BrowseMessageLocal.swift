@@ -9,15 +9,22 @@
 import UIKit
 
 class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
-//, UITableViewDelegate, UITableViewDataSource {
+    var whichPage:String = ""
     let db = SQLiteDB.sharedInstance()
     var data:AnyObject?
 //    var m_tableView:UITableView!
     var m_scrollerView:UIScrollView!
     var m_pageControl:UIPageControl!
     var m_messageIndex:Int = 0 //第幾項，從1開始
+    
+    func setPageSring(page:String) {
+        whichPage = page
+//        print("setPageSring \(page)")
+    }
 
     override func viewDidLoad() {
+//        print("viewDidLoad page=\(whichPage)")
+//        print("viewDidLoad s")
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor(red: 209/255.0, green: 235/255.0, blue: 254/255.0, alpha: 1)
@@ -26,8 +33,13 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         loadMessageLocalData()
         refreshWithFrame(self.view.frame)
         
-        if data?.count > 0 {m_messageIndex = 1}
+        if data?.count > 0 {
+            m_messageIndex = 1
+        } else {
+            m_messageIndex = 0
+        }
         self.navigationItem.title = "\(m_messageIndex)/\(String((data?.count)!))"
+//        print("viewDidLoad e")
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -44,7 +56,6 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
     }
     
     func loadMessageLocalData() {
-        data = db.query("select * from messagelocal where 1=1")
         /*
             id             : 1
             messageTime    :2016-03-18_14-11-09
@@ -55,6 +66,15 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             messageImage   :圖片檔名.副檔名
             addFavorite    :加入收藏
         */
+        switch whichPage {
+            case "browse":
+                data = db.query("select * from messagelocal where 1=1")
+            case "favorite":
+                data = db.query("select * from messagelocal where addFavorite='yes'")
+            default:
+                data = db.query("select * from messagelocal where 1=1")
+        }
+        print(data!.count)
     }
 
     func refreshWithFrame(frame:CGRect) {
@@ -137,7 +157,6 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         if data?.count > 0 {titleLabel.text = data![index].objectForKey("messageTitle") as? String}
         scrollView.addSubview(titleLabel)
         usedHeight += titleLabel.frame.height + interval
-//        print("2 \(usedHeight)")
         
         //副標題
         let subtitleLabel = UILabel(frame: CGRectMake(
@@ -150,7 +169,6 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         subtitleLabel.layer.masksToBounds = true
         scrollView.addSubview(subtitleLabel)
         usedHeight += subtitleLabel.frame.height + interval
-//        print("3 \(usedHeight)")
         
         //內容
         let contentTextView = UITextView(frame: CGRectMake(
@@ -165,7 +183,6 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         contentTextView.layer.masksToBounds = true
         scrollView.addSubview(contentTextView)
         usedHeight += contentTextView.frame.height + interval
-//        print("4 \(usedHeight)")
         
         //圖片 ImageView
         let imageImageView = UIImageView(frame: CGRectMake(
@@ -174,7 +191,6 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             scrollView.frame.width*0.9, 200)) //w, h
         imageImageView.userInteractionEnabled = false
         let imageName = NSHomeDirectory() + "/Documents/images/msg/" + (data![index].objectForKey("messageImage") as? String)!
-//        print("\(imageName) ========================...")
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
             let tempData = NSData(contentsOfFile: imageName)
 
@@ -189,49 +205,42 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(imageImageView)
         usedHeight += imageImageView.frame.height + interval
         
-        //加入收藏按鈕
-        let buttonH = pView.frame.height*0.08
-        let buttonW = CGFloat(60)
-        let favImage = UIImageView(frame: CGRectMake(
-            pView.frame.width - pView.frame.width*0.05 - buttonW , //x
-            pView.frame.height*0.06 - buttonH/2, //y
-            buttonW, //w
-            buttonH)) //h
-        favImage.backgroundColor = UIColor(red: 209/255.0, green: 235/255.0, blue: 254/255.0, alpha: 1)
-        favImage.layer.cornerRadius = 10
-        favImage.layer.masksToBounds = true
-//        favButton.setImage(UIImage(named: "FavoriteStarO"), forState: UIControlState.Normal)
-        if data?.count > 0 {
-            if (data![index]["addFavorite"] as? String) == "yes" {
-                favImage.image = UIImage(named: "FavoriteStarO") //橘色
-            } else {
-                favImage.image = UIImage(named: "FavoriteStarG") //灰色
+        //瀏覽訊息頁才有收藏按鈕
+        if whichPage == "browse" {
+            //加入收藏按鈕
+            let buttonH = pView.frame.height*0.08
+            let buttonW = CGFloat(60)
+            let favImage = UIImageView(frame: CGRectMake(
+                pView.frame.width - pView.frame.width*0.05 - buttonW , //x
+                pView.frame.height*0.06 - buttonH/2, //y
+                buttonW, //w
+                buttonH)) //h
+            favImage.backgroundColor = UIColor(red: 209/255.0, green: 235/255.0, blue: 254/255.0, alpha: 1)
+            favImage.layer.cornerRadius = 10
+            favImage.layer.masksToBounds = true
+            if data?.count > 0 {
+                if (data![index]["addFavorite"] as? String) == "yes" {
+                    favImage.image = UIImage(named: "FavoriteStarO") //橘色
+                } else {
+                    favImage.image = UIImage(named: "FavoriteStarG") //灰色
+                }
             }
+            favImage.contentMode = UIViewContentMode.ScaleAspectFit
+            favImage.userInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: "imageTapped")
+            favImage.addGestureRecognizer(tapGesture)
+            favImage.tag = index + 1
+            pView.addSubview(favImage)
         }
-        favImage.contentMode = UIViewContentMode.ScaleAspectFit
-//        favButton.clipsToBounds = true
-        favImage.userInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: "imageTapped")
-        favImage.addGestureRecognizer(tapGesture)
-        favImage.tag = index + 1
-//        print("favImage.tag = \(m_messageIndex)")
-        pView.addSubview(favImage)
     }
     
     func imageTapped() {
-//        let index = m_messageIndex - 1
-//        print("m_messageIndex = \(m_messageIndex)")
-        
         //改變sqlite addFavorite欄位的值
         let messageTime = data![m_messageIndex - 1].objectForKey("messageTime") as? String
         let favValue = db.query("select addFavorite from messagelocal where messageTime='\(messageTime!)'")
         
         if favValue.count > 0 {
             let willChangeImage = self.view.viewWithTag(m_messageIndex) as! UIImageView
-//            print(m_scrollerView.viewWithTag(0)?.viewWithTag(m_messageIndex))
-//            print(self.view.viewWithTag(0)?.viewWithTag(m_messageIndex))
-//            print(self.view.viewWithTag(index))
-//            m_scrollerView.subviews.
             
             if (favValue[0]["addFavorite"] as? String) == "yes" {
                 let reV = db.query("update messagelocal set addFavorite='no' where messageTime='\(messageTime!)'")
@@ -250,17 +259,12 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let currentPage = scrollView.contentOffset.y / m_scrollerView.frame.size.height
-//        print("\(scrollView.contentOffset.y) _ \(m_scrollerView.frame.size.height)")
-//        print("\(currentPage) _ \(m_pageControl.currentPage)")
+
         if Int(currentPage)+1 == m_messageIndex {
             return
         }
         m_messageIndex = Int(currentPage)+1
-//        print(Int(currentPage))
-//        print(m_pageControl.currentPage)
-        
+
         self.navigationItem.title = "\(m_messageIndex)/\((data?.count)!)"
-//        print("\((data?.count)!)則通知, 第\(m_pageControl.currentPage + 1)則")
-//        print("\(self.navigationItem.title) ==========================")
     }
 }
