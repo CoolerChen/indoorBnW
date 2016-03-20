@@ -163,5 +163,13 @@ class Sup: NSObject {
         UIGraphicsEndImageContext()
         return newImage
     }
+    static func addMyImageView(frame:CGRect,Taraget:UIViewController,img:UIImage) -> MyImageView2{
+        let imageView:MyImageView2 = MyImageView2(frame: frame)
+        imageView.setTarget(Taraget)
+        imageView.image = img
+        imageView.userInteractionEnabled = true
+        imageView.backgroundColor = UIColor.lightGrayColor()
+        return imageView
+    }
     
 }

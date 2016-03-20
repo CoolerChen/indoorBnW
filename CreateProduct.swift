@@ -12,7 +12,7 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
     
     var textFieldAry:[UITextField] = [UITextField]()
     var product:Product?
-    var imageView:UIImageView!
+    var imageView:MyImageView2!
     
     var bol:Bool = true
     override func viewDidLoad() {
@@ -31,9 +31,10 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
             textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 45.0 * i + 5.0, textFieldW, textFieldH), placeholdString: textFieldtext[Int(i)]))
             scorll.addSubview(textFieldAry[Int(i)])
         }
-        scorll.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 45, textFieldW, textFieldH), str: "選擇圖片", tag: 0))
+//        scorll.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 45, textFieldW, textFieldH), str: "選擇圖片", tag: 0))
         let img:UIImage = UIImage()
-        imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 90, textFieldW, textFieldW), img: img)
+        //imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 90, textFieldW, textFieldW), img: img)
+        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 90, textFieldW, textFieldW), Taraget: self, img: img)
         scorll.addSubview(imageView)
         
         
@@ -42,19 +43,21 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
         scorll.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height+1)
     }
     func onBtnAction(sender:UIButton){
-    
-        switch sender.tag {
-        case 0:
+        if textFieldAry[0].text == "" {
+            Sup.showAlert(self, str: "請輸入商品名稱")
+            return
+        }
+        Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/CreateProduct.php", submitBody: "productBySupervisor=\(Sup.Supervisor.supervisor)&productByStore=\(Sup.Supervisor.storeID)&productName=\(textFieldAry[0].text!)&productType=分類&productInfo=\(textFieldAry[1].text!)&productPrice=\(textFieldAry[2].text!)&productImage=圖")
+        
+    }
+    func handleLongPressFrom(longPressRecognizer:UILongPressGestureRecognizer){
+        if longPressRecognizer.state == UIGestureRecognizerState.Began{
+            
+        }else if longPressRecognizer.state == UIGestureRecognizerState.Changed{
+            
+        }else if longPressRecognizer.state == UIGestureRecognizerState.Ended || longPressRecognizer.state == UIGestureRecognizerState.Cancelled{
             Sup.PhotoLibrary(self)
             bol = false
-        case 1:
-            if textFieldAry[0].text == "" {
-                Sup.showAlert(self, str: "請輸入商品名稱")
-                return
-            }
-            Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/CreateProduct.php", submitBody: "productBySupervisor=\(Sup.Supervisor.supervisor)&productByStore=\(Sup.Supervisor.storeID)&productName=\(textFieldAry[0].text!)&productType=分類&productInfo=\(textFieldAry[1].text!)&productPrice=\(textFieldAry[2].text!)&productImage=圖")
-        default:
-            break
         }
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {

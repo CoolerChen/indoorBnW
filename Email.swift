@@ -34,10 +34,11 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         let lab:UILabel = Sup.addLabel(CGRectMake(10, textView.frame.origin.y + 65, 200, 30), str: "內文：")
         scrollerView.addSubview(lab)
         let img:UIImage = UIImage()
-        imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 160, textFieldW, textFieldW), img:img )
+        //imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 160, textFieldW, textFieldW), img:img )
+        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 160, textFieldW, textFieldW), Taraget: self, img: img)
         textView = Sup.addTextView(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, lab.frame.origin.y + 40, textFieldW, textFieldW))
         scrollerView.addSubview(textView)
-        scrollerView.addSubview(Sup.addBtn(self, frame:  CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "選擇圖片", tag: 0))
+        //scrollerView.addSubview(Sup.addBtn(self, frame:  CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "選擇圖片", tag: 0))
         scrollerView.addSubview(Sup.addBtn(self, frame:  CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "確認", tag: 1))
         scrollerView.addSubview(textField)
         scrollerView.addSubview(imageView)
@@ -47,8 +48,6 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
     }
     func onBtnAction(sender:UIButton){
         switch sender.tag {
-        case 0://取得相簿
-            Sup.PhotoLibrary(self)
         case 1:
             if textField.text == ""{
                 Sup.showAlert(self, str: "請輸入標題")
@@ -59,6 +58,16 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
             
         default :
             break
+        }
+    }
+    //圖片被按下
+    func handleLongPressFrom(longPressRecognizer:UILongPressGestureRecognizer){
+        if longPressRecognizer.state == UIGestureRecognizerState.Began{
+            
+        }else if longPressRecognizer.state == UIGestureRecognizerState.Changed{
+            
+        }else if longPressRecognizer.state == UIGestureRecognizerState.Ended || longPressRecognizer.state == UIGestureRecognizerState.Cancelled{
+            Sup.PhotoLibrary(self)
         }
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
