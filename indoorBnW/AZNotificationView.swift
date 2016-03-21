@@ -64,23 +64,43 @@ class AZNotificationView : UIView
         setup()
     }
     
-    func hideNotification()
+    func setup()
     {
-        animator.removeBehavior(gravity)
-        gravity = UIGravityBehavior(items: [self])
-        gravity.gravityDirection = CGVectorMake(0, -1)
-        animator.addBehavior(gravity)
+        let screenBounds = UIScreen.mainScreen().bounds
+        self.frame = CGRectMake(0, showNotificationUnderNavigationBar == true ? 1 : -1 * notificationViewHeight, screenBounds.size.width, notificationViewHeight)
         
-        //顯示狀態列
-        NSTimer.scheduledTimerWithTimeInterval(0.3, target: self, selector: "showStatusbar", userInfo: nil, repeats: false)
+        setupNotificationType()
+        
+        labelRect = CGRectMake(10,10, screenBounds.size.width, notificationViewHeight)
+        
+        titleLabel = UILabel(frame: labelRect!)
+        titleLabel?.text = title
+        titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 17)
+        titleLabel?.textColor = UIColor.whiteColor()
+        
+        addSubview(titleLabel!)
+        
+        let tapNotificationGesture = UITapGestureRecognizer(target: self, action: "notificationTapped")
+        self.addGestureRecognizer(tapNotificationGesture)
     }
-    func hideStatusbar()
+    
+    func setupNotificationType()
     {
-        UIApplication.sharedApplication().statusBarHidden = true
-    }
-    func showStatusbar()
-    {
-        UIApplication.sharedApplication().statusBarHidden = false
+        switch notificationType
+        {
+        case .Success:
+            backgroundColor = UIColor(fromHexString: NotificationColors.Success.rawValue)
+            
+        case .Error:
+            backgroundColor = UIColor(fromHexString: NotificationColors.Error.rawValue)
+            
+        case .Warning:
+            backgroundColor = UIColor(fromHexString: NotificationColors.Warning.rawValue)
+            
+        case .Message:
+            backgroundColor = UIColor(fromHexString: NotificationColors.Message.rawValue)
+            
+        }
     }
     
     func applyDynamics()
@@ -116,49 +136,29 @@ class AZNotificationView : UIView
         //隱藏通知
         NSTimer.scheduledTimerWithTimeInterval(6.0, target: self, selector: "hideNotification", userInfo: nil, repeats: false)
     }
-    
-    func setup()
+    func hideNotification()
     {
-        let screenBounds = UIScreen.mainScreen().bounds
-        self.frame = CGRectMake(0, showNotificationUnderNavigationBar == true ? 1 : -1 * notificationViewHeight, screenBounds.size.width, notificationViewHeight)
+        animator.removeBehavior(gravity)
+        gravity = UIGravityBehavior(items: [self])
+        gravity.gravityDirection = CGVectorMake(0, -1)
+        animator.addBehavior(gravity)
         
-        setupNotificationType()
-     
-        labelRect = CGRectMake(10,10, screenBounds.size.width, notificationViewHeight)
-        
-        titleLabel = UILabel(frame: labelRect!)
-        titleLabel?.text = title
-        titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 17)
-        titleLabel?.textColor = UIColor.whiteColor()
-        
-        addSubview(titleLabel!)
-        
-        let tapNotificationGesture = UITapGestureRecognizer(target: self, action: "notificationTapped")
-        self.addGestureRecognizer(tapNotificationGesture)
+        //顯示狀態列
+        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "showStatusbar", userInfo: nil, repeats: false)
     }
-    
-    func setupNotificationType()
+    func hideStatusbar()
     {
-        switch notificationType
-        {
-        case .Success:
-            backgroundColor = UIColor(fromHexString: NotificationColors.Success.rawValue)
-
-        case .Error:
-            backgroundColor = UIColor(fromHexString: NotificationColors.Error.rawValue)
-            
-        case .Warning:
-            backgroundColor = UIColor(fromHexString: NotificationColors.Warning.rawValue)
-            
-        case .Message:
-            backgroundColor = UIColor(fromHexString: NotificationColors.Message.rawValue)
-            
-        }
-
+        UIApplication.sharedApplication().statusBarHidden = true
+    }
+    func showStatusbar()
+    {
+        UIApplication.sharedApplication().statusBarHidden = false
     }
     
     //MARK: - 顯示訊息
     func notificationTapped() {
+        showStatusbar()
+        
         print("=================== AZNotificationView.swift notificationTapped")
         if json.count > 0 {
             print("json.count 大於0")

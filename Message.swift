@@ -16,6 +16,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     let indicator=UIActivityIndicatorView()
     var getWhatData:String = ""
     var imageFileName:String = ""
+    var messageGoPhoto:Bool!
     
     let viewStartY=CGFloat(64)
     var usedHeight:Int = 0
@@ -35,6 +36,8 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         super.viewDidLoad()
         print("viewDidLoad")
         
+        messageGoPhoto = false
+        
         init_Setting()
         loadElement()
         loadMessage()
@@ -48,13 +51,21 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         print("viewDidAppear")
         //        storeLabel.text = Sup.store
         //        loadMessage()
+        messageGoPhoto = false
     }
-    override func viewWillDisappear(animated: Bool) {
-        json=[]
-        titleTextField.text = ""
-        subtitleTextField.text = ""
-        contentTextView.text = ""
-        imageImageView.image = nil
+//    override func viewWillDisappear(animated: Bool) {
+//        json=[]
+//        titleTextField.text = ""
+//        subtitleTextField.text = ""
+//        contentTextView.text = ""
+//        imageImageView.image = nil
+//    }
+    override func viewDidDisappear(animated: Bool) {
+        if messageGoPhoto == false {
+            for vc:UIView in self.view.subviews {
+                vc.removeFromSuperview()
+            }
+        }
     }
     
     //    func onSegmAction(sender:UISegmentedControl)
@@ -160,6 +171,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
+        print("取完照片")
         let tempImg = info[UIImagePickerControllerOriginalImage] as? UIImage
         let resizeImg = Sup.resizeImage(tempImg!, newWidth: 200, newHeight: 200)
         imageImageView.image = resizeImg
@@ -217,6 +229,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     }
     //選擇圖片
     func selectPhoto() {
+        messageGoPhoto = true //不清空畫面上的資料
         scrollViewTouch()
         
         let myPickerController = UIImagePickerController()

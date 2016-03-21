@@ -57,8 +57,7 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         self.view.addSubview(textFieldAry[1])
         
         textFieldAry[1].secureTextEntry = true
-        textFieldAry[0].text = "Bing"
-        textFieldAry[1].text = "Bing"
+
         
         
         
@@ -181,7 +180,8 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         ibeacon.frame = CGRectMake(self.view.frame.size.width/2-50, 530, 100, 100)
         UIView.commitAnimations()
         
-        
+        textFieldAry[0].text = "Bing"
+        textFieldAry[1].text = "Bing"
         
 //        for var i:CGFloat = 0;i < 4;i++ {
 //            btnAry.append(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-btnW/2, 70.0 * i + 250.0, btnW, 60), str: btnStr[Int(i)], tag: Int(i)))

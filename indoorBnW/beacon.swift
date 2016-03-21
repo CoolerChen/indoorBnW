@@ -448,7 +448,12 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         localNotification.fireDate = NSDate(timeIntervalSinceNow: 0)
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         
-        AZNotification.showNotificationWithTitle("歡迎光臨 家樂福", controller: self, notificationType: AZNotificationType.Success)
+        //App在前景才顯示前景通知
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        print("現在處於 \(appDelegate.statusBackOrFore) @#@#@#@#@#@#@#@#@#@#")
+        if appDelegate.statusBackOrFore == "fore" {
+            AZNotification.showNotificationWithTitle("歡迎光臨 家樂福", controller: self, notificationType: AZNotificationType.Success)
+        }
     }
     func showNotificationWhenCloseProduct() {
 //        print("showNotificationWhenVeryClose")
@@ -470,7 +475,11 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         localNotification.applicationIconBadgeNumber = Sup.User.IconBadgeNumber
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         
-        AZNotification.showNotificationWithTitle("接近XX店", controller: self, notificationType: AZNotificationType.Success)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        print("現在處於 \(appDelegate.statusBackOrFore) @#@#@#@#@#@#@#@#@#@#")
+        if appDelegate.statusBackOrFore == "fore" {
+            AZNotification.showNotificationWithTitle("接近XX店", controller: self, notificationType: AZNotificationType.Success)
+        }
     }
     
     func getMessageData() {

@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    var user:User?
     var setting:Setting?
     
+    //顯示訊息
+    var statusBackOrFore:String="back"
     var backScrollView:UIView!
     var scrollView:UIScrollView!
     var usedY:CGFloat = 0
@@ -45,6 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //設定beacon通知
         application.registerUserNotificationSettings(UIUserNotificationSettings (forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil))
+        
+        //偵測背景前景
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "appMovedToBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "appMoveToForeground", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         //設定資料庫
         let fmgr: NSFileManager = NSFileManager()
@@ -96,17 +103,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
-        if setting == nil {
-            setting = Setting()
-        }
-        if setting?.getJsonCount() > 0 {
-            print("AppDelegate: 有message資料 執行showMessageView")
-            showMessageView()
-        }
+        //改成點了通知進來的才顯示訊息
+//        if setting == nil {
+//            setting = Setting()
+//        }
+//        if setting?.getJsonCount() > 0 {
+//            print("AppDelegate: 有message資料 執行showMessageView")
+//            showMessageView()
+//        }
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        print("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+        //        print(notification.category!)
+        switch notification.category! {
+        case "EnterMarket":
+            print("EnterMarket")
+            if setting == nil {
+                setting = Setting()
+            }
+            if setting?.getJsonCount() > 0 {
+                print("AppDelegate: 有message資料 執行showMessageView")
+                showMessageView()
+            }
+            
+            
+        case "CloseProduct":
+            print("CloseProduct")
+            
+            
+        default:
+            print("default")
+        }
+        
+        UIApplication.sharedApplication().cancelLocalNotification(notification)
     }
 
     //MARK: - 顯示訊息
@@ -236,24 +270,16 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
         scrollView.hidden = true
         backScrollView.hidden = true
     }
-    
-    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        print("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
-//        print(notification.category!)
-        switch notification.category! {
-            case "EnterMarket":
-                print("EnterMarket")
-            
-            case "CloseProduct":
-                print("CloseProduct")
-            
-            
-            default:
-                print("default")
-        }
-        
-        UIApplication.sharedApplication().cancelLocalNotification(notification)
-    }
 
+    func appMovedToBackground() {
+        print("App moved to background! 背景")
+        statusBackOrFore = "back"
+        print("                  \(statusBackOrFore)")
+    }
+    func appMoveToForeground() {
+        print("App moved to foreground! 前景")
+        statusBackOrFore = "fore"
+        print("                  \(statusBackOrFore)")
+    }
 }
 
