@@ -132,11 +132,13 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
             }
         case 1://訊息
             print("訊息")
-            if message == nil{
-                message = Message()
-            }
             Sup.Supervisor.store = json[indexPath.row].objectForKey("storeName") as! String
             Sup.Supervisor.storeID = json[indexPath.row].objectForKey("storeID") as! String
+            if message == nil{
+                message = Message()
+            } else {
+                message?.viewDidLoad()
+            }
             self.navigationController?.pushViewController(message!, animated: true)
         
         default:
