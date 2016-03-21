@@ -171,5 +171,19 @@ class Sup: NSObject {
         imageView.backgroundColor = UIColor.lightGrayColor()
         return imageView
     }
+    static func addActivityIndicatorView(frame:CGRect) -> UIActivityIndicatorView{
+        let inter:UIActivityIndicatorView = UIActivityIndicatorView()
+        inter.frame = frame
+        inter.transform = CGAffineTransformMakeScale(7.0, 7.0)
+        inter.color = UIColor.whiteColor()
+        return inter
+    }
+    static func addView(frame:CGRect) -> UIView{
+        let view:UIView = UIView()
+        view.backgroundColor = UIColor.blackColor()
+        view.alpha = 0.5
+        view.frame = frame
+        return view
+    }
     
 }

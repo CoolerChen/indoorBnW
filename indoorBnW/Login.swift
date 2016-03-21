@@ -65,6 +65,8 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         segm.addTarget(self, action: "onSegmAction:", forControlEvents: .ValueChanged)
         segm.tintColor = UIColor.blueColor()
         self.view.addSubview(segm)
+        
+        
     }
     
     func onBtnAction(sender:UIButton){
