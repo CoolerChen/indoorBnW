@@ -13,6 +13,8 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
     var textFieldAry:[UITextField] = [UITextField]()
     var product:Product?
     var imageView:MyImageView2!
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     
     var bol:Bool = true
     override func viewDidLoad() {
@@ -47,6 +49,11 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
             Sup.showAlert(self, str: "請輸入商品名稱")
             return
         }
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/CreateProduct.php", submitBody: "productBySupervisor=\(Sup.Supervisor.supervisor)&productByStore=\(Sup.Supervisor.storeID)&productName=\(textFieldAry[0].text!)&productType=分類&productInfo=\(textFieldAry[1].text!)&productPrice=\(textFieldAry[2].text!)&productImage=圖")
         
     }
@@ -99,6 +106,8 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
             uploadimage.myImageUploadRequest("http://bing0112.100hub.net/bing/productUploadImage.php", img: imageView.image!, fileName: Sup.Supervisor.productID)
             
         }
+        actiView.hidden = true
+        acti.stopAnimating()
         
     }
     override func viewDidDisappear(animated: Bool) {

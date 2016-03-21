@@ -13,6 +13,8 @@ class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDel
     var browseProduct:BrowseProduct?
     var json = []
     var btnAry:[UIButton] = [UIButton]()
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.blueColor()
@@ -45,6 +47,8 @@ class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDel
             
         }
         scroller.contentSize = CGSizeMake(self.view.frame.size.width, (btnAry.last?.frame.origin.y)! + 170)
+        actiView.hidden = true
+        acti.stopAnimating()
     }
     func onBtnAction(sender:UIButton){
         print(json[sender.tag])
@@ -61,6 +65,11 @@ class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDel
     }
 
     func downloadStore(){
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/allStoreJSON.php", submitBody: "")
     }
     override func didReceiveMemoryWarning() {

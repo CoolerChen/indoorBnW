@@ -17,6 +17,8 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
     var json = []
     var m_image:UIImage?
     var emailAry:[String] = []
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +55,11 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
                 Sup.showAlert(self, str: "請輸入標題")
                 return
             }
+            actiView = Sup.addView(self.view.frame)
+            self.view.addSubview(actiView)
+            acti = Sup.addActivityIndicatorView(self.view.frame)
+            acti.startAnimating()
+            self.view.addSubview(acti)
             //先抓user email的資料後再開email
             Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/userEmailJSON.php", submitBody: "")
             
@@ -123,6 +130,8 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         for ary in json {
             emailAry.append(ary.objectForKey("userEmail") as! String)
         }
+        actiView.hidden = true
+        acti.stopAnimating()
         email()
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

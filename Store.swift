@@ -19,6 +19,9 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     var status = Sup.Status.Done //判斷是編輯還是瀏覽
     var supervisorStoreQRCode:SupervisorStoreQRCode?
     
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -102,6 +105,7 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
                 }
                 editStore?.store = self
                 Sup.Supervisor.storeDic = json[indexPath.row] as! Dictionary<String, String>
+                Sup.Supervisor.storeID = json[indexPath.row].objectForKey("storeID") as! String
                 editStore?.setStoreDictionary(json[indexPath.row] as! Dictionary<String, String>)
                 self.navigationController?.pushViewController(editStore!, animated: true)
                 
@@ -147,9 +151,13 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
             print("解json失敗")
         }
         m_tableView.reloadData()
+        actiView.hidden = true
+        acti.stopAnimating()
     }
     override func viewDidAppear(animated: Bool) {
         self.navigationItem.title = "\(Sup.Supervisor.supervisor)的商店"
+        
+        self.view.addSubview(acti)
         if Sup.Supervisor.clickMode == 0{
             let rightBtnItem:UIBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Done, target: self, action: Selector("OnSelectRightAction:"))
             self.navigationItem.rightBarButtonItem = rightBtnItem
@@ -165,6 +173,12 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     }
     
     func downloadStore(){
+        //轉轉轉
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/storeJson.php", submitBody: "supervisor=\(Sup.Supervisor.supervisor)")
     }
 }

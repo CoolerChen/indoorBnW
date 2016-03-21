@@ -12,6 +12,8 @@ class EditStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelega
     var storeDic:Dictionary<String,String>!
     var textFieldAry:[UITextField] = [UITextField]()
     var store:Store?
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,11 @@ class EditStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelega
         self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 350, textFieldW, textFieldH), str: "刪除商店", tag: 2))
     }
     func onBtnAction(sender:UIButton){
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
         switch sender.tag{
         case 1://修改
             Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/EditStore.php", submitBody: "storeID=\(storeDic["storeID"]!)&storeName=\(textFieldAry[0].text!)&storeByMarket=\(storeDic["storeByMarket"]!)&storeCategory=\(textFieldAry[1].text!)&storeSlogan=\(textFieldAry[2].text!)&storeLogo=\(textFieldAry[3].text!)&storeSupervisor=\(storeDic["storeSupervisor"]!)")
@@ -85,6 +92,8 @@ class EditStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelega
         }else {
             Sup.showAlert(self, str: "網路不穩")
         }
+        actiView.hidden = true
+        acti.stopAnimating()
     }
     //鍵盤中return那個案件
     func textFieldShouldReturn(textField: UITextField) -> Bool {

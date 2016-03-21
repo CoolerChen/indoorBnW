@@ -14,9 +14,10 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
     var registeredSupervisor:RegisteredSupervisor?
     var btnAry:[UIButton] = [UIButton]()
     var textFieldAry:[UITextField] = [UITextField]()
-    
     var bing:Bing!
     var VC:UIViewController?
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     
     let segm:UISegmentedControl = UISegmentedControl(items: ["會員","商家"])
     
@@ -70,6 +71,13 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
     }
     
     func onBtnAction(sender:UIButton){
+        //轉轉轉
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
+        
         switch sender.tag {
         case 0:
             if textFieldAry[1].text == "" || textFieldAry[0].text == "" {
@@ -132,6 +140,9 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         }else{
             Sup.showAlert(self, str: "網路不穩")
         }
+        
+        actiView.hidden = true
+        acti.stopAnimating()
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         textFieldAry[0].resignFirstResponder()

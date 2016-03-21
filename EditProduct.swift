@@ -15,6 +15,8 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
     var imageView:UIImageView = UIImageView()
     var productGoEdit:Bool!
     var productGoPhoto:Bool!
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     
     
     override func viewDidLoad() {
@@ -46,6 +48,11 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
         
     }
     func onBtnAction(sender:UIButton){
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
 //        if sender.tag == 1{//選擇圖片
 //            Sup.PhotoLibrary(self)
 //            productGoPhoto = true
@@ -98,6 +105,8 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
         }else {
             Sup.showAlert(self, str: "網路不穩")
         }
+        actiView.hidden = true
+        acti.stopAnimating()
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         

@@ -12,6 +12,7 @@ class ProductDetail: UIViewController,UIScrollViewDelegate {
     var imageView:UIImageView = UIImageView()
     var scroll:UIScrollView!
     var labAry:[UILabel] = [UILabel]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -54,7 +55,6 @@ class ProductDetail: UIViewController,UIScrollViewDelegate {
         for var i = 0; i < Str.count;i++ {
             labAry[i].text = Str[i]
         }
-        
         //下載頭像
         imageView.image = Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(Sup.Supervisor.productDic["productID"]!).jpg")
 

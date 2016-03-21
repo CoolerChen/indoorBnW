@@ -14,6 +14,8 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
     var btnAry:[UIButton] = [UIButton]()
     var imageAry:[UIImageView] = [UIImageView]()
     var productDetail:ProductDetail?
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +53,8 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         if json.count != 0 {
             scroller.contentSize = CGSizeMake(self.view.frame.size.width, (btnAry.last?.frame.origin.y)! + 170)
         }
+        actiView.hidden = true
+        acti.stopAnimating()
         
     
     
@@ -59,6 +63,11 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         downloadProduct()
     }
     func downloadProduct(){
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/product.php", submitBody: "productByStore=\(Sup.User.storeID)")
     }
     func onBtnAction(sender:UIButton){

@@ -17,7 +17,8 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
     var editProduct:EditProduct?
     var Btn:UIButton = UIButton()
     var status = Sup.Status.Done //判斷是編輯還是瀏覽
-    //var goto:Int!
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,11 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
     }
     override func viewDidAppear(animated: Bool) {
         print("\(Sup.Supervisor.supervisor) 的 \(Sup.Supervisor.store) 商店" )
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/product.php", submitBody: "productByStore=\(Sup.Supervisor.storeID)")
         self.navigationItem.title = "\(Sup.Supervisor.store)的商品"
     }
@@ -116,6 +122,8 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
             print("解json失敗")
         }
         m_tableView.reloadData()
+        actiView.hidden = true
+        acti.stopAnimating()
         
     }
     //點選了哪一個

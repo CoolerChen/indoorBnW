@@ -11,6 +11,8 @@ import UIKit
 class RegisteredSupervisor: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate {
     var textFieldAry:[UITextField] = [UITextField]()
     var superVisor:Supervisor?
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -40,6 +42,11 @@ class RegisteredSupervisor: UIViewController,UITextFieldDelegate,NSURLSessionDow
             }
         }
         if check{
+            actiView = Sup.addView(self.view.frame)
+            self.view.addSubview(actiView)
+            acti = Sup.addActivityIndicatorView(self.view.frame)
+            acti.startAnimating()
+            self.view.addSubview(acti)
             Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/supervisor.php", submitBody: "supervisorAcc=\(textFieldAry[0].text!)&supervisorPwd=\(textFieldAry[1].text!)&supervisorEmail=\(textFieldAry[2].text!)&supervisoruserPhone=\(textFieldAry[3].text!)&supervisorAddress=\(textFieldAry[4].text!)")
         }
     }
@@ -61,6 +68,8 @@ class RegisteredSupervisor: UIViewController,UITextFieldDelegate,NSURLSessionDow
             self.navigationController?.pushViewController(superVisor!, animated: true)
             
         }
+        actiView.hidden = true
+        acti.stopAnimating()
         
     }
     //鍵盤中return那個案件

@@ -11,6 +11,8 @@ import UIKit
 class RegisteredUser: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate{
     var textFieldAry:[UITextField] = [UITextField]()
     var user:User?
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +44,11 @@ class RegisteredUser: UIViewController,UITextFieldDelegate,NSURLSessionDownloadD
             }
         }
         if check{
+            actiView = Sup.addView(self.view.frame)
+            self.view.addSubview(actiView)
+            acti = Sup.addActivityIndicatorView(self.view.frame)
+            acti.startAnimating()
+            self.view.addSubview(acti)
             Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/user.php", submitBody: "userAcc=\(textFieldAry[0].text!)&userPwd=\(textFieldAry[1].text!)&userCard=\(textFieldAry[2].text!)&userEmail=\(textFieldAry[3].text!)&userPhone=\(textFieldAry[4].text!)&userAddress=\(textFieldAry[5].text!)")
         }
         
@@ -77,6 +84,8 @@ class RegisteredUser: UIViewController,UITextFieldDelegate,NSURLSessionDownloadD
             self.navigationController?.pushViewController(user!, animated: true)
             
         }
+        actiView.hidden = true
+        acti.stopAnimating()
 
     }
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
