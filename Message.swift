@@ -17,6 +17,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     var getWhatData:String = ""
     var imageFileName:String = ""
     
+    let viewStartY=CGFloat(64)
     var usedHeight:Int = 0
     var m_checkStr:String = String() //切換鈕
     //    var storeTableView:UITableView!
@@ -36,12 +37,12 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         
         init_Setting()
         loadElement()
-        //        loadMessage()
+        loadMessage()
     }
     override func viewWillAppear(animated: Bool) {
         print("viewWillAppear")
         storeLabel.text = Sup.Supervisor.store
-        loadMessage()
+//        loadMessage()
     }
     override func viewDidAppear(animated: Bool) {
         print("viewDidAppear")
@@ -245,10 +246,10 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         let keyboardFrame:NSValue = userInfo.valueForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
         let keyboardRectangle = keyboardFrame.CGRectValue()
         let keyboardHeight = keyboardRectangle.height
-        print("keyboardHeight \(keyboardHeight)")
+//print("keyboardHeight \(keyboardHeight)")
         
         var frame = scrollView.frame
-        frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height - keyboardHeight)
+        frame = CGRectMake(0, viewStartY, self.view.frame.width, self.view.frame.height - viewStartY - keyboardHeight)
         scrollView.frame = frame
     }
     func scrollViewTouch() {
@@ -259,7 +260,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         
         var frame = scrollView.frame
         //        frame = CGRectMake(scrollView.frame.origin.x, scrollView.frame.origin.y, self.view.frame.width, self.view.frame.height)
-        frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        frame = CGRectMake(0, viewStartY, self.view.frame.width, self.view.frame.height - viewStartY)
         scrollView.frame = frame
         //scroll to top
         //        self.scrollView.setContentOffset(CGPointMake(self.scrollView.contentOffset.x, -64), animated: true)
@@ -363,16 +364,18 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     //MARK: - init settings
     func init_Setting() {
+        self.automaticallyAdjustsScrollViewInsets = false
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        
-        
     }
     func loadElement() {
         self.view.backgroundColor = UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
         self.navigationItem.title = "訊息"
         
-        scrollView = UIScrollView(frame: CGRectMake(0, 0, //x, y
-            self.view.frame.width, self.view.frame.height*1.0)) //w, h
+        scrollView = UIScrollView(frame: CGRectMake(
+            0, viewStartY, //x, y
+            self.view.frame.width,
+            self.view.frame.height*1.0 - viewStartY)) //w, h
         //        scrollView.scrollEnabled = true
         //        scrollView.autoresizesSubviews = true
         //        scrollView.bounces = true
@@ -508,7 +511,9 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         uploadButton.backgroundColor = UIColor.blueColor()
         scrollView.addSubview(uploadButton)
         usedHeight += Int(uploadButton.frame.size.height)
-        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, CGFloat(usedHeight + 20)) //設定contentsize
+        
+        //設定contentsize
+        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, CGFloat(usedHeight + 10))
         
         //加入event
         let tapGesture1 = UITapGestureRecognizer(target: self, action: "selectPhoto")
@@ -539,13 +544,6 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
 }
 
-//MARK: - extension
-//extension NSMutableData {
-//    func appendString(string: String) {
-//        let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
-//        appendData(data!)
-//    }
-//}
 //extension UITextView {
 //    func increaseFontSize () {
 //        self.font =  UIFont(name: "", size: self.frame.size.height / 4)!

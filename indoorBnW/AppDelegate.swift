@@ -103,7 +103,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("AppDelegate: 有message資料 執行showMessageView")
             showMessageView()
         }
-        
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -116,70 +115,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         if backScrollView == nil {
-//        if backScrollView != nil {
-//            backScrollView = nil
-//        }
             let screenW = UIScreen.mainScreen().bounds.size.width
             let screenH = UIScreen.mainScreen().bounds.size.height
-            
-            //            msgView = UIView(frame: CGRectMake(0, 0, screenW, screenH-0))
-            //            msgView!.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
             
             backScrollView = UIScrollView(frame: CGRectMake(0, 0, //x, y
                 screenW, screenH*1.0)) //w, h
             backScrollView?.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
-            //            msgView?.transform = CGAffineTransformMakeScale(0.1, 0.1)
+//            msgView?.transform = CGAffineTransformMakeScale(0.1, 0.1)
             
             self.window?.addSubview(backScrollView!)
         }
         
-        
         let viewW = (backScrollView?.frame.width)!
         let viewH = (backScrollView?.frame.height)!
+        let interval:CGFloat = 10
         
-        
-
         if scrollView != nil {
-            print("bb")
             (scrollView as UIView).removeFromSuperview()
         }
         
         //內ScrollView
         let viewStartY:CGFloat = 0
         
-//        if scrollView == nil {
-//            print("aa")
-//        if scrollView != nil {
-//            scrollView = nil
-//        }
-            scrollView = UIScrollView(frame: CGRectMake(
-                (viewW - viewW*0.9)/2, //x
-                (( viewH-viewStartY ) - ( viewH-viewStartY )*0.85)/2 + viewStartY, //y
-                viewW*0.9,
-                ( viewH-viewStartY )*0.85)) //w, h
-            scrollView.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.58, alpha: 1)
-            scrollView.layer.cornerRadius = 10
-            scrollView.layer.masksToBounds = true
-            self.window?.addSubview(scrollView)
-            usedY = 20 //scrollView.frame.origin.y + 20
-//        }
+        scrollView = UIScrollView(frame: CGRectMake(
+            (viewW - viewW*0.9)/2, //x
+            (( viewH-viewStartY ) - ( viewH-viewStartY )*0.85)/2 + viewStartY, //y
+            viewW*0.9,
+            ( viewH-viewStartY )*0.85)) //w, h
+        scrollView.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.58, alpha: 1)
+        scrollView.layer.cornerRadius = 10
+        scrollView.layer.masksToBounds = true
+        self.window?.addSubview(scrollView)
+        usedY = 20 //scrollView.frame.origin.y + 20
         
         scrollView.hidden = false
-        
-        //remove scrollview's subview
-//        if scrollView.subviews.count == 0 {
-//            print("0")
-//        } else {
-//            print("X0")
-//        }
-//        print("subviews count:\(scrollView.subviews.count)")
-//        for v: UIView in scrollView.subviews {
-//            if v.isKindOfClass(UIImageView) {
-//                
-//            } else {
-//                v.removeFromSuperview()
-//            }
-//        }
         
         //標題
         let titleLabel = UILabel(frame: CGRectMake(
@@ -190,7 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         titleLabel.text = json[0].objectForKey("messageTitle") as? String
 print("標題: \(json[0].objectForKey("messageTitle") as? String)")
         scrollView.addSubview(titleLabel)
-        usedY += titleLabel.frame.height + 20
+        usedY += titleLabel.frame.height + interval
         
         //副標題
         let subtitleLabel = UILabel(frame: CGRectMake(
@@ -200,7 +169,7 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
         subtitleLabel.backgroundColor = UIColor.lightGrayColor()
         subtitleLabel.text = json[0].objectForKey("messageSubtitle") as? String
         scrollView.addSubview(subtitleLabel)
-        usedY += subtitleLabel.frame.height + 20
+        usedY += subtitleLabel.frame.height + interval
         
         //內容
         let contentTextView = UITextView(frame: CGRectMake(
@@ -212,7 +181,7 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
         contentTextView.text = json[0].objectForKey("messageContent") as? String
         contentTextView.selectable = false
         scrollView.addSubview(contentTextView)
-        usedY += contentTextView.frame.height + 20
+        usedY += contentTextView.frame.height + interval
         
         //圖片
         let imageImageView = UIImageView(frame: CGRectMake(
@@ -230,7 +199,7 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
             imageImageView.backgroundColor = UIColor.redColor()
         }
         scrollView.addSubview(imageImageView)
-        usedY += imageImageView.frame.height + 20 + 200
+        usedY += imageImageView.frame.height + interval + 200
         
         //ScrollView ContentSize
         scrollView.contentSize = CGSizeMake(scrollView.frame.width, usedY)
@@ -241,7 +210,6 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
         Sup.User.IconBadgeNumber -= 1
 //        UIApplication.sharedApplication().applicationIconBadgeNumber -= 1
 //        UIApplication.sharedApplication().cancelAllLocalNotifications()
-        
         
         scrollView.transform = CGAffineTransformMakeScale(0.1, 0.1)
         UIView.transitionWithView(scrollView, duration: 0.35, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
@@ -265,13 +233,8 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
     }
     
     func viewTouch(sender: UITapGestureRecognizer) {
-//        print("viewTouch \(sender)")
-        
         scrollView.hidden = true
-//        scrollView = nil
         backScrollView.hidden = true
-//        backScrollView = nil
-        
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {

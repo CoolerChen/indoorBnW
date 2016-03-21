@@ -10,6 +10,8 @@ import UIKit
 
 class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
     var whichPage:String = ""
+    let scrollviewBackColor = UIColor(red: 154/255.0, green: 208/255.0, blue: 248/255.0, alpha: 1)
+    let textBackgroundColor = UIColor(red: 209/255.0, green: 235/255.0, blue: 254/255.0, alpha: 1)
     let db = SQLiteDB.sharedInstance()
     var data:AnyObject?
 //    var m_tableView:UITableView!
@@ -89,6 +91,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         m_scrollerView.showsVerticalScrollIndicator = false //垂直的滾動指示
         m_scrollerView.delegate = self
         m_scrollerView.pagingEnabled = true  //可以以本身容器的寬度做切頁分頁
+        m_scrollerView.scrollsToTop = true
         self.view.addSubview(m_scrollerView)
         
         var pageView:UIView!
@@ -103,7 +106,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             for var i = 0 ; i < data?.count ; i++ {
                 pageView = UIView(frame: CGRectMake(0, h*CGFloat(i), w, h))
     //            print("pageView ori y= \(pageView.frame.origin.y)")
-                pageView.backgroundColor = aryColor[i%5]
+                pageView.backgroundColor = UIColor.whiteColor() //aryColor[i%5]
                 
                 //載入資料
                 addObject(pageView, index: i)
@@ -127,7 +130,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             (pView.frame.height - pView.frame.height*0.9)/2 + 10, //y
             pView.frame.width*0.9, //w
             pView.frame.height*0.9)) //h
-        scrollView.backgroundColor = UIColor(red: 209/255.0, green: 235/255.0, blue: 254/255.0, alpha: 1)
+        scrollView.backgroundColor = scrollviewBackColor
         scrollView.layer.cornerRadius = corRadius*2
         scrollView.layer.masksToBounds = true
         pView.addSubview(scrollView)
@@ -137,9 +140,11 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
             20, //y
             scrollView.frame.width*0.9, 35)) //w, h
-        storeLabel.backgroundColor = UIColor.lightGrayColor()
+        storeLabel.backgroundColor = textBackgroundColor
         storeLabel.layer.cornerRadius = corRadius
         storeLabel.layer.masksToBounds = true
+//        storeLabel.layer.borderWidth = 1
+//        storeLabel.layer.borderColor = UIColor.blackColor().CGColor
         if data?.count > 0 {storeLabel.text = data![index]["messageStore"] as? String}
         scrollView.addSubview(storeLabel)
         usedHeight += storeLabel.frame.origin.y + storeLabel.frame.height + interval
@@ -151,9 +156,11 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             alignX, //x
             usedHeight, //y
             scrollView.frame.width*0.9, 35)) //w, h
-        titleLabel.backgroundColor = UIColor.lightGrayColor()
+        titleLabel.backgroundColor = textBackgroundColor
         titleLabel.layer.cornerRadius = corRadius
         titleLabel.layer.masksToBounds = true
+//        titleLabel.layer.borderWidth = 1
+//        titleLabel.layer.borderColor = UIColor.blackColor().CGColor
         if data?.count > 0 {titleLabel.text = data![index].objectForKey("messageTitle") as? String}
         scrollView.addSubview(titleLabel)
         usedHeight += titleLabel.frame.height + interval
@@ -163,10 +170,12 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             alignX, //x
             usedHeight, //y
             scrollView.frame.width*0.9, 35)) //w, h
-        subtitleLabel.backgroundColor = UIColor.lightGrayColor()
         if data?.count > 0 {subtitleLabel.text = data![index].objectForKey("messageSubtitle") as? String}
+        subtitleLabel.backgroundColor = textBackgroundColor
         subtitleLabel.layer.cornerRadius = corRadius
         subtitleLabel.layer.masksToBounds = true
+//        subtitleLabel.layer.borderWidth = 1
+//        subtitleLabel.layer.borderColor = UIColor.blackColor().CGColor
         scrollView.addSubview(subtitleLabel)
         usedHeight += subtitleLabel.frame.height + interval
         
@@ -175,12 +184,14 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             alignX, //x
             usedHeight, //y
             scrollView.frame.width*0.9, 70)) //w, h
-        contentTextView.backgroundColor = UIColor.lightGrayColor()
         contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 17) //改變textview字型大小
         if data?.count > 0 {contentTextView.text = data![index].objectForKey("messageContent") as? String}
-        contentTextView.selectable = false
+        contentTextView.backgroundColor = textBackgroundColor
         contentTextView.layer.cornerRadius = corRadius
         contentTextView.layer.masksToBounds = true
+//        contentTextView.layer.borderWidth = 1
+//        contentTextView.layer.borderColor = UIColor.blackColor().CGColor
+        contentTextView.selectable = false
         scrollView.addSubview(contentTextView)
         usedHeight += contentTextView.frame.height + interval
         
@@ -190,6 +201,11 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             usedHeight, //y
             scrollView.frame.width*0.9, 200)) //w, h
         imageImageView.userInteractionEnabled = false
+        imageImageView.backgroundColor = textBackgroundColor
+        imageImageView.layer.cornerRadius = corRadius
+        imageImageView.layer.masksToBounds = true
+        imageImageView.layer.borderWidth = 1
+        imageImageView.layer.borderColor = UIColor.blackColor().CGColor
         let imageName = NSHomeDirectory() + "/Documents/images/msg/" + (data![index].objectForKey("messageImage") as? String)!
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
             let tempData = NSData(contentsOfFile: imageName)
@@ -197,9 +213,10 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             dispatch_async(dispatch_get_main_queue(),{
                 if tempData != nil {
                     imageImageView.image = UIImage(data: tempData!)
-                } else {
-                    imageImageView.backgroundColor = UIColor.whiteColor()
                 }
+//                else {
+//                    imageImageView.backgroundColor = UIColor.whiteColor()
+//                }
             })
         })
         scrollView.addSubview(imageImageView)
@@ -208,14 +225,14 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         //瀏覽訊息頁才有收藏按鈕
         if whichPage == "browse" {
             //加入收藏按鈕
-            let buttonH = pView.frame.height*0.08
-            let buttonW = CGFloat(60)
+            let buttonH = pView.frame.height*0.09
+            let buttonW = CGFloat(70)
             let favImage = UIImageView(frame: CGRectMake(
                 pView.frame.width - pView.frame.width*0.05 - buttonW , //x
                 pView.frame.height*0.06 - buttonH/2, //y
                 buttonW, //w
                 buttonH)) //h
-            favImage.backgroundColor = UIColor(red: 209/255.0, green: 235/255.0, blue: 254/255.0, alpha: 1)
+            favImage.backgroundColor = scrollviewBackColor //UIColor(red: 209/255.0, green: 235/255.0, blue: 25/255.0, alpha: 1)
             favImage.layer.cornerRadius = 10
             favImage.layer.masksToBounds = true
             if data?.count > 0 {
