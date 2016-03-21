@@ -88,17 +88,17 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
     }
     override func viewDidDisappear(animated: Bool) {
         //離開畫面就要清掉
-        if loading {
-            for var i = 0;i < btnAry.count;i++ {
-                btnAry[i].removeFromSuperview()
-            }
-            btnAry = []
-            for var i = 0 ; i < imageAry.count;i++ {
-                imageAry[i].removeFromSuperview()
-            }
-            imageAry = []
-        }
-        
+//        if loading {
+//            for var i = 0;i < btnAry.count;i++ {
+//                btnAry[i].removeFromSuperview()
+//            }
+//            btnAry = []
+//            for var i = 0 ; i < imageAry.count;i++ {
+//                imageAry[i].removeFromSuperview()
+//            }
+//            imageAry = []
+//        }
+//        
         
     }
 

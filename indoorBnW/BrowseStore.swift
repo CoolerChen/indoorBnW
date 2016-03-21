@@ -15,6 +15,7 @@ class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDel
     var btnAry:[UIButton] = [UIButton]()
     var acti:UIActivityIndicatorView = UIActivityIndicatorView()
     var actiView:UIView = UIView()
+    var browseProductAry:[AnyObject] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.blueColor()
@@ -44,6 +45,7 @@ class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDel
             scroller.addSubview(Sup.addLabel(CGRectMake(15, 40 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店分類: \(json[i]["storeCategory"] as! String)"))
             scroller.addSubview(Sup.addLabel(CGRectMake(15, 70 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店slogan: \(json[i]["storeSlogan"] as! String)"))
             scroller.addSubview(Sup.addLabel(CGRectMake(15, 100 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str: "商店簡介: \(json[i]["storeLogo"] as! String)"))
+            browseProductAry.append(NSNull)
             
         }
         scroller.contentSize = CGSizeMake(self.view.frame.size.width, (btnAry.last?.frame.origin.y)! + 170)
@@ -53,15 +55,27 @@ class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDel
     func onBtnAction(sender:UIButton){
         print(json[sender.tag])
         //把資料丟給Sup裡面 然後跳去product那一頁並且把該store的資料撈下來呈現
-        if browseProduct == nil{
-            browseProduct = BrowseProduct()
-        }
-        self.navigationController?.pushViewController(browseProduct!, animated: true)
         Sup.User.storeDic = json[sender.tag] as! Dictionary<String, String>
         Sup.User.storeID = json[sender.tag]["storeID"] as! String
         Sup.User.storeName = json[sender.tag]["storeName"] as! String
         Sup.Supervisor.storeDic = json[sender.tag] as! Dictionary<String, String>
-        browseProduct?.downloadProduct()
+        
+        
+        if browseProductAry[sender.tag].isEqual(NSNull) {
+            browseProductAry[sender.tag] = BrowseProduct()
+            (browseProductAry[sender.tag] as! BrowseProduct).downloadProduct()
+            print("yo")
+        }
+        (browseProductAry[sender.tag] as! BrowseProduct).loading = false
+        self.navigationController?.pushViewController(browseProductAry[sender.tag] as! UIViewController, animated: true)
+        
+        
+//        if browseProduct == nil{
+//            browseProduct = BrowseProduct()
+//        }
+//        self.navigationController?.pushViewController(browseProduct!, animated: true)
+        
+        
     }
 
     func downloadStore(){
