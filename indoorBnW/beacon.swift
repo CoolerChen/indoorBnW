@@ -13,7 +13,7 @@ let defaults=NSUserDefaults.standardUserDefaults()
 var getWhatData = ""
 var jsons = []
 var json = []
-var backScrollView:UIScrollView!
+//var backScrollView:UIScrollView!
 var isShow = false
 var beaconRegion1:CLBeaconRegion!
 var beaconRegion2:CLBeaconRegion!
@@ -75,7 +75,17 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
 //        locationManager2.pausesLocationUpdatesAutomatically = false
     }
     
+    func simpleAlert (title:String,message:String) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
     
+    
+    //MARK: - CLLocationManager
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         
         switch status {
@@ -104,15 +114,6 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
             // The user has not yet made a choice regarding whether this app can use location services.
             break
         }
-    }
-    
-    func simpleAlert (title:String,message:String) {
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func locationManager(manager: CLLocationManager, didStartMonitoringForRegion region: CLRegion) {
@@ -362,8 +363,80 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         }
     }
     
+    //MARK: - NSURLSessionDownloadDelegate
+    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL)
+    {
+//        print("beacon.swift: *** didFinishDownloadingToURL ***")
+        switch getWhatData
+        {
+        case "getMessageData":
+//            print("    didfinish getMessageData")
+            getWhatData = ""
+            do {
+                let resp = String(data: NSData(contentsOfURL: location)!, encoding: NSUTF8StringEncoding)
+                if resp! == "[{}]" {
+//                    print("    db沒有資料")
+                    
+                } else {
+                    print("    db有資料，序列化")
+                    json = try NSJSONSerialization.JSONObjectWithData(NSData(contentsOfURL: location)!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+                    
+//                    print("=-=-=-=-=-=-=-=-= json[0].objectForKey(messageType) = \(json[0].objectForKey("messageType")!)")
+                    
+                    
+                    //test
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
+                    //        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+                    //        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+                    let prepareTime = dateFormatter.stringFromDate(NSDate())
+                    
+                    let prepareStore    = json[0].objectForKey("messageStore")! //商店名稱
+                    let prepareTitle    = json[0].objectForKey("messageTitle")!
+                    let prepareSubtitle = json[0].objectForKey("messageSubtitle")!
+                    let prepareContent  = json[0].objectForKey("messageContent")!
+                    let prepareImage    = prepareTime.stringByReplacingOccurrencesOfString(":", withString: "-") + ".jpg"
+                    let imgUrl          = "http://bing0112.100hub.net/bing/MessageImage/"+String((json[0].objectForKey("messageImage"))!)
+                    //                    print(imgUrl)
+                    
+                    //寫入手機sqlite資料庫
+                    let db = SQLiteDB.sharedInstance()
+                    db.query("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage, addFavorite) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)','no') ")
+                    print("_ _ _SQLiteDB query test _ _ _")
+                    
+                    //圖片寫入Document
+                    let imgData = NSData(contentsOfURL: NSURL(string: imgUrl)!)
+                    if imgData != nil {
+                        let path = NSHomeDirectory() + "/Documents/images/msg/\(prepareImage)"
+                        imgData?.writeToFile(path, atomically: false)
+                        print("path: \(path)")
+                    }
+                    //                    print("=-=-=-=-=-=-=-=-=-= \(data) =-=-=-=-=-=-=-=-=-=")
+                    //                    print("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
+                    
+                    //                    let asdf:UIScrollView = UIScrollView(frame: CGRectMake(0,0,100,100))
+                }
+                
+            }catch let error as NSError {
+                print("beacon.swift: There is an error. \(error)")
+            }
+            
+        default:
+            print("beacon.swift: default")
+        }
+    }
+    
+    //MARK: - Notification
+    //偵測到iBeacon訊息，建立本地推播 取得線上資料
     func showNotificationWhenEnter() {
 //        print("showNotificationWhenVeryClose")
+        if getWhatData != "getMessageData" {
+            getMessageData()
+            print("showNotificationWhenEnter ----------")
+        } else {
+            print("-----------------------------------1")
+        }
+        
         let localNotification:UILocalNotification = UILocalNotification()
         localNotification.alertAction = "開啟"
         localNotification.alertBody = "indoorBnW，歡迎光臨!"
@@ -375,15 +448,17 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         localNotification.fireDate = NSDate(timeIntervalSinceNow: 0)
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         
-        if getWhatData != "getMessageData" {
-            getMessageData()
-            print("showNotificationWhenEnter ----------")
-        } else {
-            print("-----------------------------------1")
-        }
+        AZNotification.showNotificationWithTitle("歡迎光臨 家樂福", controller: self, notificationType: AZNotificationType.Success)
     }
     func showNotificationWhenCloseProduct() {
 //        print("showNotificationWhenVeryClose")
+        if getWhatData != "getMessageData" {
+            getMessageData2()
+            print("showNotificationWhenCloseProduct ----------")
+        } else {
+            print("-------------------------------------------")
+        }
+        
         let localNotification:UILocalNotification = UILocalNotification()
         localNotification.alertAction = "開啟"
         localNotification.alertBody = "indoorBnW，商品大特價!"
@@ -395,13 +470,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         localNotification.applicationIconBadgeNumber = Sup.User.IconBadgeNumber
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         
-        if getWhatData != "getMessageData" {
-            getMessageData2()
-            print("showNotificationWhenCloseProduct ----------")
-        } else {
-            print("-------------------------------------------")
-        }
-        
+        AZNotification.showNotificationWithTitle("接近XX店", controller: self, notificationType: AZNotificationType.Success)
     }
     
     func getMessageData() {
@@ -454,71 +523,10 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         print("beacon.swift: end ===== ")
     }
     
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL)
-    {
-//        print("beacon.swift: *** didFinishDownloadingToURL ***")
-        switch getWhatData
-        {
-        case "getMessageData":
-//            print("    didfinish getMessageData")
-            getWhatData = ""
-            do {
-                let resp = String(data: NSData(contentsOfURL: location)!, encoding: NSUTF8StringEncoding)
-                if resp! == "[{}]" {
-//                    print("    db沒有資料")
-                    
-                } else {
-//                    print("    db有資料")
-                    json = try NSJSONSerialization.JSONObjectWithData(NSData(contentsOfURL: location)!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
-                    
-//                    print("=-=-=-=-=-=-=-=-= json[0].objectForKey(messageType) = \(json[0].objectForKey("messageType")!)")
-                    
-                    
-                    //test
-                    let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
-            //        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-            //        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-                    let prepareTime = dateFormatter.stringFromDate(NSDate())
-                    
-                    let prepareStore    = json[0].objectForKey("messageStore")! //商店名稱
-                    let prepareTitle    = json[0].objectForKey("messageTitle")!
-                    let prepareSubtitle = json[0].objectForKey("messageSubtitle")!
-                    let prepareContent  = json[0].objectForKey("messageContent")!
-                    let prepareImage    = prepareTime.stringByReplacingOccurrencesOfString(":", withString: "-") + ".jpg"
-                    let imgUrl          = "http://bing0112.100hub.net/bing/MessageImage/"+String((json[0].objectForKey("messageImage"))!)
-//                    print(imgUrl)
-                    
-                    //圖片寫入Document
-                    let imgData = NSData(contentsOfURL: NSURL(string: imgUrl)!)
-                    if imgData != nil {
-                        let path = NSHomeDirectory() + "/Documents/images/msg/\(prepareImage)"
-                        imgData?.writeToFile(path, atomically: false)
-                        print("path: \(path)")
-                    }
-                    
-                    //寫入手機sqlite資料庫
-                    let db = SQLiteDB.sharedInstance()
-                    db.query("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage, addFavorite) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)','no') ")
-                    print("_ _ _SQLiteDB query test _ _ _")
-//                    print("=-=-=-=-=-=-=-=-=-= \(data) =-=-=-=-=-=-=-=-=-=")
-//                    print("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
-                    
-//                    let asdf:UIScrollView = UIScrollView(frame: CGRectMake(0,0,100,100))
-                }
-                
-            }catch let error as NSError {
-                print("beacon.swift: There is an error. \(error)")
-            }
-            
-        default:
-            print("beacon.swift: default")
-        }
-    }
-    
     func getJsonCount() -> Int {
         return json.count
     }
+    
     
 }
 

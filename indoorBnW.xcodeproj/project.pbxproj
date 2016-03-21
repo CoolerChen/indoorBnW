@@ -43,6 +43,9 @@
 		B34FCDFD1C9AF6AB0080D09F /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */; };
 		B34FCDFE1C9AF6AB0080D09F /* SQLTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */; };
 		B34FCE041C9AFC630080D09F /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCE031C9AFC630080D09F /* String-Extras.swift */; };
+		B352C6511C9FB3B30058BB8B /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = B352C64E1C9FB3B30058BB8B /* UIColor+Additions.m */; };
+		B352C6521C9FB3B30058BB8B /* AZNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B352C64F1C9FB3B30058BB8B /* AZNotification.swift */; };
+		B352C6531C9FB3B30058BB8B /* AZNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B352C6501C9FB3B30058BB8B /* AZNotificationView.swift */; };
 		B37B62B11C9D9D6300059113 /* messagelocal.db in Resources */ = {isa = PBXBuildFile; fileRef = B37B62B01C9D95E700059113 /* messagelocal.db */; };
 		B3F2A0391C9B92AD00779AE5 /* BrowseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F2A0371C9B92AD00779AE5 /* BrowseStore.swift */; };
 		B3F2A03A1C9B92AD00779AE5 /* BrowseProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F2A0381C9B92AD00779AE5 /* BrowseProduct.swift */; };
@@ -89,6 +92,10 @@
 		B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLTable.swift; sourceTree = "<group>"; };
 		B34FCDFF1C9AF70C0080D09F /* indoorBnW-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "indoorBnW-Bridging-Header.h"; sourceTree = "<group>"; };
 		B34FCE031C9AFC630080D09F /* String-Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-Extras.swift"; sourceTree = "<group>"; };
+		B352C64D1C9FB3B30058BB8B /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
+		B352C64E1C9FB3B30058BB8B /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
+		B352C64F1C9FB3B30058BB8B /* AZNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AZNotification.swift; sourceTree = "<group>"; };
+		B352C6501C9FB3B30058BB8B /* AZNotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AZNotificationView.swift; sourceTree = "<group>"; };
 		B37B62B01C9D95E700059113 /* messagelocal.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = messagelocal.db; sourceTree = "<group>"; };
 		B3F2A0371C9B92AD00779AE5 /* BrowseStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseStore.swift; sourceTree = "<group>"; };
 		B3F2A0381C9B92AD00779AE5 /* BrowseProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseProduct.swift; sourceTree = "<group>"; };
@@ -153,6 +160,7 @@
 				B33E731C1C98EBB000923F7E /* User */,
 				B33E73211C98EDBA00923F7E /* Beacon */,
 				B33E732C1C98FC2E00923F7E /* Framework */,
+				B352C64C1C9FB38D0058BB8B /* AZNotification */,
 				B33E72F21C98E97800923F7E /* Assets.xcassets */,
 				B33E72F41C98E97800923F7E /* LaunchScreen.storyboard */,
 				B33E72F71C98E97800923F7E /* Info.plist */,
@@ -214,6 +222,17 @@
 			);
 			name = Framework;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		B352C64C1C9FB38D0058BB8B /* AZNotification */ = {
+			isa = PBXGroup;
+			children = (
+				B352C64D1C9FB3B30058BB8B /* UIColor+Additions.h */,
+				B352C64E1C9FB3B30058BB8B /* UIColor+Additions.m */,
+				B352C64F1C9FB3B30058BB8B /* AZNotification.swift */,
+				B352C6501C9FB3B30058BB8B /* AZNotificationView.swift */,
+			);
+			name = AZNotification;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,11 +328,14 @@
 				37188A041C9BE78D00116338 /* MyAlert.swift in Sources */,
 				B33E73041C98EB8800923F7E /* UploadImage.swift in Sources */,
 				B33E73131C98EBAA00923F7E /* EditStore.swift in Sources */,
+				B352C6531C9FB3B30058BB8B /* AZNotificationView.swift in Sources */,
 				B34FCDF51C9AAA090080D09F /* BingLoginDelegate.swift in Sources */,
 				B33E72FE1C98EB6100923F7E /* Login.swift in Sources */,
 				B34FCDFE1C9AF6AB0080D09F /* SQLTable.swift in Sources */,
 				B33E73201C98EBC000923F7E /* RegisteredUser.swift in Sources */,
 				B33E73191C98EBAA00923F7E /* ProductDetail.swift in Sources */,
+				B352C6511C9FB3B30058BB8B /* UIColor+Additions.m in Sources */,
+				B352C6521C9FB3B30058BB8B /* AZNotification.swift in Sources */,
 				B3F2A03C1C9BD65E00779AE5 /* BrowseMessageLocal.swift in Sources */,
 				B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */,
 				37188A341C9ED31000116338 /* MyImageView2.swift in Sources */,
