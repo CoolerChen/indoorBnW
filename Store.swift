@@ -60,6 +60,8 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
             createStore?.store = self
         }
         self.navigationController?.pushViewController(createStore!, animated: true)
+        status = Sup.Status.Done
+        m_tableView.reloadData()
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,9 +97,9 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     //點選了哪一個
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //判斷要去哪裡
+        
         switch (Sup.Supervisor.clickMode){
         case 0,3://瀏覽 或 QRCode
-            
             switch status {
             case .Done:
                 if product == nil{
@@ -117,7 +119,8 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
                 Sup.Supervisor.storeID = json[indexPath.row].objectForKey("storeID") as! String
                 editStore?.setStoreDictionary(json[indexPath.row] as! Dictionary<String, String>)
                 self.navigationController?.pushViewController(editStore!, animated: true)
-                
+                status = Sup.Status.Done
+                m_tableView.reloadData()
             case .QRCode:
                 //supervisorStoreQRCode
                 if supervisorStoreQRCode == nil{

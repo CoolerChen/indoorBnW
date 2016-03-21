@@ -119,6 +119,8 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
             createProduct?.product = self
         }
         self.navigationController?.pushViewController(createProduct!, animated: true)
+        status = Sup.Status.Done
+        m_tableView.reloadData()
     }
     //取得echo回來的值
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
