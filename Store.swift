@@ -46,10 +46,12 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
             sender.title = "Done"
             Btn.hidden = false
             status = Sup.Status.Edit
+            m_tableView.reloadData()
         }else if status == Sup.Status.Edit{
             sender.title = "Edit"
             Btn.hidden = true
             status = Sup.Status.Done
+            m_tableView.reloadData()
         }
     }
     func onBtnAction(sender:UIButton){
@@ -76,6 +78,13 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
         cell!.lab1.text = "店名:\(json[indexPath.row].objectForKey("storeName") as! String)" //主標題
         cell!.lab2.text = "Slogan:\(json[indexPath.row].objectForKey("storeSlogan") as! String)"
         cell!.lab3.text =  "簡介:\(json[indexPath.row].objectForKey("storeLogo") as! String)"
+        
+        if status == Sup.Status.Edit {
+            cell.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        }else{
+            cell.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+        }
+        
         
         
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator//右邊的 >

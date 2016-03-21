@@ -83,7 +83,15 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
         })
 //
         
-        
+        if status == Sup.Status.Edit {
+            cell.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+            cell.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        }else{
+            cell.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+            cell.view.backgroundColor = UIColor.blueColor()
+            
+            cell.view.alpha = 0.1
+        }
         
         
         
@@ -103,6 +111,7 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
             Btn.hidden = true
             status = Sup.Status.Done
         }
+        m_tableView.reloadData()
     }
     func onBtnAction(sender:UIButton){
         if createProduct == nil{

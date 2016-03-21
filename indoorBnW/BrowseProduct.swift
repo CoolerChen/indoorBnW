@@ -43,9 +43,9 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 40 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品分類: \(json[i]["productType"] as! String)"))
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 70 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品價格: \(json[i]["productPrice"] as! String)"))
             
-            imageAry.append(Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60), img: Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[i]["productID"] as! String).jpg")))
+            imageAry.append(Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60)))
             
-            
+            imageAry[i].image = Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[i]["productID"] as! String).jpg")
             scroller.addSubview(imageAry[i])
             
             
@@ -70,6 +70,7 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         self.view.addSubview(acti)
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/product.php", submitBody: "productByStore=\(Sup.User.storeID)")
     }
+    
     func onBtnAction(sender:UIButton){
         Sup.Supervisor.productID = json[sender.tag].objectForKey("productID") as! String
         if productDetail == nil{

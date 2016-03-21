@@ -18,6 +18,7 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
     var VC:UIViewController?
     var acti:UIActivityIndicatorView = UIActivityIndicatorView()
     var actiView:UIView = UIView()
+    var ibeacon:UIImageView = UIImageView()
     
     let segm:UISegmentedControl = UISegmentedControl(items: ["會員","商家"])
     
@@ -67,6 +68,8 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         segm.tintColor = UIColor.blueColor()
         self.view.addSubview(segm)
         
+        ibeacon = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-50, -100, 100, 100))
+        self.view.addSubview(ibeacon)
         
     }
     
@@ -175,6 +178,7 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
             textFieldAry[i].frame = CGRectMake(self.view.frame.size.width/2-300 / 2, 55.0 * CGFloat(i) + 85.0, 300, 40)
         }
         segm.frame = CGRectMake(self.view.frame.size.width/2-300 / 2, 200, 300,40)
+        ibeacon.frame = CGRectMake(self.view.frame.size.width/2-50, 530, 100, 100)
         UIView.commitAnimations()
         
         

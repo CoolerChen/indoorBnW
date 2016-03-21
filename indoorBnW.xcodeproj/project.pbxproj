@@ -10,11 +10,11 @@
 		37188A001C9BE77E00116338 /* MyCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371889FF1C9BE77E00116338 /* MyCell1.swift */; };
 		37188A021C9BE78600116338 /* MyCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A011C9BE78600116338 /* MyCell2.swift */; };
 		37188A041C9BE78D00116338 /* MyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A031C9BE78D00116338 /* MyAlert.swift */; };
-		37188A061C9BE8D900116338 /* ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 37188A051C9BE8D900116338 /* ball.png */; };
 		37188A281C9D2F8700116338 /* SupervisorStoreQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A271C9D2F8700116338 /* SupervisorStoreQRCode.swift */; };
 		37188A2A1C9D3E4000116338 /* UserQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A291C9D3E4000116338 /* UserQRCode.swift */; };
 		37188A2C1C9D420C00116338 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37188A2B1C9D420C00116338 /* AVFoundation.framework */; };
 		37188A341C9ED31000116338 /* MyImageView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A331C9ED31000116338 /* MyImageView2.swift */; };
+		37188A361C9FD36300116338 /* ibeacon.png in Resources */ = {isa = PBXBuildFile; fileRef = 37188A351C9FD36300116338 /* ibeacon.png */; };
 		B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E72EB1C98E97800923F7E /* AppDelegate.swift */; };
 		B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F21C98E97800923F7E /* Assets.xcassets */; };
 		B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F41C98E97800923F7E /* LaunchScreen.storyboard */; };
@@ -53,11 +53,11 @@
 		371889FF1C9BE77E00116338 /* MyCell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCell1.swift; sourceTree = "<group>"; };
 		37188A011C9BE78600116338 /* MyCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCell2.swift; sourceTree = "<group>"; };
 		37188A031C9BE78D00116338 /* MyAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAlert.swift; sourceTree = "<group>"; };
-		37188A051C9BE8D900116338 /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
 		37188A271C9D2F8700116338 /* SupervisorStoreQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupervisorStoreQRCode.swift; sourceTree = "<group>"; };
 		37188A291C9D3E4000116338 /* UserQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserQRCode.swift; sourceTree = "<group>"; };
 		37188A2B1C9D420C00116338 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		37188A331C9ED31000116338 /* MyImageView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyImageView2.swift; sourceTree = "<group>"; };
+		37188A351C9FD36300116338 /* ibeacon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ibeacon.png; sourceTree = "<group>"; };
 		B33E72E81C98E97800923F7E /* indoorBnW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = indoorBnW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33E72EB1C98E97800923F7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B33E72F21C98E97800923F7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,7 +112,7 @@
 		371889FE1C9BE75A00116338 /* MyClass */ = {
 			isa = PBXGroup;
 			children = (
-				37188A051C9BE8D900116338 /* ball.png */,
+				37188A351C9FD36300116338 /* ibeacon.png */,
 				37188A331C9ED31000116338 /* MyImageView2.swift */,
 				37188A031C9BE78D00116338 /* MyAlert.swift */,
 				37188A011C9BE78600116338 /* MyCell2.swift */,
@@ -276,8 +276,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B37B62B11C9D9D6300059113 /* messagelocal.db in Resources */,
+				37188A361C9FD36300116338 /* ibeacon.png in Resources */,
 				B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */,
-				37188A061C9BE8D900116338 /* ball.png in Resources */,
 				B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

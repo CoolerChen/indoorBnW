@@ -25,7 +25,7 @@ class MyAlert: UIAlertController {
         
         for var i:CGFloat = 0 ; i < 7 ; i++ {
             let view:UIImageView = UIImageView()
-            view.image = UIImage(named: "ball.png")
+            view.image = UIImage(named: "ibeacon.png")
             view.frame = CGRectMake(self.view.frame.size.width/2-80, -50, 50, 50 )
             view.alpha = 0
             self.view.addSubview(view)

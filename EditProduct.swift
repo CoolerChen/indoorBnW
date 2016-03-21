@@ -32,9 +32,8 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
             self.view.addSubview(textFieldAry[Int(i)])
             textFieldAry[Int(i)].text = Fieldtext[Int(i)]
         }
-        let img:UIImage = UIImage()
         //imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, (textFieldAry.last?.frame.origin.y)! + 55, textFieldW, textFieldW), img: img)
-        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, (textFieldAry.last?.frame.origin.y)! + 55, textFieldW, textFieldW), Taraget: self, img: img)
+        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, (textFieldAry.last?.frame.origin.y)! + 55, textFieldW, textFieldW), Taraget: self)
         self.view.addSubview(imageView)
         
         //選擇圖片

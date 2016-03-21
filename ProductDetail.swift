@@ -20,9 +20,9 @@ class ProductDetail: UIViewController,UIScrollViewDelegate {
         let imageviewW:CGFloat = 250
         scroll = Sup.addScrollerView(self, frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) , contentSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) )
         self.view.addSubview(scroll)
-        let img:UIImage = UIImage()
-        imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-imageviewW/2, 10, imageviewW, imageviewW), img: img)
-        imageView.backgroundColor =  UIColor.clearColor()
+        
+        imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-imageviewW/2, 10, imageviewW, imageviewW))
+        //imageView.backgroundColor =  UIColor.clearColor()
         scroll.addSubview(imageView)
         
         for var i = 0 ; i < 8 ; i++ {

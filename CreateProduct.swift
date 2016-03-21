@@ -34,9 +34,9 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
             scorll.addSubview(textFieldAry[Int(i)])
         }
 //        scorll.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 45, textFieldW, textFieldH), str: "選擇圖片", tag: 0))
-        let img:UIImage = UIImage()
+        
         //imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 90, textFieldW, textFieldW), img: img)
-        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 90, textFieldW, textFieldW), Taraget: self, img: img)
+        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textFieldAry[2].frame.origin.y + 90, textFieldW, textFieldW), Taraget: self)
         scorll.addSubview(imageView)
         
         
