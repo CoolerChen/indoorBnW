@@ -28,17 +28,19 @@ class MyCell1: UITableViewCell {
         
         
         lab1.font = UIFont.boldSystemFontOfSize(20)
-        //lab1.adjustsFontSizeToFitWidth = true
+        lab1.adjustsFontSizeToFitWidth = true
+        lab1.textColor = UIColor.blueColor()
         self.addSubview(lab1)
         
         
         lab2.font = UIFont.boldSystemFontOfSize(20)
         //lab2.textColor = UIColor.purpleColor()
         lab2.shadowOffset = CGSizeMake(1, 1)
+        lab2.textColor = UIColor.blueColor()
         lab2.adjustsFontSizeToFitWidth = true
         self.addSubview(lab2)
         
-        
+        lab3.textColor = UIColor.blueColor()
         lab3.font = UIFont.boldSystemFontOfSize(20)
         lab3.adjustsFontSizeToFitWidth = true//
         self.addSubview(lab3)

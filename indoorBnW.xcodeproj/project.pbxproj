@@ -117,6 +117,8 @@
 				37188A031C9BE78D00116338 /* MyAlert.swift */,
 				37188A011C9BE78600116338 /* MyCell2.swift */,
 				371889FF1C9BE77E00116338 /* MyCell1.swift */,
+				B33E73011C98EB8300923F7E /* Sup.swift */,
+				B33E73031C98EB8800923F7E /* UploadImage.swift */,
 			);
 			name = MyClass;
 			sourceTree = "<group>";
@@ -147,8 +149,6 @@
 				B33E73261C98F56B00923F7E /* Setting.swift */,
 				B33E72FD1C98EB6100923F7E /* Login.swift */,
 				B33E72FF1C98EB7E00923F7E /* Passer.swift */,
-				B33E73011C98EB8300923F7E /* Sup.swift */,
-				B33E73031C98EB8800923F7E /* UploadImage.swift */,
 				B33E73051C98EB9200923F7E /* Supervisor */,
 				B33E731C1C98EBB000923F7E /* User */,
 				B33E73211C98EDBA00923F7E /* Beacon */,
