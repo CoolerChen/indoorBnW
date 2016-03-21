@@ -17,6 +17,8 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
     var json = []
     var m_image:UIImage?
     var emailAry:[String] = []
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +35,9 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         
         let lab:UILabel = Sup.addLabel(CGRectMake(10, textView.frame.origin.y + 65, 200, 30), str: "內文：")
         scrollerView.addSubview(lab)
-        let img:UIImage = UIImage()
+        
         //imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 160, textFieldW, textFieldW), img:img )
-        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 160, textFieldW, textFieldW), Taraget: self, img: img)
+        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 160, textFieldW, textFieldW), Taraget: self)
         textView = Sup.addTextView(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, lab.frame.origin.y + 40, textFieldW, textFieldW))
         scrollerView.addSubview(textView)
         //scrollerView.addSubview(Sup.addBtn(self, frame:  CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "選擇圖片", tag: 0))
@@ -53,6 +55,11 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
                 Sup.showAlert(self, str: "請輸入標題")
                 return
             }
+            actiView = Sup.addView(self.view.frame)
+            self.view.addSubview(actiView)
+            acti = Sup.addActivityIndicatorView(self.view.frame)
+            acti.startAnimating()
+            self.view.addSubview(acti)
             //先抓user email的資料後再開email
             Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/userEmailJSON.php", submitBody: "")
             
@@ -123,6 +130,8 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         for ary in json {
             emailAry.append(ary.objectForKey("userEmail") as! String)
         }
+        actiView.hidden = true
+        acti.stopAnimating()
         email()
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

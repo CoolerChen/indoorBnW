@@ -14,6 +14,8 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
     var btnAry:[UIButton] = [UIButton]()
     var imageAry:[UIImageView] = [UIImageView]()
     var productDetail:ProductDetail?
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +43,9 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 40 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品分類: \(json[i]["productType"] as! String)"))
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 70 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品價格: \(json[i]["productPrice"] as! String)"))
             
-            imageAry.append(Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60), img: Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[i]["productID"] as! String).jpg")))
+            imageAry.append(Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60)))
             
-            
+            imageAry[i].image = Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(self.json[i]["productID"] as! String).jpg")
             scroller.addSubview(imageAry[i])
             
             
@@ -51,6 +53,8 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         if json.count != 0 {
             scroller.contentSize = CGSizeMake(self.view.frame.size.width, (btnAry.last?.frame.origin.y)! + 170)
         }
+        actiView.hidden = true
+        acti.stopAnimating()
         
     
     
@@ -59,8 +63,14 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         downloadProduct()
     }
     func downloadProduct(){
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/product.php", submitBody: "productByStore=\(Sup.User.storeID)")
     }
+    
     func onBtnAction(sender:UIButton){
         Sup.Supervisor.productID = json[sender.tag].objectForKey("productID") as! String
         if productDetail == nil{

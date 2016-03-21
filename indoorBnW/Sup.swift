@@ -101,10 +101,10 @@ class Sup: NSObject {
         return textView
     }
     //新增ImageView
-    static func addImageView(frame:CGRect,img:UIImage) -> UIImageView {
+    static func addImageView(frame:CGRect) -> UIImageView {
         let imageView:UIImageView = UIImageView()
         imageView.frame = frame
-        imageView.image = img
+        imageView.image = UIImage(named: "ibeacon.png")
         return imageView
     }
     //取得相簿  要有protocol<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
@@ -163,13 +163,27 @@ class Sup: NSObject {
         UIGraphicsEndImageContext()
         return newImage
     }
-    static func addMyImageView(frame:CGRect,Taraget:UIViewController,img:UIImage) -> MyImageView2{
+    static func addMyImageView(frame:CGRect,Taraget:UIViewController) -> MyImageView2{
         let imageView:MyImageView2 = MyImageView2(frame: frame)
         imageView.setTarget(Taraget)
-        imageView.image = img
+        imageView.image = UIImage(named: "ibeacon.png")
         imageView.userInteractionEnabled = true
-        imageView.backgroundColor = UIColor.lightGrayColor()
+        //imageView.backgroundColor = UIColor.lightGrayColor()
         return imageView
+    }
+    static func addActivityIndicatorView(frame:CGRect) -> UIActivityIndicatorView{
+        let inter:UIActivityIndicatorView = UIActivityIndicatorView()
+        inter.frame = frame
+        inter.transform = CGAffineTransformMakeScale(7.0, 7.0)
+        inter.color = UIColor.whiteColor()
+        return inter
+    }
+    static func addView(frame:CGRect) -> UIView{
+        let view:UIView = UIView()
+        view.backgroundColor = UIColor.blackColor()
+        view.alpha = 0.5
+        view.frame = frame
+        return view
     }
     
 }

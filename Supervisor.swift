@@ -14,6 +14,7 @@ class Supervisor: UIViewController {
     var btnAry:[UIButton] = [UIButton]()
     var btnW:CGFloat = 0.0
     var myView:UIView = UIView()
+    var ibeacon:UIImageView = UIImageView()
     
     
     override func viewDidLoad() {
@@ -38,6 +39,9 @@ class Supervisor: UIViewController {
         myView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
         myView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(myView)
+        
+        ibeacon = Sup.addImageView(CGRectMake(self.view.frame.size.width/2+10, self.view.frame.size.height, btnW, btnW))
+        self.view.addSubview(ibeacon)
     }
     func onBtnAction(sender:UIButton){//"瀏覽商店","訊息","Email","QRCode","地圖","設定"]
         switch sender.tag {
@@ -99,8 +103,9 @@ class Supervisor: UIViewController {
         UIView.beginAnimations("MOveobjmati", context: nil)
         UIView.setAnimationDuration(0.5)
         btnAry[4].frame = CGRectMake(10, btnW*2+110, btnW, btnW)
-//        UIView.setAnimationDuration(0.7)
+        UIView.setAnimationDuration(0.7)
 //        btnAry[5].frame = CGRectMake(20+btnW, btnW*2+110, btnW, btnW)
+        ibeacon.frame = CGRectMake(self.view.frame.size.width/2+10, 460, btnW, btnW)
         UIView.commitAnimations()
         myView.frame = CGRectMake(0, 0, 0, 0)
     }
@@ -112,6 +117,7 @@ class Supervisor: UIViewController {
             btnAry[Int(i)].frame = CGRectMake(space * (i%2 + 1) + i%2 * btnW, viewH , btnW, btnW)
         }
         myView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+        ibeacon.frame = CGRectMake(self.view.frame.size.width/2+10, viewH, btnW, btnW)
     }
     
     override func didReceiveMemoryWarning() {

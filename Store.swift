@@ -19,6 +19,9 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     var status = Sup.Status.Done //判斷是編輯還是瀏覽
     var supervisorStoreQRCode:SupervisorStoreQRCode?
     
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -43,10 +46,12 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
             sender.title = "Done"
             Btn.hidden = false
             status = Sup.Status.Edit
+            m_tableView.reloadData()
         }else if status == Sup.Status.Edit{
             sender.title = "Edit"
             Btn.hidden = true
             status = Sup.Status.Done
+            m_tableView.reloadData()
         }
     }
     func onBtnAction(sender:UIButton){
@@ -55,6 +60,8 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
             createStore?.store = self
         }
         self.navigationController?.pushViewController(createStore!, animated: true)
+        status = Sup.Status.Done
+        m_tableView.reloadData()
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -74,6 +81,13 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
         cell!.lab2.text = "Slogan:\(json[indexPath.row].objectForKey("storeSlogan") as! String)"
         cell!.lab3.text =  "簡介:\(json[indexPath.row].objectForKey("storeLogo") as! String)"
         
+        if status == Sup.Status.Edit {
+            cell.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        }else{
+            cell.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+        }
+        
+        
         
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator//右邊的 >
         //cell?.imageView?.image = UIImage(named: "123")//左邊圖片
@@ -83,9 +97,9 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     //點選了哪一個
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //判斷要去哪裡
+        
         switch (Sup.Supervisor.clickMode){
         case 0,3://瀏覽 或 QRCode
-            
             switch status {
             case .Done:
                 if product == nil{
@@ -102,9 +116,11 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
                 }
                 editStore?.store = self
                 Sup.Supervisor.storeDic = json[indexPath.row] as! Dictionary<String, String>
+                Sup.Supervisor.storeID = json[indexPath.row].objectForKey("storeID") as! String
                 editStore?.setStoreDictionary(json[indexPath.row] as! Dictionary<String, String>)
                 self.navigationController?.pushViewController(editStore!, animated: true)
-                
+                status = Sup.Status.Done
+                m_tableView.reloadData()
             case .QRCode:
                 //supervisorStoreQRCode
                 if supervisorStoreQRCode == nil{
@@ -147,9 +163,13 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
             print("解json失敗")
         }
         m_tableView.reloadData()
+        actiView.hidden = true
+        acti.stopAnimating()
     }
     override func viewDidAppear(animated: Bool) {
         self.navigationItem.title = "\(Sup.Supervisor.supervisor)的商店"
+        
+        self.view.addSubview(acti)
         if Sup.Supervisor.clickMode == 0{
             let rightBtnItem:UIBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Done, target: self, action: Selector("OnSelectRightAction:"))
             self.navigationItem.rightBarButtonItem = rightBtnItem
@@ -165,6 +185,12 @@ class Store: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURLSe
     }
     
     func downloadStore(){
+        //轉轉轉
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/storeJson.php", submitBody: "supervisor=\(Sup.Supervisor.supervisor)")
     }
 }

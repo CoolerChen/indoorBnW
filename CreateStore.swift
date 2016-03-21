@@ -11,6 +11,8 @@ import UIKit
 class CreateStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate {
     var textFieldAry:[UITextField] = [UITextField]()
     var store:Store?
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -28,6 +30,11 @@ class CreateStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
         self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 300, textFieldW, textFieldH), str: "送出", tag: 0))
     }
     func onBtnAction(sender:UIButton){
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
         if textFieldAry[0].text == "" {
             Sup.showAlert(self, str: "請輸入商店名稱")
             return
@@ -54,6 +61,8 @@ class CreateStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
                 textFieldAry[i].text = ""
             }
         }
+        actiView.hidden = true
+        acti.stopAnimating()
     }
     //鍵盤中return那個案件
     func textFieldShouldReturn(textField: UITextField) -> Bool {

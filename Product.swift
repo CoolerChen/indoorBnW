@@ -17,7 +17,8 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
     var editProduct:EditProduct?
     var Btn:UIButton = UIButton()
     var status = Sup.Status.Done //判斷是編輯還是瀏覽
-    //var goto:Int!
+    var acti:UIActivityIndicatorView = UIActivityIndicatorView()
+    var actiView:UIView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,11 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
     }
     override func viewDidAppear(animated: Bool) {
         print("\(Sup.Supervisor.supervisor) 的 \(Sup.Supervisor.store) 商店" )
+        actiView = Sup.addView(self.view.frame)
+        self.view.addSubview(actiView)
+        acti = Sup.addActivityIndicatorView(self.view.frame)
+        acti.startAnimating()
+        self.view.addSubview(acti)
         Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/product.php", submitBody: "productByStore=\(Sup.Supervisor.storeID)")
         self.navigationItem.title = "\(Sup.Supervisor.store)的商品"
     }
@@ -77,7 +83,15 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
         })
 //
         
-        
+        if status == Sup.Status.Edit {
+            cell.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+            cell.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        }else{
+            cell.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+            cell.view.backgroundColor = UIColor.blueColor()
+            
+            cell.view.alpha = 0.1
+        }
         
         
         
@@ -97,6 +111,7 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
             Btn.hidden = true
             status = Sup.Status.Done
         }
+        m_tableView.reloadData()
     }
     func onBtnAction(sender:UIButton){
         if createProduct == nil{
@@ -104,6 +119,8 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
             createProduct?.product = self
         }
         self.navigationController?.pushViewController(createProduct!, animated: true)
+        status = Sup.Status.Done
+        m_tableView.reloadData()
     }
     //取得echo回來的值
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
@@ -116,6 +133,8 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
             print("解json失敗")
         }
         m_tableView.reloadData()
+        actiView.hidden = true
+        acti.stopAnimating()
         
     }
     //點選了哪一個
