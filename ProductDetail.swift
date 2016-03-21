@@ -8,10 +8,11 @@
 
 import UIKit
 
-class ProductDetail: UIViewController,UIScrollViewDelegate {
+class ProductDetail: UIViewController,UIScrollViewDelegate ,UITextViewDelegate{
     var imageView:UIImageView = UIImageView()
     var scroll:UIScrollView!
     var labAry:[UILabel] = [UILabel]()
+    var textView:UITextView = UITextView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,13 +26,19 @@ class ProductDetail: UIViewController,UIScrollViewDelegate {
         //imageView.backgroundColor =  UIColor.clearColor()
         scroll.addSubview(imageView)
         
-        for var i = 0 ; i < 8 ; i++ {
+        for var i = 0 ; i < 6 ; i++ {
             labAry.append(Sup.addLabel(CGRectMake(5, imageView.frame.origin.y + imageviewW + CGFloat(i) * 50, self.view.frame.size.width, 50), str: ""))
             scroll.addSubview(labAry[i])
             labAry[i].textColor = UIColor.blueColor()
         }
         
-        scroll.contentSize = CGSizeMake(self.view.frame.size.width,imageView.frame.origin.y + imageviewW + CGFloat(8) * 50 )
+        textView = Sup.addTextView(self, frame: CGRectMake(5, imageView.frame.origin.y + imageviewW + CGFloat(6) * 50, self.view.frame.size.width, imageviewW))
+        scroll.addSubview(textView)
+        textView.userInteractionEnabled = false
+        textView.textColor = UIColor.blueColor()
+
+        
+        scroll.contentSize = CGSizeMake(self.view.frame.size.width,textView.frame.origin.y + imageviewW + 100 )
         
     }
     
@@ -48,10 +55,10 @@ class ProductDetail: UIViewController,UIScrollViewDelegate {
         
         
         Str.append("商品名稱:\(Sup.Supervisor.productDic["productName"]!)")
-        Str.append("商品Type:\(Sup.Supervisor.productDic["productType"]!)")
-        Str.append("商品簡介:\(Sup.Supervisor.productDic["productInfo"]!)")
+        //Str.append("商品Type:\(Sup.Supervisor.productDic["productType"]!)")
+        //Str.append("商品簡介:\(Sup.Supervisor.productDic["productInfo"]!)")
         Str.append("商品價格:\(Sup.Supervisor.productDic["productPrice"]!)元")
-        
+        textView.text = "商品簡介:\(Sup.Supervisor.productDic["productInfo"]!)"
         for var i = 0; i < Str.count;i++ {
             labAry[i].text = Str[i]
         }
@@ -60,10 +67,11 @@ class ProductDetail: UIViewController,UIScrollViewDelegate {
 
     }
     override func viewDidDisappear(animated: Bool) {
-        let labTextAry:[String] = ["商店名稱:","商店Slogan:","商店簡介:","商店分類:","商品名稱:","商品Type:","商品簡介:","商品價格:"]
+        let labTextAry:[String] = ["商店名稱:","商店Slogan:","商店簡介:","商店分類:","商品名稱:","商品價格:"]
         for var i  = 0 ; i < labAry.count ; i++ {
             labAry[i].text = labTextAry[i]
         }
+        textView.text = "商品簡介:"
         imageView.image = nil
     }
 }
