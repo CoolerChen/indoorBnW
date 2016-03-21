@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate ,UINavigationControllerDelegate,UIImagePickerControllerDelegate {
+class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate ,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIScrollViewDelegate ,UITextViewDelegate{
     var textFieldAry:[UITextField] = [UITextField]()
 //    var productDic:Dictionary<String,String>!
     var product:Product?
@@ -17,33 +17,47 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
     var productGoPhoto:Bool!
     var acti:UIActivityIndicatorView = UIActivityIndicatorView()
     var actiView:UIView = UIView()
+    var textView:UITextView = UITextView()
+    var scroller:UIScrollView = UIScrollView()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
-
+        print(Sup.Supervisor.productDic["productID"]!)
+        
+        scroller = Sup.addScrollerView(self, frame: self.view.frame, contentSize: CGSizeMake(self.view.frame.width, self.view.frame.height))
+        self.view.addSubview(scroller)
+        scroller.backgroundColor = UIColor.blackColor()
+        
         let textFieldW:CGFloat = 250
         let textFieldH:CGFloat = 40
-        let textFieldtext:[String] = ["商品名稱","商品簡介","價格"]
+        let textFieldtext:[String] = ["商品名稱","價格"]
         let Fieldtext:[String] = [Sup.Supervisor.productDic["productName"]!,Sup.Supervisor.productDic["productInfo"]!,Sup.Supervisor.productDic["productPrice"]!]
-        for var i:CGFloat = 0;i < 3 ; i++ {
-            textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 45.0 * i + 80.0, textFieldW, textFieldH), placeholdString: textFieldtext[Int(i)]))
-            self.view.addSubview(textFieldAry[Int(i)])
+        for var i:CGFloat = 0;i < 2 ; i++ {
+            textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 45.0 * i + 10.0, textFieldW, textFieldH), placeholdString: textFieldtext[Int(i)]))
+            scroller.addSubview(textFieldAry[Int(i)])
             textFieldAry[Int(i)].text = Fieldtext[Int(i)]
         }
         //imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, (textFieldAry.last?.frame.origin.y)! + 55, textFieldW, textFieldW), img: img)
-        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, (textFieldAry.last?.frame.origin.y)! + 55, textFieldW, textFieldW), Taraget: self)
-        self.view.addSubview(imageView)
+        
+        scroller.addSubview(Sup.addLabel(CGRectMake(self.view.frame.size.width/2-textFieldW/2, (textFieldAry.last?.frame.origin.y)! + 45, textFieldW, 30), str: "內文:"))
+        textView = Sup.addTextView(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, (textFieldAry.last?.frame.origin.y)! + 75, textFieldW, textFieldW))
+        scroller.addSubview(textView)
+        
+        
+        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 10, textFieldW, textFieldW), Taraget: self)
+        scroller.addSubview(imageView)
         
         //選擇圖片
         //self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "選擇圖片", tag: 1))
         
         //送出
-        self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 60, textFieldW, textFieldH), str: "送出", tag: 2))
+        scroller.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 60, textFieldW, textFieldH), str: "送出", tag: 2))
         //刪除
-        self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 110, textFieldW, textFieldH), str: "刪除", tag: 3))
+        scroller.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 110, textFieldW, textFieldH), str: "刪除", tag: 3))
         productGoPhoto = false
+        scroller.contentSize = CGSizeMake(self.view.frame.size.width, imageView.frame.origin.y + 2 * textFieldW)
         
     }
     func onBtnAction(sender:UIButton){
@@ -58,10 +72,10 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
 //        }else
         if sender.tag == 2{//送出
             //改變圖片資料
-            Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/EditProduct.php", submitBody: "productBySupervisor=\(Sup.Supervisor.productDic["productBySupervisor"]!)&productByStore=\(Sup.Supervisor.productDic["productByStore"]!)&productName=\(textFieldAry[0].text!)&productType=熱褲&productInfo=\(textFieldAry[1].text!)&productPrice=\(textFieldAry[2].text!)&productImage=\(Sup.Supervisor.productID).jpg&oldProductName=\(Sup.Supervisor.productDic["productName"]!)")
+            Sup.mySQL(self, url: "http://bing0112.100hub.net/bing/EditProduct.php", submitBody: "productBySupervisor=\(Sup.Supervisor.productDic["productBySupervisor"]!)&productByStore=\(Sup.Supervisor.productDic["productByStore"]!)&productName=\(textFieldAry[0].text!)&productType=熱褲&productInfo=\(textView.text!)&productPrice=\(textFieldAry[1].text!)&productImage=\(Sup.Supervisor.productDic["productID"]!).jpg&oldProductName=\(Sup.Supervisor.productDic["productName"]!)")
             //上傳圖片
             let uploadimage:UploadImage = UploadImage()
-            uploadimage.myImageUploadRequest("http://bing0112.100hub.net/bing/productUploadImage.php", img: imageView.image!, fileName: Sup.Supervisor.productID)
+            uploadimage.myImageUploadRequest("http://bing0112.100hub.net/bing/productUploadImage.php", img: imageView.image!, fileName: Sup.Supervisor.productDic["productID"]!)
             
             
         }else if sender.tag == 3 {//刪除
@@ -117,10 +131,9 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
         
         if (productGoEdit == true) {
             //此段要包在product進來才做
-            let Fieldtext:[String] = [Sup.Supervisor.productDic["productName"]!,Sup.Supervisor.productDic["productInfo"]!,Sup.Supervisor.productDic["productPrice"]!,Sup.Supervisor.productDic["productImage"]!]
-            for var i = 0;i<textFieldAry.count;i++ {
-                textFieldAry[Int(i)].text = Fieldtext[Int(i)]
-            }
+            textFieldAry[0].text = Sup.Supervisor.productDic["productName"]!
+            textFieldAry[1].text = Sup.Supervisor.productDic["productPrice"]!
+            textView.text = Sup.Supervisor.productDic["productInfo"]!
             imageView.image = Sup.downloadimage("http://bing0112.100hub.net/bing/ProductImage/\(Sup.Supervisor.productDic["productID"]!).jpg")
             productGoEdit = false
         }
@@ -136,6 +149,7 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
             for var i = 0;i<textFieldAry.count;i++ {
                 textFieldAry[Int(i)].text = ""
             }
+            textView.text = ""
             imageView.image = nil
 
         }
@@ -150,6 +164,19 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
         for var i = 0 ; i < textFieldAry.count ;i++ {
             textFieldAry[i].resignFirstResponder()
         }
+        textView.resignFirstResponder()
         
+    }
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        for var i = 0;i<textFieldAry.count;i++ {
+            textFieldAry[i].resignFirstResponder()
+        }
+        textView.resignFirstResponder()
+    }
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        for var i = 0;i<textFieldAry.count;i++ {
+            textFieldAry[i].resignFirstResponder()
+        }
+        textView.resignFirstResponder()
     }
 }
