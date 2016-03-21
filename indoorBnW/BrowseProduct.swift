@@ -16,7 +16,7 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
     var productDetail:ProductDetail?
     var acti:UIActivityIndicatorView = UIActivityIndicatorView()
     var actiView:UIView = UIView()
-    
+    var loading:Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -25,6 +25,7 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         scroller = Sup.addScrollerView(self, frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) , contentSize: CGSizeMake(self.view.frame.width, 1000))
         scroller.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(scroller)
+        loading = true
     }
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
         do{
@@ -40,8 +41,7 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
             btnAry[i].backgroundColor = UIColor.blueColor()
             scroller.addSubview(btnAry[i])
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 10 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品名稱: \(json[i]["productName"] as! String)" ))
-            scroller.addSubview(Sup.addLabel(CGRectMake(90, 40 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品分類: \(json[i]["productType"] as! String)"))
-            scroller.addSubview(Sup.addLabel(CGRectMake(90, 70 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品價格: \(json[i]["productPrice"] as! String)"))
+            scroller.addSubview(Sup.addLabel(CGRectMake(90, 40 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品價格: \(json[i]["productPrice"] as! String)"))
             
             imageAry.append(Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60)))
             
@@ -60,7 +60,12 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
     
     }
     override func viewDidAppear(animated: Bool) {
-        downloadProduct()
+        //從明細回來不用重新下載
+        if loading {
+            downloadProduct()
+        }
+        loading = true
+        
     }
     func downloadProduct(){
         actiView = Sup.addView(self.view.frame)
@@ -79,17 +84,21 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         Sup.Supervisor.productDic = json[sender.tag] as! Dictionary<String, String>
         Sup.Supervisor.product = json[sender.tag].objectForKey("productName") as! String
         self.navigationController?.pushViewController(productDetail!, animated: true)
+        loading = false
     }
     override func viewDidDisappear(animated: Bool) {
         //離開畫面就要清掉
-        for var i = 0;i < btnAry.count;i++ {
-            btnAry[i].removeFromSuperview()
-        }
-        btnAry = []
-        for var i = 0 ; i < imageAry.count;i++ {
-            imageAry[i].removeFromSuperview()
-        }
-        imageAry = []
+//        if loading {
+//            for var i = 0;i < btnAry.count;i++ {
+//                btnAry[i].removeFromSuperview()
+//            }
+//            btnAry = []
+//            for var i = 0 ; i < imageAry.count;i++ {
+//                imageAry[i].removeFromSuperview()
+//            }
+//            imageAry = []
+//        }
+//        
         
     }
 
