@@ -9,7 +9,7 @@
 import UIKit
 
 class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,BingLoginDelegate {
-    var passer:Passer?
+    //var passer:Passer?
     var registeredUser:RegisteredUser?
     var registeredSupervisor:RegisteredSupervisor?
     var btnAry:[UIButton] = [UIButton]()
@@ -45,7 +45,7 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         btnAry.append(Sup.addBtn(self, frame: CGRectMake(-300, self.view.frame.size.height, 10, 10), str: "登入", tag: 0))
         btnAry.append(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width, self.view.frame.size.height, 10, 10), str: "註冊會員", tag: 1))
         btnAry.append(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width, -60, 10, 10), str: "註冊商家", tag: 2))
-        btnAry.append(Sup.addBtn(self, frame: CGRectMake(-300, -60, 10, 10), str: "訪客", tag: 3))
+        //btnAry.append(Sup.addBtn(self, frame: CGRectMake(-300, -60, 10, 10), str: "訪客", tag: 3))
         for var i = 0 ; i < btnAry.count ; i++ {
             self.view.addSubview(btnAry[i])
         }
@@ -67,7 +67,7 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         segm.tintColor = UIColor(red: 0.14, green: 0.51, blue: 0.9, alpha: 1)
         self.view.addSubview(segm)
         
-        ibeacon = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-50, -100, 100, 100))
+        ibeacon = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-100, -100, 200, 200))
         self.view.addSubview(ibeacon)
         
     }
@@ -101,13 +101,13 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
             actiView.hidden = true
             acti.stopAnimating()
             self.navigationController?.pushViewController(registeredSupervisor!, animated: true)
-        case 3:
-            if passer == nil{
-                passer = Passer()
-            }
-            actiView.hidden = true
-            acti.stopAnimating()
-            self.navigationController?.pushViewController(passer!, animated: true)
+//        case 3:
+//            if passer == nil{
+//                passer = Passer()
+//            }
+//            actiView.hidden = true
+//            acti.stopAnimating()
+//            self.navigationController?.pushViewController(passer!, animated: true)
             
         default:
             break
@@ -183,7 +183,7 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
             textFieldAry[i].frame = CGRectMake(self.view.frame.size.width/2-300 / 2, 55.0 * CGFloat(i) + 85.0, 300, 40)
         }
         segm.frame = CGRectMake(self.view.frame.size.width/2-300 / 2, 200, 300,40)
-        ibeacon.frame = CGRectMake(self.view.frame.size.width/2-50, 530, 100, 100)
+        ibeacon.frame = CGRectMake(self.view.frame.size.width/2-90, 460, 180, 180)
         UIView.commitAnimations()
         
         textFieldAry[0].text = "Bing"
