@@ -15,6 +15,8 @@
 		37188A2C1C9D420C00116338 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37188A2B1C9D420C00116338 /* AVFoundation.framework */; };
 		37188A341C9ED31000116338 /* MyImageView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37188A331C9ED31000116338 /* MyImageView2.swift */; };
 		37188A361C9FD36300116338 /* ibeacon.png in Resources */ = {isa = PBXBuildFile; fileRef = 37188A351C9FD36300116338 /* ibeacon.png */; };
+		B337614E1CA0FC2200629D1F /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B337614D1CA0FC2200629D1F /* SQLiteDB.swift */; };
+		B33761501CA0FC2600629D1F /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = B337614F1CA0FC2600629D1F /* String-Extras.swift */; };
 		B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E72EB1C98E97800923F7E /* AppDelegate.swift */; };
 		B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F21C98E97800923F7E /* Assets.xcassets */; };
 		B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F41C98E97800923F7E /* LaunchScreen.storyboard */; };
@@ -40,9 +42,7 @@
 		B33E732B1C98FB4600923F7E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B33E732A1C98FB4600923F7E /* MessageUI.framework */; };
 		B34FCDF11C9A9C980080D09F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B34FCDF01C9A9C980080D09F /* libsqlite3.tbd */; };
 		B34FCDF51C9AAA090080D09F /* BingLoginDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDF41C9AAA090080D09F /* BingLoginDelegate.swift */; };
-		B34FCDFD1C9AF6AB0080D09F /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */; };
 		B34FCDFE1C9AF6AB0080D09F /* SQLTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */; };
-		B34FCE041C9AFC630080D09F /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FCE031C9AFC630080D09F /* String-Extras.swift */; };
 		B352C6511C9FB3B30058BB8B /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = B352C64E1C9FB3B30058BB8B /* UIColor+Additions.m */; };
 		B352C6521C9FB3B30058BB8B /* AZNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B352C64F1C9FB3B30058BB8B /* AZNotification.swift */; };
 		B352C6531C9FB3B30058BB8B /* AZNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B352C6501C9FB3B30058BB8B /* AZNotificationView.swift */; };
@@ -61,6 +61,8 @@
 		37188A2B1C9D420C00116338 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		37188A331C9ED31000116338 /* MyImageView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyImageView2.swift; sourceTree = "<group>"; };
 		37188A351C9FD36300116338 /* ibeacon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ibeacon.png; sourceTree = "<group>"; };
+		B337614D1CA0FC2200629D1F /* SQLiteDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDB.swift; sourceTree = "<group>"; };
+		B337614F1CA0FC2600629D1F /* String-Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-Extras.swift"; sourceTree = "<group>"; };
 		B33E72E81C98E97800923F7E /* indoorBnW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = indoorBnW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33E72EB1C98E97800923F7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B33E72F21C98E97800923F7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,10 +90,8 @@
 		B33E732A1C98FB4600923F7E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		B34FCDF01C9A9C980080D09F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		B34FCDF41C9AAA090080D09F /* BingLoginDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingLoginDelegate.swift; sourceTree = "<group>"; };
-		B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDB.swift; sourceTree = "<group>"; };
 		B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLTable.swift; sourceTree = "<group>"; };
 		B34FCDFF1C9AF70C0080D09F /* indoorBnW-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "indoorBnW-Bridging-Header.h"; sourceTree = "<group>"; };
-		B34FCE031C9AFC630080D09F /* String-Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-Extras.swift"; sourceTree = "<group>"; };
 		B352C64D1C9FB3B30058BB8B /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
 		B352C64E1C9FB3B30058BB8B /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
 		B352C64F1C9FB3B30058BB8B /* AZNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AZNotification.swift; sourceTree = "<group>"; };
@@ -214,9 +214,9 @@
 			children = (
 				37188A2B1C9D420C00116338 /* AVFoundation.framework */,
 				B34FCDFF1C9AF70C0080D09F /* indoorBnW-Bridging-Header.h */,
-				B34FCDFB1C9AF6AB0080D09F /* SQLiteDB.swift */,
+				B337614D1CA0FC2200629D1F /* SQLiteDB.swift */,
 				B34FCDFC1C9AF6AB0080D09F /* SQLTable.swift */,
-				B34FCE031C9AFC630080D09F /* String-Extras.swift */,
+				B337614F1CA0FC2600629D1F /* String-Extras.swift */,
 				B33E732A1C98FB4600923F7E /* MessageUI.framework */,
 				B34FCDF01C9A9C980080D09F /* libsqlite3.tbd */,
 			);
@@ -309,7 +309,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B33E73121C98EBAA00923F7E /* Store.swift in Sources */,
-				B34FCE041C9AFC630080D09F /* String-Extras.swift in Sources */,
 				37188A021C9BE78600116338 /* MyCell2.swift in Sources */,
 				B33E73021C98EB8300923F7E /* Sup.swift in Sources */,
 				B33E73111C98EBAA00923F7E /* Supervisor.swift in Sources */,
@@ -320,9 +319,9 @@
 				B33E73161C98EBAA00923F7E /* Product.swift in Sources */,
 				B33E731A1C98EBAA00923F7E /* RegisteredSupervisor.swift in Sources */,
 				B33E731F1C98EBC000923F7E /* User.swift in Sources */,
-				B34FCDFD1C9AF6AB0080D09F /* SQLiteDB.swift in Sources */,
 				37188A001C9BE77E00116338 /* MyCell1.swift in Sources */,
 				B3F2A03A1C9B92AD00779AE5 /* BrowseProduct.swift in Sources */,
+				B33761501CA0FC2600629D1F /* String-Extras.swift in Sources */,
 				B3F2A0391C9B92AD00779AE5 /* BrowseStore.swift in Sources */,
 				B33E73151C98EBAA00923F7E /* CreateStore.swift in Sources */,
 				37188A041C9BE78D00116338 /* MyAlert.swift in Sources */,
@@ -337,6 +336,7 @@
 				B352C6511C9FB3B30058BB8B /* UIColor+Additions.m in Sources */,
 				B352C6521C9FB3B30058BB8B /* AZNotification.swift in Sources */,
 				B3F2A03C1C9BD65E00779AE5 /* BrowseMessageLocal.swift in Sources */,
+				B337614E1CA0FC2200629D1F /* SQLiteDB.swift in Sources */,
 				B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */,
 				37188A341C9ED31000116338 /* MyImageView2.swift in Sources */,
 				37188A281C9D2F8700116338 /* SupervisorStoreQRCode.swift in Sources */,

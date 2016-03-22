@@ -19,9 +19,10 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
     var m_pageControl:UIPageControl!
     var m_messageIndex:Int = 0 //第幾項，從1開始
     
+//    var mydb:COpaquePointer=nil
+    
     func setPageSring(page:String) {
         whichPage = page
-//        print("setPageSring \(page)")
     }
 
     override func viewDidLoad() {
@@ -32,16 +33,28 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         self.view.backgroundColor = UIColor(red: 209/255.0, green: 235/255.0, blue: 254/255.0, alpha: 1)
         self.automaticallyAdjustsScrollViewInsets = false
         
+        screenSetting()
+    }
+    
+    func screenSetting() {
+        print("setPageSring \(whichPage)")
         loadMessageLocalData()
         refreshWithFrame(self.view.frame)
         
-        if data?.count > 0 {
-            m_messageIndex = 1
+        m_messageIndex = 0
+        if whichPage == "browse" {
+            if data?.count > 0 {
+                m_messageIndex = 1
+                let rightBtnItem = UIBarButtonItem(title: "清除資料", style: UIBarButtonItemStyle.Done, target: self, action: "clearSqliteMessage")
+                self.navigationItem.rightBarButtonItem = rightBtnItem
+            }
         } else {
-            m_messageIndex = 0
+            if data?.count > 0 {
+                m_messageIndex = 1
+            }
+            self.navigationItem.rightBarButtonItem = nil
         }
         self.navigationItem.title = "\(m_messageIndex)/\(String((data?.count)!))"
-//        print("viewDidLoad e")
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -51,7 +64,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
 //        m_tableView.reloadData()
 //        refreshWithFrame(self.view.frame)
     }
-    override func viewWillDisappear(animated: Bool) {
+    override func viewDidDisappear(animated: Bool) {
         for vc:UIView in self.view.subviews {
             vc.removeFromSuperview()
         }
@@ -70,11 +83,11 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         */
         switch whichPage {
             case "browse":
-                data = db.query("select * from messagelocal where 1=1")
+                data = db.query("select * from messagelocal where 1=1 order by id desc")
             case "favorite":
-                data = db.query("select * from messagelocal where addFavorite='yes'")
+                data = db.query("select * from messagelocal where addFavorite='yes' order by id desc")
             default:
-                data = db.query("select * from messagelocal where 1=1")
+                data = db.query("select * from messagelocal where 1=1 order by id desc")
         }
         print(data!.count)
     }
@@ -121,7 +134,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
     }
 
     func addObject(pView:UIView, index:Int) {
-        var usedHeight:CGFloat = 0
+        var usedHeight:CGFloat = 20
         let corRadius:CGFloat = 5
         let interval:CGFloat = 10
         
@@ -135,21 +148,23 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         scrollView.layer.masksToBounds = true
         pView.addSubview(scrollView)
         
-        //商店
-        let storeLabel = UILabel(frame: CGRectMake(
-            (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
-            20, //y
-            scrollView.frame.width*0.9, 35)) //w, h
-        storeLabel.backgroundColor = textBackgroundColor
-        storeLabel.layer.cornerRadius = corRadius
-        storeLabel.layer.masksToBounds = true
-//        storeLabel.layer.borderWidth = 1
-//        storeLabel.layer.borderColor = UIColor.blackColor().CGColor
-        if data?.count > 0 {storeLabel.text = data![index]["messageStore"] as? String}
-        scrollView.addSubview(storeLabel)
-        usedHeight += storeLabel.frame.origin.y + storeLabel.frame.height + interval
-        
         let alignX = (pView.frame.width - pView.frame.width*0.9)/2
+        
+        //商店
+        if (data![index]["messageStore"] as! String) != "" {
+            let storeLabel = UILabel(frame: CGRectMake(
+                (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
+                usedHeight, //y
+                scrollView.frame.width*0.9, 35)) //w, h
+            storeLabel.backgroundColor = textBackgroundColor
+            storeLabel.layer.cornerRadius = corRadius
+            storeLabel.layer.masksToBounds = true
+    //        storeLabel.layer.borderWidth = 1
+    //        storeLabel.layer.borderColor = UIColor.blackColor().CGColor
+            if data?.count > 0 {storeLabel.text = data![index]["messageStore"] as! String}
+            scrollView.addSubview(storeLabel)
+            usedHeight += storeLabel.frame.height + interval
+        }
         
         //標題
         let titleLabel = UILabel(frame: CGRectMake(
@@ -260,11 +275,11 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             let willChangeImage = self.view.viewWithTag(m_messageIndex) as! UIImageView
             
             if (favValue[0]["addFavorite"] as? String) == "yes" {
-                let reV = db.query("update messagelocal set addFavorite='no' where messageTime='\(messageTime!)'")
+                let reV = db.execute("update messagelocal set addFavorite='no' where messageTime='\(messageTime!)'")
                 willChangeImage.image = UIImage(named: "FavoriteStarG") //灰色
 //                print("index:\(m_messageIndex - 1) set no: \(reV)")
             } else {
-                let reV = db.query("update messagelocal set addFavorite='yes' where messageTime='\(messageTime!)'")
+                let reV = db.execute("update messagelocal set addFavorite='yes' where messageTime='\(messageTime!)'")
                 
                 willChangeImage.image = UIImage(named: "FavoriteStarO") //橘色
 //                print("index:\(m_messageIndex - 1) set yes: \(reV)")
@@ -283,5 +298,22 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         m_messageIndex = Int(currentPage)+1
 
         self.navigationItem.title = "\(m_messageIndex)/\((data?.count)!)"
+    }
+    
+    func clearSqliteMessage() {
+//        let alertController = UIAlertController(title: "123", message: "456", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "確認清除資料!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "否", style: UIAlertActionStyle.Cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "是", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            //清除資料庫非收藏的訊息
+            self.db.execute(" delete from messagelocal where addFavorite='no' ")
+            for vc:UIView in self.view.subviews {
+                vc.removeFromSuperview()
+            }
+            self.screenSetting()
+        }))
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+//        print("clearSqliteMessage")
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 
 let defaults=NSUserDefaults.standardUserDefaults()
+let db = SQLiteDB.sharedInstance()
 var getWhatData = ""
 var jsons = []
 var json = []
@@ -232,61 +233,6 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
     
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion)
     {
-        //1.
-//        if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1"
-//        {
-//            let foundBeacons = beacons
-//            if foundBeacons.count > 0 {
-//                if let closestBeacon = foundBeacons[0] as? CLBeacon {
-//                    var proximityMessage: String!
-//                    if lastStage != closestBeacon.proximity {
-//                        lastStage = closestBeacon.proximity
-//                        switch lastStage {
-//                            case .Immediate:
-//                                proximityMessage = "Very close"
-//                                print("beacon.swift: Very close1 ==========")
-//                                self.view.backgroundColor = UIColor.greenColor()
-//                                showNotificationWhenEnter()
-//                            case .Near:
-//                                proximityMessage = "Near"
-//                                print("beacon.swift: Near1")
-//                            
-//                            case .Far:
-//                                proximityMessage = "Far"
-//                            default:
-//                                proximityMessage = "Where's the beacon?"
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        else if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B2"
-//        {
-//            let foundBeacons = beacons
-//            if foundBeacons.count > 0 {
-//                if let closestBeacon = foundBeacons[0] as? CLBeacon {
-//                    var proximityMessage: String!
-//                    if lastStage2 != closestBeacon.proximity {
-//                        lastStage2 = closestBeacon.proximity
-//                        switch lastStage2 {
-//                        case .Immediate:
-//                            proximityMessage = "Very close"
-//                            print("beacon.swift: Very close2 ==========")
-//                            self.view.backgroundColor = UIColor.greenColor()
-//                            showNotificationWhenCloseProduct()
-//                        case .Near:
-//                            proximityMessage = "Near"
-//                            print("beacon.swift: Near2")
-//                        case .Far:
-//                            proximityMessage = "Far"
-//                        default:
-//                            proximityMessage = "Where's the beacon?"
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        
         //2.
         //==================== Tells the delegate that one or more beacons are in range. ====================
         let foundBeacons = beacons
@@ -366,11 +312,10 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
     //MARK: - NSURLSessionDownloadDelegate
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL)
     {
-//        print("beacon.swift: *** didFinishDownloadingToURL ***")
+//print("beacon.swift: *** didFinishDownloadingToURL ***")
         switch getWhatData
         {
         case "getMessageData":
-//            print("    didfinish getMessageData")
             getWhatData = ""
             do {
                 let resp = String(data: NSData(contentsOfURL: location)!, encoding: NSUTF8StringEncoding)
@@ -378,31 +323,20 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
 //                    print("    db沒有資料")
                     
                 } else {
-                    print("    db有資料，序列化")
+//                    print("    db有資料，序列化")
                     json = try NSJSONSerialization.JSONObjectWithData(NSData(contentsOfURL: location)!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
                     
-//                    print("=-=-=-=-=-=-=-=-= json[0].objectForKey(messageType) = \(json[0].objectForKey("messageType")!)")
-                    
-                    
-                    //test
-                    let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
-                    //        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-                    //        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-                    let prepareTime = dateFormatter.stringFromDate(NSDate())
-                    
+                    let prepareTime     = json[0].objectForKey("messageType")! //訊息識別用
                     let prepareStore    = json[0].objectForKey("messageStore")! //商店名稱
                     let prepareTitle    = json[0].objectForKey("messageTitle")!
                     let prepareSubtitle = json[0].objectForKey("messageSubtitle")!
                     let prepareContent  = json[0].objectForKey("messageContent")!
                     let prepareImage    = prepareTime.stringByReplacingOccurrencesOfString(":", withString: "-") + ".jpg"
                     let imgUrl          = "http://bing0112.100hub.net/bing/MessageImage/"+String((json[0].objectForKey("messageImage"))!)
-                    //                    print(imgUrl)
-                    
-                    //寫入手機sqlite資料庫
-                    let db = SQLiteDB.sharedInstance()
-                    db.query("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage, addFavorite) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)','no') ")
-                    print("_ _ _SQLiteDB query test _ _ _")
+                    //更新手機sqlite資料庫
+                    db.execute("update messagelocal set messageStore='\(prepareStore)', messageTitle='\(prepareTitle)', messageSubtitle='\(prepareSubtitle)', messageContent='\(prepareContent)', messageImage='\(prepareImage)' where messageTime='\(prepareTime)' ")
+//                    db.execute("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage, addFavorite) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)','no') ")
+                    print("_ _ _ SQLiteDB 更新 _ _ _")
                     
                     //圖片寫入Document
                     let imgData = NSData(contentsOfURL: NSURL(string: imgUrl)!)
@@ -411,10 +345,6 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
                         imgData?.writeToFile(path, atomically: false)
                         print("path: \(path)")
                     }
-                    //                    print("=-=-=-=-=-=-=-=-=-= \(data) =-=-=-=-=-=-=-=-=-=")
-                    //                    print("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)') ")
-                    
-                    //                    let asdf:UIScrollView = UIScrollView(frame: CGRectMake(0,0,100,100))
                 }
                 
             }catch let error as NSError {
@@ -430,17 +360,18 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
     //偵測到iBeacon訊息，建立本地推播 取得線上資料
     func showNotificationWhenEnter() {
 //        print("showNotificationWhenVeryClose")
-        if getWhatData != "getMessageData" {
-            getMessageData()
-            print("showNotificationWhenEnter ----------")
-        } else {
-            print("-----------------------------------1")
-        }
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
+        let msgTime = dateFormatter.stringFromDate(NSDate())
         
+        getMessageData(msgTime)
+        
+        //本地推播
         let localNotification:UILocalNotification = UILocalNotification()
         localNotification.alertAction = "開啟"
         localNotification.alertBody = "indoorBnW，歡迎光臨!"
-        localNotification.category = "EnterMarket"
+//        localNotification.category = "EnterMarket"
+        localNotification.category = msgTime
         localNotification.soundName = UILocalNotificationDefaultSoundName; //聲音
         //localNotification.soundName = "sound.caf";
         Sup.User.IconBadgeNumber += 1
@@ -448,26 +379,29 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         localNotification.fireDate = NSDate(timeIntervalSinceNow: 0)
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         
+        //先在sqlite建立初始資料，在didFinish下載完成後再update
+        db.execute("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage, addFavorite) values('\(msgTime)','','','','','','no') ")
+        
         //App在前景才顯示前景通知
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        print("現在處於 \(appDelegate.statusBackOrFore) @#@#@#@#@#@#@#@#@#@#")
         if appDelegate.statusBackOrFore == "fore" {
-            AZNotification.showNotificationWithTitle("歡迎光臨 家樂福", controller: self, notificationType: AZNotificationType.Success)
+            AZNotification.showNotificationWithTitle("歡迎光臨 家樂福", controller: self, notificationType: AZNotificationType.Success, messageTime: msgTime)
         }
     }
     func showNotificationWhenCloseProduct() {
 //        print("showNotificationWhenVeryClose")
-        if getWhatData != "getMessageData" {
-            getMessageData2()
-            print("showNotificationWhenCloseProduct ----------")
-        } else {
-            print("-------------------------------------------")
-        }
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
+        let msgTime = dateFormatter.stringFromDate(NSDate())
         
+        getMessageData2(msgTime)
+        
+        //本地推播
         let localNotification:UILocalNotification = UILocalNotification()
         localNotification.alertAction = "開啟"
         localNotification.alertBody = "indoorBnW，商品大特價!"
-        localNotification.category = "CloseProduct"
+//        localNotification.category = "CloseProduct"
+        localNotification.category = msgTime
         localNotification.soundName = UILocalNotificationDefaultSoundName; //聲音
         //localNotification.soundName = "sound.caf";
         localNotification.fireDate = NSDate(timeIntervalSinceNow: 0)
@@ -475,14 +409,16 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         localNotification.applicationIconBadgeNumber = Sup.User.IconBadgeNumber
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         
+        //先在sqlite建立初始資料，在didFinish下載完成後再update
+        db.execute("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage, addFavorite) values('\(msgTime)','','','','','','no') ")
+        
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        print("現在處於 \(appDelegate.statusBackOrFore) @#@#@#@#@#@#@#@#@#@#")
         if appDelegate.statusBackOrFore == "fore" {
-            AZNotification.showNotificationWithTitle("接近XX店", controller: self, notificationType: AZNotificationType.Success)
+            AZNotification.showNotificationWithTitle("果粉專賣店：Macbook Pro Retina 現正特價中", controller: self, notificationType: AZNotificationType.Success, messageTime: msgTime)
         }
     }
     
-    func getMessageData() {
+    func getMessageData(msgTime:String) {
 //        print("=== 進入門口")
         
         getWhatData = "getMessageData"
@@ -490,8 +426,9 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         let url = NSURL(string: "http://bing0112.100hub.net/bing/MessageLoad.php")
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: url!)
         
+        //"returnMessageType=EnterMarket" +
         let submitBody: String =
-        "returnMessageType=EnterMarket" +
+        "returnMessageType=\(msgTime)" +
         "&bySupervisor=Leo" +
         "&byStore=Leo-001"
         print("下載訊息 => http://bing0112.100hub.net/bing/MessageLoad.php?\(submitBody)")
@@ -507,7 +444,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
 //        print("beacon.swift: end ===== ")
     }
     
-    func getMessageData2() {
+    func getMessageData2(msgTime:String) {
 //        print("=== 靠近商品")
         
         getWhatData = "getMessageData"
@@ -515,8 +452,9 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         let url = NSURL(string: "http://bing0112.100hub.net/bing/MessageLoad.php")
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: url!)
         
+        //"returnMessageType=CloseProductA" +
         let submitBody: String =
-        "returnMessageType=CloseProductA" +
+        "returnMessageType=\(msgTime)" +
         "&bySupervisor=Leo" +
         "&byStore=Leo-004"
         print("下載訊息 => http://bing0112.100hub.net/bing/MessageLoad.php?\(submitBody)")
@@ -535,7 +473,6 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
     func getJsonCount() -> Int {
         return json.count
     }
-    
     
 }
 

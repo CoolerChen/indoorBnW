@@ -21,10 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var setting:Setting?
     
     //顯示訊息
-    var statusBackOrFore:String="back"
+    var statusBackOrFore:String="back" //fore, back
     var backScrollView:UIView!
     var scrollView:UIScrollView!
+    var closeImageView:UIImageView!
     var usedY:CGFloat = 0
+    var notificationCategory:String = ""
     
     var mydb:COpaquePointer=nil
 
@@ -83,70 +85,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("建立msg資料夾失敗：\(error)")
         }
         
+//        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         return true
     }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        print("WillResignActive")
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        print("DidEnterBackground")
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        print("WillEnterForeground")
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
-        //改成點了通知進來的才顯示訊息
-//        if setting == nil {
-//            setting = Setting()
-//        }
-//        if setting?.getJsonCount() > 0 {
-//            print("AppDelegate: 有message資料 執行showMessageView")
-//            showMessageView()
-//        }
+        print("這邊 DidBecomeActive")
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        print("WillTerminate")
     }
     
-    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        print("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
-        //        print(notification.category!)
-        switch notification.category! {
-        case "EnterMarket":
-            print("EnterMarket")
-            if setting == nil {
-                setting = Setting()
-            }
-            if setting?.getJsonCount() > 0 {
-                print("AppDelegate: 有message資料 執行showMessageView")
-                showMessageView()
-            }
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification)
+    {
+        print("didReceiveLocalNotification \(statusBackOrFore)")
+        print("notification.category! = \(notification.category!)")
+        if statusBackOrFore == "back" {
+            notificationCategory = notification.category!
+            performSelector(Selector("beforeShowMessageView"), withObject: nil, afterDelay: 1.0)
             
-            
-        case "CloseProduct":
-            print("CloseProduct")
-            
-            
-        default:
-            print("default")
+            Sup.User.IconBadgeNumber -= 1
+            UIApplication.sharedApplication().applicationIconBadgeNumber -= 1
+            UIApplication.sharedApplication().cancelLocalNotification(notification)
         }
-        
-        UIApplication.sharedApplication().cancelLocalNotification(notification)
     }
 
     //MARK: - 顯示訊息
-    func showMessageView() {
+    func beforeShowMessageView() {
+        showMessageView(notificationCategory)
+    }
+    func showMessageView(msgTime:String) {
         backScrollView?.hidden = false
+        let scrollviewBackColor:UIColor = UIColor(red: 0.85, green: 0.85, blue: 0.58, alpha: 1)
+        let txtBackgroundColor:UIColor = UIColor(red: 250/255.0, green: 243/255.0, blue: 203/255.0, alpha: 1)
         
+        //
+        let db = SQLiteDB.sharedInstance()
+        let data = db.query("select * from messagelocal where messageTime='\(msgTime)' ")
+
+        notificationCategory = ""
         
         if backScrollView == nil {
             let screenW = UIScreen.mainScreen().bounds.size.width
@@ -155,7 +152,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             backScrollView = UIScrollView(frame: CGRectMake(0, 0, //x, y
                 screenW, screenH*1.0)) //w, h
             backScrollView?.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
-//            msgView?.transform = CGAffineTransformMakeScale(0.1, 0.1)
             
             self.window?.addSubview(backScrollView!)
         }
@@ -163,35 +159,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewW = (backScrollView?.frame.width)!
         let viewH = (backScrollView?.frame.height)!
         let interval:CGFloat = 10
+        let corRadius:CGFloat = 5
         
         if scrollView != nil {
             (scrollView as UIView).removeFromSuperview()
         }
+        if self.closeImageView != nil {
+            self.closeImageView.removeFromSuperview()
+        }
         
         //內ScrollView
-        let viewStartY:CGFloat = 0
-        
+        let viewStartY:CGFloat = 20
         scrollView = UIScrollView(frame: CGRectMake(
             (viewW - viewW*0.9)/2, //x
             (( viewH-viewStartY ) - ( viewH-viewStartY )*0.85)/2 + viewStartY, //y
             viewW*0.9,
             ( viewH-viewStartY )*0.85)) //w, h
-        scrollView.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.58, alpha: 1)
-        scrollView.layer.cornerRadius = 10
+//        scrollView = UIScrollView(frame: CGRectMake(
+//            (viewW - viewW*0.9)/2, //x
+//            (viewH - viewH*0.85)/2 + viewStartY, //y
+//            viewW*0.9,
+//            ( viewH-viewStartY )*0.85)) //w, h
+        scrollView.backgroundColor = scrollviewBackColor
+        scrollView.layer.cornerRadius = corRadius*2
         scrollView.layer.masksToBounds = true
         self.window?.addSubview(scrollView)
-        usedY = 20 //scrollView.frame.origin.y + 20
+        usedY = 20
         
         scrollView.hidden = false
+        
+        //商店
+        if data.count > 0 {
+            if (data[0]["messageStore"] as! String) != "" {
+                let storeLabel = UILabel(frame: CGRectMake(
+                    (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
+                    usedY, //y
+                    scrollView.frame.width*0.9, 35)) //w, h
+                storeLabel.backgroundColor = txtBackgroundColor
+                storeLabel.layer.cornerRadius = corRadius
+                storeLabel.layer.masksToBounds = true
+                storeLabel.text = data[0]["messageStore"] as! String
+                scrollView.addSubview(storeLabel)
+                usedY += storeLabel.frame.height + interval
+            }
+        }
         
         //標題
         let titleLabel = UILabel(frame: CGRectMake(
             (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
             usedY, //y
             scrollView.frame.width*0.9, 35)) //w, h
-        titleLabel.backgroundColor = UIColor.lightGrayColor()
-        titleLabel.text = json[0].objectForKey("messageTitle") as? String
-print("標題: \(json[0].objectForKey("messageTitle") as? String)")
+        titleLabel.backgroundColor = txtBackgroundColor
+        titleLabel.layer.cornerRadius = corRadius
+        titleLabel.layer.masksToBounds = true
+//        titleLabel.text = json[0].objectForKey("messageTitle") as? String
+        titleLabel.text = data.count>0 ? data[0]["messageTitle"] as! String : ""
+//        print(data[0]["messageTitle"] as! String)
+//print("標題: \(json[0].objectForKey("messageTitle") as? String)")
         scrollView.addSubview(titleLabel)
         usedY += titleLabel.frame.height + interval
         
@@ -200,8 +224,12 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
             titleLabel.frame.origin.x, //x
             usedY, //y
             scrollView.frame.width*0.9, 35)) //w, h
-        subtitleLabel.backgroundColor = UIColor.lightGrayColor()
-        subtitleLabel.text = json[0].objectForKey("messageSubtitle") as? String
+        subtitleLabel.backgroundColor = txtBackgroundColor
+        subtitleLabel.layer.cornerRadius = corRadius
+        subtitleLabel.layer.masksToBounds = true
+//        subtitleLabel.text = json[0].objectForKey("messageSubtitle") as? String
+        subtitleLabel.text = data.count>0 ? data[0]["messageSubtitle"] as! String : ""
+//        print(data[0]["messageSubtitle"] as! String)
         scrollView.addSubview(subtitleLabel)
         usedY += subtitleLabel.frame.height + interval
         
@@ -210,9 +238,13 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
             titleLabel.frame.origin.x, //x
             usedY, //y
             scrollView.frame.width*0.9, 70)) //w, h
-        contentTextView.backgroundColor = UIColor.lightGrayColor()
+        contentTextView.backgroundColor = txtBackgroundColor
+        contentTextView.layer.cornerRadius = corRadius
+        contentTextView.layer.masksToBounds = true
         contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 17) //改變textview字型大小
-        contentTextView.text = json[0].objectForKey("messageContent") as? String
+//        contentTextView.text = json[0].objectForKey("messageContent") as? String
+        contentTextView.text = data.count>0 ? data[0]["messageContent"] as! String : ""
+//        print(data[0]["messageContent"] as! String)
         contentTextView.selectable = false
         scrollView.addSubview(contentTextView)
         usedY += contentTextView.frame.height + interval
@@ -222,15 +254,19 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
             (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
             usedY, //y
             scrollView.frame.width*0.9, 200)) //w, h
-        imageImageView.backgroundColor = UIColor.lightGrayColor()
+        imageImageView.backgroundColor = txtBackgroundColor
+        imageImageView.layer.cornerRadius = corRadius
+        imageImageView.layer.masksToBounds = true
         imageImageView.userInteractionEnabled = false
         
-        let imageName = json[0].objectForKey("messageImage") as? String
-        let tempData = NSData(contentsOfURL: NSURL(string: "http://bing0112.100hub.net/bing/MessageImage/\(imageName!)")!)
-        if tempData != nil {
-            imageImageView.image = UIImage(data: tempData!)
-        } else {
-            imageImageView.backgroundColor = UIColor.redColor()
+        let imageName = data.count>0 ? data[0]["messageImage"] as! String : ""
+//        print(imageName)
+        if imageName != "" {
+//            let tempData = NSData(contentsOfURL: NSURL(string: "http://bing0112.100hub.net/bing/MessageImage/\(imageName)")!)
+            let tempData = NSData(contentsOfFile: NSHomeDirectory() + "/Documents/images/msg/" + imageName)
+            if tempData != nil {
+                imageImageView.image = UIImage(data: tempData!)
+            }
         }
         scrollView.addSubview(imageImageView)
         usedY += imageImageView.frame.height + interval + 200
@@ -238,15 +274,11 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
         //ScrollView ContentSize
         scrollView.contentSize = CGSizeMake(scrollView.frame.width, usedY)
         
-        
-//        print("AppDelegate: json = \(json)")
-        json = [] //顯示訊息後清空，避免重複顯示
-        Sup.User.IconBadgeNumber -= 1
-//        UIApplication.sharedApplication().applicationIconBadgeNumber -= 1
-//        UIApplication.sharedApplication().cancelAllLocalNotifications()
+//        json = [] //顯示訊息後清空，避免重複顯示
         
         scrollView.transform = CGAffineTransformMakeScale(0.1, 0.1)
-        UIView.transitionWithView(scrollView, duration: 0.35, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+        UIView.transitionWithView(scrollView, duration: 0.35, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void
+            in
             self.scrollView.transform = CGAffineTransformMakeScale(1.1, 1.1);
             
             }, completion: { (finished: Bool) -> Void in
@@ -257,29 +289,49 @@ print("標題: \(json[0].objectForKey("messageTitle") as? String)")
                     }, completion: { (finished: Bool) -> Void in
                         //
 //                        print("showMessage.swift 縮小訊息比例1.0")
+                        //關閉訊息圖案XX
+                        let closeW:CGFloat = 35
+                        self.closeImageView = UIImageView(frame: CGRectMake(
+                            (viewW - viewW*0.1/2) - closeW/2 - 2, //x
+                            (( viewH-viewStartY ) - ( viewH-viewStartY )*0.85)/2 + viewStartY - closeW/2 + 2, //y
+                            35, 35)) //w, h
+                        //        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \(closeImageView.frame.origin.x) \(closeImageView.frame.origin.y)")
+                        self.closeImageView.userInteractionEnabled = true
+                        self.closeImageView.layer.cornerRadius = corRadius
+                        self.closeImageView.layer.masksToBounds = true
+                        self.closeImageView.image = UIImage(named: "close")
+                        self.window?.addSubview(self.closeImageView)
+                        //加入event
+                        let closeimgTapGesture1 = UITapGestureRecognizer(target: self, action: "viewTouch:")
+                        self.closeImageView.addGestureRecognizer(closeimgTapGesture1)
                 })
 //                print("showMessage.swift 放大訊息比例1.1")
         })
         
         //add event
-        let tapGesture = UITapGestureRecognizer(target: self, action: "viewTouch:")
-        backScrollView?.addGestureRecognizer(tapGesture)
+        let viewTapGesture = UITapGestureRecognizer(target: self, action: "viewTouch:")
+        backScrollView?.addGestureRecognizer(viewTapGesture)
     }
     
     func viewTouch(sender: UITapGestureRecognizer) {
         scrollView.hidden = true
         backScrollView.hidden = true
+        closeImageView.hidden = true
     }
 
     func appMovedToBackground() {
         print("App moved to background! 背景")
         statusBackOrFore = "back"
-        print("                  \(statusBackOrFore)")
+//        print("                  \(statusBackOrFore)")
     }
     func appMoveToForeground() {
         print("App moved to foreground! 前景")
         statusBackOrFore = "fore"
-        print("                  \(statusBackOrFore)")
+//        print("                  \(statusBackOrFore)")
     }
+    
+//    func getMyDb() -> COpaquePointer {
+//        return mydb
+//    }
 }
 

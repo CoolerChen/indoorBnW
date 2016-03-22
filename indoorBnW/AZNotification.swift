@@ -14,15 +14,16 @@ var usedY:CGFloat = 0
 
 class AZNotification
 {
-    class func showNotificationWithTitle(titleString :String, var controller :UIViewController!, notificationType :AZNotificationType)
+    class func showNotificationWithTitle(titleString :String, var controller :UIViewController!, notificationType :AZNotificationType, messageTime:String)
     {
         targetView = controller
         if controller.navigationController != nil {
-            print("控制的navigationController不是空")
             controller = controller.navigationController
         }
         
-        let azNotificationView = AZNotificationView(title: titleString, referenceView: controller.view, notificationType: .Success)
+        let azNotificationView = AZNotificationView(title: titleString, referenceView: controller.view, notificationType: .Success, msgTime: messageTime)
+        
+        
 
         controller.view.addSubview(azNotificationView)
         
