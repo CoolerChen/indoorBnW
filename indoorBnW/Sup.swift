@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Sup: NSObject {
+class Sup {
     static var userOrSupervisor:String = "user"
     static var login:Login?
     

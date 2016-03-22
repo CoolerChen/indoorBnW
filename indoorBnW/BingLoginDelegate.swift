@@ -10,10 +10,7 @@ import UIKit
 
 protocol BingLoginDelegate{
     func gotowhere() -> UIViewController
-    
 }
-
-
 class Bing {
     var delegate:BingLoginDelegate?
     var me:UIViewController?
