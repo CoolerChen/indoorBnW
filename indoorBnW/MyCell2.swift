@@ -49,12 +49,12 @@ class MyCell2: UITableViewCell {
         
         
         view.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width, 100)
-        view.backgroundColor = UIColor.blueColor()
-        view.alpha = 0.1
+        view.backgroundColor = UIColor(red: 0.36, green: 0.68, blue: 1, alpha: 0.7)
+        
         self.addSubview(view)
         
         
-        textView.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width, 100)
+        textView.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width-10, 100)
         imgView.frame = CGRectMake(self.frame.size.width, 10, 90, 90)
         lab1.frame = CGRectMake(self.frame.size.width, 10, self.frame.size.width - 100, 30)
         lab2.frame = CGRectMake(self.frame.size.width, 40, self.frame.size.width - 100, 30)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Sup: NSObject {
+class Sup {
     static var userOrSupervisor:String = "user"
     static var login:Login?
     
@@ -38,7 +38,8 @@ class Sup: NSObject {
     //新增Btn
     static func addBtn(VC:UIViewController,frame:CGRect,str:String,tag:Int) -> UIButton{
         let btn:UIButton = UIButton()
-        btn.backgroundColor = UIColor.blueColor()
+        btn.backgroundColor = UIColor(red: 0.36, green: 0.68, blue: 1, alpha: 0.7)
+        btn.backgroundColor = UIColor(red: 0.14, green: 0.51, blue: 0.9, alpha: 0.7)
         btn.frame = frame
         btn.addTarget(VC, action: Selector("onBtnAction:"), forControlEvents: UIControlEvents.TouchUpInside)
         btn.setTitle(str, forState: UIControlState.Normal)

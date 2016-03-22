@@ -67,7 +67,7 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
         if longPressRecognizer.state == UIGestureRecognizerState.Began{
             
         }else if longPressRecognizer.state == UIGestureRecognizerState.Changed{
-            
+            return
         }else if longPressRecognizer.state == UIGestureRecognizerState.Ended || longPressRecognizer.state == UIGestureRecognizerState.Cancelled{
             Sup.PhotoLibrary(self)
             bol = false
@@ -102,6 +102,7 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
                 textFieldAry[i].text = ""
             }
             textView.text = ""
+            imageView.image = UIImage(named: "ibeacon.png")
             Sup.mySQL(product!, url: "http://bing0112.100hub.net/bing/product.php", submitBody: "productByStore=\(Sup.Supervisor.storeID)&productBySupervisor=\(Sup.Supervisor.supervisor)")
             //上傳成功後取得productID 
 //            再把圖片丟上去

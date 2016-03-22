@@ -18,7 +18,7 @@ class MyImageView2: UIImageView {
     }
     func setTarget(Target:UIViewController){
         let m_longPressRecognizer:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: Target, action: Selector("handleLongPressFrom:"))
-        m_longPressRecognizer.minimumPressDuration = 0.0//長按時間
+        m_longPressRecognizer.minimumPressDuration = 0.1//長按時間
         m_longPressRecognizer.allowableMovement = 1.0 //移動的更新速率  手指開合的瞬間開始觸發
         m_longPressRecognizer.cancelsTouchesInView = false//被外來因素取消
         self.addGestureRecognizer(m_longPressRecognizer)
