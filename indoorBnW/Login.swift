@@ -64,7 +64,7 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         segm.frame = CGRectMake(self.view.frame.size.width , 200, btnW,btnH)
         segm.selectedSegmentIndex = 0
         segm.addTarget(self, action: "onSegmAction:", forControlEvents: .ValueChanged)
-        segm.tintColor = UIColor.blueColor()
+        segm.tintColor = UIColor(red: 0.14, green: 0.51, blue: 0.9, alpha: 1)
         self.view.addSubview(segm)
         
         ibeacon = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-50, -100, 100, 100))
@@ -91,16 +91,22 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
             if registeredUser == nil{
                 registeredUser = RegisteredUser()
             }
+            actiView.hidden = true
+            acti.stopAnimating()
             self.navigationController?.pushViewController(registeredUser!, animated: true)
         case 2:
             if registeredSupervisor == nil{
                 registeredSupervisor = RegisteredSupervisor()
             }
+            actiView.hidden = true
+            acti.stopAnimating()
             self.navigationController?.pushViewController(registeredSupervisor!, animated: true)
         case 3:
             if passer == nil{
                 passer = Passer()
             }
+            actiView.hidden = true
+            acti.stopAnimating()
             self.navigationController?.pushViewController(passer!, animated: true)
             
         default:
