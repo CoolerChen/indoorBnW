@@ -145,7 +145,7 @@ class Sup {
         lab.textColor = UIColor.whiteColor()
         return lab
     }
-    //下載頭像
+    //下載圖片
     static func downloadimage(url:String) -> UIImage {
         var img:UIImage = UIImage()
         let url = NSURL(string: url)
