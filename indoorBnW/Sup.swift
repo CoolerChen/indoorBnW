@@ -108,7 +108,8 @@ class Sup {
         imageView.image = UIImage(named: "ibeacon.png")
         return imageView
     }
-    //取得相簿  要有protocol<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+    //取得相簿  
+    //要有protocol<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
     //static func tackPhoto(ViewController:UIViewController,delegeat: protocol<UINavigationControllerDelegate,UIImagePickerControllerDelegate>){
     static func PhotoLibrary(VC:UIViewController){
         var m_picker: UIImagePickerController
@@ -136,6 +137,7 @@ class Sup {
 //        scrollerView.minimumZoomScale = 1.0  //最小變焦倍數
         return scrollerView
     }
+    //Label
     static func addLabel(frame:CGRect,str:String) -> UILabel {
         let lab:UILabel = UILabel()
         lab.text = str
@@ -164,6 +166,7 @@ class Sup {
         UIGraphicsEndImageContext()
         return newImage
     }
+    //有觸控的ImageView
     static func addMyImageView(frame:CGRect,Taraget:UIViewController) -> MyImageView2{
         let imageView:MyImageView2 = MyImageView2(frame: frame)
         imageView.setTarget(Taraget)
@@ -172,6 +175,7 @@ class Sup {
         //imageView.backgroundColor = UIColor.lightGrayColor()
         return imageView
     }
+    //Loading圖
     static func addActivityIndicatorView(frame:CGRect) -> UIActivityIndicatorView{
         let inter:UIActivityIndicatorView = UIActivityIndicatorView()
         inter.frame = frame
@@ -179,6 +183,7 @@ class Sup {
         inter.color = UIColor.whiteColor()
         return inter
     }
+    //普通View
     static func addView(frame:CGRect) -> UIView{
         let view:UIView = UIView()
         view.backgroundColor = UIColor.blackColor()
