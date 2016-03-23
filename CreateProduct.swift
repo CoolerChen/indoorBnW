@@ -102,7 +102,7 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
                 textFieldAry[i].text = ""
             }
             textView.text = ""
-            imageView.image = UIImage(named: "ibeacon.png")
+            
             Sup.mySQL(product!, url: "http://bing0112.100hub.net/bing/product.php", submitBody: "productByStore=\(Sup.Supervisor.storeID)&productBySupervisor=\(Sup.Supervisor.supervisor)")
             //上傳成功後取得productID 
 //            再把圖片丟上去
@@ -112,6 +112,7 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
             //上傳檔案呼叫此物件實體執行物件方法
             let uploadimage:UploadImage = UploadImage()
             uploadimage.myImageUploadRequest("http://bing0112.100hub.net/bing/productUploadImage.php", img: imageView.image!, fileName: Sup.Supervisor.productID)
+            imageView.image = UIImage(named: "ibeacon.png")
             
         }
         actiView.hidden = true
