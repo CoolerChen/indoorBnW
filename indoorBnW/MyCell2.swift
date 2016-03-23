@@ -80,6 +80,7 @@ class MyCell2: UITableViewCell {
     //準備被拿出來重用
     override func prepareForReuse() {
         super.prepareForReuse()
+        imgView.image = nil
         view.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width, 100)
         textView.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width, 100)
         imgView.frame = CGRectMake(self.frame.size.width, 10, 90, 90)

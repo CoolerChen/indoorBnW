@@ -61,6 +61,7 @@ class MyCell1: UITableViewCell {
         
     }
     override func prepareForReuse() {
+        
         lab1.frame = CGRectMake(30, -self.frame.size.height, self.frame.size.width, 20)
         lab2.frame = CGRectMake(30, -self.frame.size.height, self.frame.size.width, 20)
         lab3.frame = CGRectMake(30, -self.frame.size.height, self.frame.size.width, 20)
