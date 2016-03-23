@@ -43,6 +43,9 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         
         m_messageIndex = 0
         if whichPage == "browse" {
+            //進入訊息頁 把IconBadgeNumber歸零
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            
             if data?.count > 0 {
                 m_messageIndex = 1
                 let rightBtnItem = UIBarButtonItem(title: "清除資料", style: UIBarButtonItemStyle.Done, target: self, action: "clearSqliteMessage")

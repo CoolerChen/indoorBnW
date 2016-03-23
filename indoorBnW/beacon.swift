@@ -22,13 +22,7 @@ var beaconRegion2:CLBeaconRegion!
 extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSessionDownloadDelegate {
     
     func setupBeacon() {
-//        let notificationCenter = NSNotificationCenter.defaultCenter()
-//        notificationCenter.addObserver(self, selector: "appMovedToBackground", name: UIApplicationWillResignActiveNotification, object: nil)
-//        notificationCenter.addObserver(self, selector: "appMoveToForeground", name: UIApplicationDidBecomeActiveNotification, object: nil)
-        
-        print("setupBeacon")
         locationManager.delegate = self
-//        locationManager2.delegate = self
         
         // Enter Your iBeacon UUID
         let uuid = NSUUID(UUIDString: "F34A1A1F-500F-48FB-AFAA-9584D641D7B1")!
@@ -184,45 +178,12 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         {
         case .Inside:
             //The user is inside the iBeacon range.
-            
-//            if region == beaconRegion1 {
-//                locationManager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
-//            }
-//            else if region == beaconRegion2 {
-//                locationManager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
-//            }
-            
-//            if (region as! CLBeaconRegion).proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1" {
-                locationManager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
-//                print("beacon.swift: startRanging1")
-//            } else if (region as! CLBeaconRegion).proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B2" {
-//                locationManager2.startRangingBeaconsInRegion(region as! CLBeaconRegion)
-//                print("beacon.swift: startRanging2")
-//            }
-            print("beacon.swift: startRanging")
-            
+            locationManager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
             break
             
         case .Outside:
             //The user is outside the iBeacon range.
-            
-//            if region == beaconRegion1 {
-//                locationManager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
-//            }
-//            else if region == beaconRegion2 {
-//                locationManager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
-//            }
-            
-//            print("region uuid: \((region as! CLBeaconRegion).proximityUUID.UUIDString)")
-//            if (region as! CLBeaconRegion).proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1" {
-                locationManager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
-//                print("beacon.swift: stopRanging1")
-//            } else if (region as! CLBeaconRegion).proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B2" {
-//                locationManager2.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
-//                print("beacon.swift: stopRanging2")
-//            }
-            print("beacon.swift: stopRanging")
-            
+            locationManager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
             break
             
         default :
@@ -233,14 +194,12 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
     
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion)
     {
-        //2.
         //==================== Tells the delegate that one or more beacons are in range. ====================
         let foundBeacons = beacons
         
         if foundBeacons.count > 0 {
             if let closestBeacon = foundBeacons[0] as? CLBeacon
             {
-//                print(closestBeacon.accuracy*100)
                 if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1"
                 {
                     var proximityMessage: String!
@@ -336,14 +295,13 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
                     //更新手機sqlite資料庫
                     db.execute("update messagelocal set messageStore='\(prepareStore)', messageTitle='\(prepareTitle)', messageSubtitle='\(prepareSubtitle)', messageContent='\(prepareContent)', messageImage='\(prepareImage)' where messageTime='\(prepareTime)' ")
 //                    db.execute("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage, addFavorite) values('\(prepareTime)','\(prepareStore)','\(prepareTitle)','\(prepareSubtitle)','\(prepareContent)','\(prepareImage)','no') ")
-                    print("_ _ _ SQLiteDB 更新 _ _ _")
+                    print("beacon.swift: _ _ _ SQLiteDB 更新 _ _ _")
                     
                     //圖片寫入Document
                     let imgData = NSData(contentsOfURL: NSURL(string: imgUrl)!)
                     if imgData != nil {
                         let path = NSHomeDirectory() + "/Documents/images/msg/\(prepareImage)"
                         imgData?.writeToFile(path, atomically: false)
-                        print("path: \(path)")
                     }
                 }
                 
@@ -365,11 +323,12 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         let msgTime = dateFormatter.stringFromDate(NSDate())
         
         getMessageData(msgTime)
+        let notificationString = "歡迎光臨 家樂福！\n點擊查看今日優惠"
         
         //本地推播
         let localNotification:UILocalNotification = UILocalNotification()
         localNotification.alertAction = "開啟"
-        localNotification.alertBody = "indoorBnW，歡迎光臨!"
+        localNotification.alertBody = notificationString
 //        localNotification.category = "EnterMarket"
         localNotification.category = msgTime
         localNotification.soundName = UILocalNotificationDefaultSoundName; //聲音
@@ -385,7 +344,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         //App在前景才顯示前景通知
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if appDelegate.statusBackOrFore == "fore" {
-            AZNotification.showNotificationWithTitle("歡迎光臨 家樂福", controller: self, notificationType: AZNotificationType.Success, messageTime: msgTime)
+            AZNotification.showNotificationWithTitle(notificationString, controller: self, notificationType: AZNotificationType.Success, messageTime: msgTime)
         }
     }
     func showNotificationWhenCloseProduct() {
@@ -395,11 +354,12 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         let msgTime = dateFormatter.stringFromDate(NSDate())
         
         getMessageData2(msgTime)
+        let notificationString = "果粉專賣店：\nMacbook Pro Retina 現正特價中"
         
         //本地推播
         let localNotification:UILocalNotification = UILocalNotification()
         localNotification.alertAction = "開啟"
-        localNotification.alertBody = "indoorBnW，商品大特價!"
+        localNotification.alertBody = notificationString
 //        localNotification.category = "CloseProduct"
         localNotification.category = msgTime
         localNotification.soundName = UILocalNotificationDefaultSoundName; //聲音
@@ -414,7 +374,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if appDelegate.statusBackOrFore == "fore" {
-            AZNotification.showNotificationWithTitle("果粉專賣店：Macbook Pro Retina 現正特價中", controller: self, notificationType: AZNotificationType.Success, messageTime: msgTime)
+            AZNotification.showNotificationWithTitle(notificationString, controller: self, notificationType: AZNotificationType.Success, messageTime: msgTime)
         }
     }
     
@@ -431,7 +391,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         "returnMessageType=\(msgTime)" +
         "&bySupervisor=Leo" +
         "&byStore=Leo-001"
-        print("下載訊息 => http://bing0112.100hub.net/bing/MessageLoad.php?\(submitBody)")
+//        print("下載訊息 => http://bing0112.100hub.net/bing/MessageLoad.php?\(submitBody)")
         
         request.HTTPMethod = "POST"
         request.HTTPBody = submitBody.dataUsingEncoding(NSUTF8StringEncoding)
@@ -455,9 +415,9 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         //"returnMessageType=CloseProductA" +
         let submitBody: String =
         "returnMessageType=\(msgTime)" +
-        "&bySupervisor=Leo" +
-        "&byStore=Leo-004"
-        print("下載訊息 => http://bing0112.100hub.net/bing/MessageLoad.php?\(submitBody)")
+        "&bySupervisor=Bing" +
+        "&byStore=Bing-021"
+//        print("下載訊息 => http://bing0112.100hub.net/bing/MessageLoad.php?\(submitBody)")
         
         request.HTTPMethod = "POST"
         request.HTTPBody = submitBody.dataUsingEncoding(NSUTF8StringEncoding)
@@ -467,7 +427,6 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         
         let dataTask = session.downloadTaskWithRequest(request)
         dataTask.resume()
-        print("beacon.swift: end ===== ")
     }
     
     func getJsonCount() -> Int {

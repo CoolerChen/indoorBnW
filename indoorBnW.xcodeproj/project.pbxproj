@@ -17,6 +17,7 @@
 		37188A361C9FD36300116338 /* ibeacon.png in Resources */ = {isa = PBXBuildFile; fileRef = 37188A351C9FD36300116338 /* ibeacon.png */; };
 		B337614E1CA0FC2200629D1F /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B337614D1CA0FC2200629D1F /* SQLiteDB.swift */; };
 		B33761501CA0FC2600629D1F /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = B337614F1CA0FC2600629D1F /* String-Extras.swift */; };
+		B33761541CA18E6000629D1F /* MessageUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33761531CA18E6000629D1F /* MessageUIView.swift */; };
 		B33E72EC1C98E97800923F7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E72EB1C98E97800923F7E /* AppDelegate.swift */; };
 		B33E72F31C98E97800923F7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F21C98E97800923F7E /* Assets.xcassets */; };
 		B33E72F61C98E97800923F7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B33E72F41C98E97800923F7E /* LaunchScreen.storyboard */; };
@@ -63,6 +64,7 @@
 		37188A351C9FD36300116338 /* ibeacon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ibeacon.png; sourceTree = "<group>"; };
 		B337614D1CA0FC2200629D1F /* SQLiteDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDB.swift; sourceTree = "<group>"; };
 		B337614F1CA0FC2600629D1F /* String-Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-Extras.swift"; sourceTree = "<group>"; };
+		B33761531CA18E6000629D1F /* MessageUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageUIView.swift; sourceTree = "<group>"; };
 		B33E72E81C98E97800923F7E /* indoorBnW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = indoorBnW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33E72EB1C98E97800923F7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B33E72F21C98E97800923F7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				B33E73281C98F5B000923F7E /* beacon.swift */,
+				B33761531CA18E6000629D1F /* MessageUIView.swift */,
 			);
 			name = Beacon;
 			sourceTree = "<group>";
@@ -267,7 +270,7 @@
 				TargetAttributes = {
 					B33E72E71C98E97800923F7E = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = C5DGZJU43C;
+						DevelopmentTeam = 482N23KZ42;
 					};
 				};
 			};
@@ -311,6 +314,7 @@
 				B33E73121C98EBAA00923F7E /* Store.swift in Sources */,
 				37188A021C9BE78600116338 /* MyCell2.swift in Sources */,
 				B33E73021C98EB8300923F7E /* Sup.swift in Sources */,
+				B33761541CA18E6000629D1F /* MessageUIView.swift in Sources */,
 				B33E73111C98EBAA00923F7E /* Supervisor.swift in Sources */,
 				B33E73291C98F5B000923F7E /* beacon.swift in Sources */,
 				B33E73141C98EBAA00923F7E /* Message.swift in Sources */,
@@ -454,7 +458,7 @@
 				INFOPLIST_FILE = indoorBnW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnWb;
+				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "indoorBnW-Bridging-Header.h";
@@ -472,7 +476,7 @@
 				INFOPLIST_FILE = indoorBnW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnWb;
+				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "indoorBnW-Bridging-Header.h";
