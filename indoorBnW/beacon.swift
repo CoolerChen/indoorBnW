@@ -16,6 +16,7 @@ var jsons = []
 var json = []
 //var backScrollView:UIScrollView!
 var isShow = false
+var beaconRegion0:CLBeaconRegion!
 var beaconRegion1:CLBeaconRegion!
 var beaconRegion2:CLBeaconRegion!
 
@@ -25,21 +26,33 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         locationManager.delegate = self
         
         // Enter Your iBeacon UUID
-        let uuid = NSUUID(UUIDString: "F34A1A1F-500F-48FB-AFAA-9584D641D7B1")!
+        let uuid0 = NSUUID(UUIDString: "F34A1A1F-500F-48FB-AFAA-9584D641D7B0")!
+        let uuid1 = NSUUID(UUIDString: "F34A1A1F-500F-48FB-AFAA-9584D641D7B1")!
         let uuid2 = NSUUID(UUIDString: "F34A1A1F-500F-48FB-AFAA-9584D641D7B2")!
         
         // Use identifier like your company name or website
-        let identifier = "com.appcoda.beacondemo"
-        let identifier2 = "com.appcoda.beacondemo2"
+        let identifier0 = "com.beacondemo0"
+        let identifier1 = "com.beacondemo1"
+        let identifier2 = "com.beacondemo2"
         
-        let Major:CLBeaconMajorValue = 1
-        let Minor:CLBeaconMinorValue = 1
+        let Major0:CLBeaconMajorValue = 1
+        let Minor0:CLBeaconMinorValue = 1
+        let Major1:CLBeaconMajorValue = 1
+        let Minor1:CLBeaconMinorValue = 1
         let Major2:CLBeaconMajorValue = 1
-        let Minor2:CLBeaconMinorValue = 2
+        let Minor2:CLBeaconMinorValue = 1
         
         //第一個beaconRegion
-        beaconRegion1 = CLBeaconRegion(proximityUUID: uuid, major: Major, minor: Minor, identifier: identifier)
-//        beaconRegion1 = CLBeaconRegion(proximityUUID: uuid, identifier: identifier)
+        beaconRegion0 = CLBeaconRegion(proximityUUID: uuid0, major: Major0, minor: Minor0, identifier: identifier0)
+        // called delegate when Enter iBeacon Range
+        beaconRegion0.notifyOnEntry = true
+        // called delegate when Exit iBeacon Range
+        beaconRegion0.notifyOnExit = true
+        // ci: Notify whenever app enters or leaves a beacon region.
+        beaconRegion0.notifyEntryStateOnDisplay = true
+        
+        //第二個beaconRegion
+        beaconRegion1 = CLBeaconRegion(proximityUUID: uuid1, major: Major1, minor: Minor1, identifier: identifier1)
         // called delegate when Enter iBeacon Range
         beaconRegion1.notifyOnEntry = true
         // called delegate when Exit iBeacon Range
@@ -47,7 +60,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         // ci: Notify whenever app enters or leaves a beacon region.
         beaconRegion1.notifyEntryStateOnDisplay = true
         
-//        //第二個beaconRegion
+        //第三個beaconRegion
         beaconRegion2 = CLBeaconRegion(proximityUUID: uuid2, major: Major2, minor: Minor2, identifier: identifier2)
         // called delegate when Enter iBeacon Range
         beaconRegion2.notifyOnEntry = true
@@ -60,14 +73,11 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         // Requests permission to use location services
         locationManager.requestAlwaysAuthorization()
         // Starts monitoring the specified iBeacon Region
+        locationManager.startMonitoringForRegion(beaconRegion0)
         locationManager.startMonitoringForRegion(beaconRegion1)
         locationManager.startMonitoringForRegion(beaconRegion2)
         // ci: In order to make sure that iOS doesn’t stop location updates when the app is idle for some time and is in background, we should set this property as false.
         locationManager.pausesLocationUpdatesAutomatically = false
-        
-//        locationManager2.requestAlwaysAuthorization()
-//        locationManager2.startMonitoringForRegion(beaconRegion2)
-//        locationManager2.pausesLocationUpdatesAutomatically = false
     }
     
     func simpleAlert (title:String,message:String) {
@@ -200,7 +210,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         if foundBeacons.count > 0 {
             if let closestBeacon = foundBeacons[0] as? CLBeacon
             {
-                if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1"
+                if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B0"
                 {
                     var proximityMessage: String!
                     if lastStage1 != closestBeacon.proximity {
@@ -210,28 +220,28 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
                             
                             case .Immediate:
                                 proximityMessage = "Very close"
-                                print("beacon.swift: Very close.1 ==========")
+                                print("beacon.swift: Very close.0 ==========")
                                 self.view.backgroundColor = UIColor.greenColor()
                                 showNotificationWhenEnter()
                                 
                             case .Near:
                                 proximityMessage = "Near"
                                 self.view.backgroundColor = UIColor.lightGrayColor()
-                                print("beacon.swift: Near.1")
+                                print("beacon.swift: Near.0")
                                 
                             case .Far:
                                 proximityMessage = "Far"
                                 self.view.backgroundColor = UIColor.blackColor()
-                                print("beacon.swift: Far.1")
+                                print("beacon.swift: Far.0")
                             
                             default:
                                 proximityMessage = "Where's the beacon?"
                                 self.view.backgroundColor = UIColor.redColor()
-                                print("beacon.swift: Where's the beacon.1")
+                                print("beacon.swift: Where's the beacon.0")
                         }
                     }
                 }
-                else if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B2"
+                else if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B1"
                 {
                     var proximityMessage: String!
                     if lastStage2 != closestBeacon.proximity {
@@ -242,24 +252,56 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
                             case .Immediate:
                                 proximityMessage = "Very close"
                                 
-                                print("beacon.swift: Very close.2 ==========")
+                                print("beacon.swift: Very close.1 ==========")
                                 self.view.backgroundColor = UIColor.greenColor()
-                                showNotificationWhenCloseProduct()
+                                showNotificationWhenEnterStore1()
                                 
                             case .Near:
                                 proximityMessage = "Near"
                                 self.view.backgroundColor = UIColor.lightGrayColor()
-                                print("beacon.swift: Near.2")
+                                print("beacon.swift: Near.1")
                                 
                             case .Far:
                                 proximityMessage = "Far"
                                 self.view.backgroundColor = UIColor.blackColor()
-                                print("beacon.swift: Far.2")
+                                print("beacon.swift: Far.1")
                                 
                             default:
                                 proximityMessage = "Where's the beacon?"
                                 self.view.backgroundColor = UIColor.redColor()
-                                print("beacon.swift: Where's the beacon.2")
+                                print("beacon.swift: Where's the beacon.1")
+                        }
+                    }
+                }
+                else if region.proximityUUID.UUIDString == "F34A1A1F-500F-48FB-AFAA-9584D641D7B2"
+                {
+                    var proximityMessage: String!
+                    if lastStage3 != closestBeacon.proximity {
+                        lastStage3 = closestBeacon.proximity
+                        
+                        switch  lastStage3 {
+                            
+                        case .Immediate:
+                            proximityMessage = "Very close"
+                            
+                            print("beacon.swift: Very close.2 ==========")
+                            self.view.backgroundColor = UIColor.greenColor()
+                            showNotificationWhenEnterStore2()
+                            
+                        case .Near:
+                            proximityMessage = "Near"
+                            self.view.backgroundColor = UIColor.lightGrayColor()
+                            print("beacon.swift: Near.2")
+                            
+                        case .Far:
+                            proximityMessage = "Far"
+                            self.view.backgroundColor = UIColor.blackColor()
+                            print("beacon.swift: Far.2")
+                            
+                        default:
+                            proximityMessage = "Where's the beacon?"
+                            self.view.backgroundColor = UIColor.redColor()
+                            print("beacon.swift: Where's the beacon.2")
                         }
                     }
                 }
@@ -322,7 +364,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         dateFormatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
         let msgTime = dateFormatter.stringFromDate(NSDate())
         
-        getMessageData(msgTime)
+        getMessageData0(msgTime)
         let notificationString = "歡迎光臨 家樂福！\n點擊查看今日優惠"
         
         //本地推播
@@ -347,13 +389,13 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
             AZNotification.showNotificationWithTitle(notificationString, controller: self, notificationType: AZNotificationType.Success, messageTime: msgTime)
         }
     }
-    func showNotificationWhenCloseProduct() {
+    func showNotificationWhenEnterStore1() {
 //        print("showNotificationWhenVeryClose")
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
         let msgTime = dateFormatter.stringFromDate(NSDate())
         
-        getMessageData2(msgTime)
+        getMessageData1(msgTime)
         let notificationString = "果粉專賣店：\nMacbook Pro Retina 現正特價中"
         
         //本地推播
@@ -378,7 +420,38 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         }
     }
     
-    func getMessageData(msgTime:String) {
+    func showNotificationWhenEnterStore2() {
+        //        print("showNotificationWhenVeryClose")
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
+        let msgTime = dateFormatter.stringFromDate(NSDate())
+        
+        getMessageData2(msgTime)
+        let notificationString = "陳家食品：\n好吃又健康的食物，安心食品認證！"
+        
+        //本地推播
+        let localNotification:UILocalNotification = UILocalNotification()
+        localNotification.alertAction = "開啟"
+        localNotification.alertBody = notificationString
+        //        localNotification.category = "CloseProduct"
+        localNotification.category = msgTime
+        localNotification.soundName = UILocalNotificationDefaultSoundName; //聲音
+        //localNotification.soundName = "sound.caf";
+        localNotification.fireDate = NSDate(timeIntervalSinceNow: 0)
+        Sup.User.IconBadgeNumber += 1
+        localNotification.applicationIconBadgeNumber = Sup.User.IconBadgeNumber
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        
+        //先在sqlite建立初始資料，在didFinish下載完成後再update
+        db.execute("Insert into messagelocal(messageTime, messageStore, messageTitle, messageSubtitle, messageContent, messageImage, addFavorite) values('\(msgTime)','','','','','','no') ")
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        if appDelegate.statusBackOrFore == "fore" {
+            AZNotification.showNotificationWithTitle(notificationString, controller: self, notificationType: AZNotificationType.Success, messageTime: msgTime)
+        }
+    }
+    
+    func getMessageData0(msgTime:String) {
 //        print("=== 進入門口")
         
         getWhatData = "getMessageData"
@@ -404,7 +477,7 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
 //        print("beacon.swift: end ===== ")
     }
     
-    func getMessageData2(msgTime:String) {
+    func getMessageData1(msgTime:String) {
 //        print("=== 靠近商品")
         
         getWhatData = "getMessageData"
@@ -417,6 +490,31 @@ extension Setting: CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSession
         "returnMessageType=\(msgTime)" +
         "&bySupervisor=Bing" +
         "&byStore=Bing-021"
+//        print("下載訊息 => http://bing0112.100hub.net/bing/MessageLoad.php?\(submitBody)")
+        
+        request.HTTPMethod = "POST"
+        request.HTTPBody = submitBody.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let sessionWithConfigure = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let session = NSURLSession(configuration: sessionWithConfigure, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        let dataTask = session.downloadTaskWithRequest(request)
+        dataTask.resume()
+    }
+    
+    func getMessageData2(msgTime:String) {
+        //        print("=== 靠近商品")
+        
+        getWhatData = "getMessageData"
+        //寫入資料至資料庫
+        let url = NSURL(string: "http://bing0112.100hub.net/bing/MessageLoad.php")
+        let request: NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+        
+        //"returnMessageType=CloseProductA" +
+        let submitBody: String =
+        "returnMessageType=\(msgTime)" +
+            "&bySupervisor=Bing" +
+        "&byStore=Bing-017"
 //        print("下載訊息 => http://bing0112.100hub.net/bing/MessageLoad.php?\(submitBody)")
         
         request.HTTPMethod = "POST"

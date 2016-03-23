@@ -20,6 +20,7 @@ class Setting: UIViewController, CBPeripheralManagerDelegate {
     let myBTManager = CBPeripheralManager()
     var lastStage1 = CLProximity.Unknown
     var lastStage2 = CLProximity.Unknown
+    var lastStage3 = CLProximity.Unknown
     
     override func viewDidLoad() {
         super.viewDidLoad()
