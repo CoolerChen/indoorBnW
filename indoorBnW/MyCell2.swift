@@ -35,7 +35,7 @@ class MyCell2: UITableViewCell {
 
         //lab2.font = UIFont.boldSystemFontOfSize(20)
         lab2.font = UIFont.boldSystemFontOfSize(20)//UIFont(name: "Bradley Hand", size: 20)
-        lab2.textColor = UIColor.blueColor()
+        lab2.textColor = UIColor.lightGrayColor()
         lab2.shadowOffset = CGSizeMake(1, 1)
         lab2.adjustsFontSizeToFitWidth = true
         self.addSubview(lab2)

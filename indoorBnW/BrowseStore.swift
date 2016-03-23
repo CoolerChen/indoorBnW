@@ -41,10 +41,19 @@ class BrowseStore: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadDel
             btnAry.append(Sup.addBtn(self, frame: CGRectMake(10, 20 + 140 * CGFloat(i), self.view.frame.size.width - 20, 130), str: "", tag: i))
             btnAry[i].backgroundColor = UIColor(red: 0.14, green: 0.51, blue: 0.9, alpha: 0.7)
             scroller.addSubview(btnAry[i])
-            scroller.addSubview(Sup.addLabel(CGRectMake(15, 10 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店名稱: \(json[i]["storeName"] as! String)" ))
-            scroller.addSubview(Sup.addLabel(CGRectMake(15, 40 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店分類: \(json[i]["storeCategory"] as! String)"))
-            scroller.addSubview(Sup.addLabel(CGRectMake(15, 70 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店slogan: \(json[i]["storeSlogan"] as! String)"))
-            scroller.addSubview(Sup.addLabel(CGRectMake(15, 100 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str: "商店簡介: \(json[i]["storeLogo"] as! String)"))
+            
+            let lab1:UILabel = Sup.addLabel(CGRectMake(15, 10 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店名稱: \(json[i]["storeName"] as! String)" )
+            lab1.textColor = UIColor.blackColor()
+            scroller.addSubview(lab1)
+            let lab2:UILabel = Sup.addLabel(CGRectMake(15, 40 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店分類: \(json[i]["storeCategory"] as! String)")
+            lab2.textColor = UIColor.whiteColor()
+            scroller.addSubview(lab2)
+            let lab3:UILabel = Sup.addLabel(CGRectMake(15, 70 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商店slogan: \(json[i]["storeSlogan"] as! String)")
+            lab3.textColor = UIColor.whiteColor()
+            scroller.addSubview(lab3)
+            let lab4:UILabel = Sup.addLabel(CGRectMake(15, 100 + 140 * CGFloat(i), self.view.frame.size.width - 20, 50), str: "商店簡介: \(json[i]["storeLogo"] as! String)")
+            lab4.textColor = UIColor.whiteColor()
+            scroller.addSubview(lab4)
             browseProductAry.append(NSNull)
             
         }
