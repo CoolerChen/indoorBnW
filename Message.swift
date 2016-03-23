@@ -65,6 +65,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     override func viewDidDisappear(animated: Bool) {
         if messageGoPhoto == false {
             for vc:UIView in self.view.subviews {
+                print("清空subviews")
                 vc.removeFromSuperview()
             }
         }
@@ -231,7 +232,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     }
     //選擇圖片
     func selectPhoto() {
-        messageGoPhoto = true //不清空畫面上的資料
+//        messageGoPhoto = true //不清空畫面上的資料
         scrollViewTouch()
         
         let myPickerController = UIImagePickerController()
@@ -384,34 +385,24 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
     }
     func loadElement() {
-        self.view.backgroundColor = UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
         self.navigationItem.title = "訊息"
+        self.view.backgroundColor = UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
+        let corRadius:CGFloat = 5
         
         scrollView = UIScrollView(frame: CGRectMake(
             0, viewStartY, //x, y
             self.view.frame.width,
             self.view.frame.height*1.0 - viewStartY)) //w, h
-        //        scrollView.scrollEnabled = true
-        //        scrollView.autoresizesSubviews = true
-        //        scrollView.bounces = true
-        //        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height)
-        //        scrollView.delegate = self
-        //        scrollView.userInteractionEnabled = true
+//        scrollView.scrollEnabled = true
+//        scrollView.autoresizesSubviews = true
+//        scrollView.bounces = true
+//        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height)
+//        scrollView.delegate = self
+//        scrollView.userInteractionEnabled = true
         scrollView.backgroundColor = scrollviewBackColor
         self.view.addSubview(scrollView)
         
         usedHeight = 0+5
-        
-        //        //訊息種類 SegmentedControl
-        //        segm = UISegmentedControl(items: ["會員訊息","一般訊息"])
-        //        segm.frame = CGRectMake(
-        //            self.view.frame.size.width/2-100, CGFloat(usedHeight + 10), //x, y
-        //            100 * 2, 30) //w, h
-        //        segm.selectedSegmentIndex = 0
-        //        segm.addTarget(self, action: "onSegmAction:", forControlEvents: .ValueChanged)
-        //        segm.tintColor = UIColor.blackColor()
-        //        scrollView.addSubview(segm)
-        //        usedHeight += Int(segm.frame.size.height+15)
         
         //商店標題 Label
         let storeColumn:UILabel = UILabel(frame: CGRectMake(
@@ -426,7 +417,8 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             (self.view.frame.width - self.view.frame.width*0.8)/2, //x
             CGFloat(usedHeight), //y
             self.view.frame.width*0.8, 35)) //w, h
-        //        storeLabel.text = Sup.store
+        storeLabel.layer.cornerRadius = corRadius
+        storeLabel.layer.masksToBounds = true
         storeLabel.backgroundColor = UIColor.lightGrayColor()
         //        let tapGesture = UITapGestureRecognizer(target: self, action: "showStoreOption")
         //        storeLabel.addGestureRecognizer(tapGesture)
@@ -447,6 +439,8 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             (self.view.frame.width - self.view.frame.width*0.8)/2, //x
             CGFloat(usedHeight), //y
             self.view.frame.width*0.8, 35)) //w, h
+        titleTextField.layer.cornerRadius = corRadius
+        titleTextField.layer.masksToBounds = true
         titleTextField.backgroundColor = textBackgroundColor
         titleTextField.delegate = self
         scrollView.addSubview(titleTextField)
@@ -465,6 +459,8 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             (self.view.frame.width - self.view.frame.width*0.8)/2, //x
             CGFloat(usedHeight), //y
             self.view.frame.width*0.8, 35)) //w, h
+        subtitleTextField.layer.cornerRadius = corRadius
+        subtitleTextField.layer.masksToBounds = true
         subtitleTextField.backgroundColor = textBackgroundColor
         subtitleTextField.delegate = self
         scrollView.addSubview(subtitleTextField)
@@ -483,6 +479,8 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             (self.view.frame.width - self.view.frame.width*0.8)/2, //x
             CGFloat(usedHeight), //y
             self.view.frame.width*0.8, 70)) //w, h
+        contentTextView.layer.cornerRadius = corRadius
+        contentTextView.layer.masksToBounds = true
         contentTextView.backgroundColor = textBackgroundColor
         contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 17) //改變textview字型大小
         scrollView.addSubview(contentTextView)
@@ -502,6 +500,8 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             (self.view.frame.width - self.view.frame.width*0.8)/2, //x
             CGFloat(usedHeight), //y
             self.view.frame.width*0.8, 200)) //w, h
+        backImageView.layer.cornerRadius = corRadius
+        backImageView.layer.masksToBounds = true
         //        backImageView.backgroundColor = UIColor.lightGrayColor()
         backImageView.image = UIImage(named: "uploadImage")
         backImageView.userInteractionEnabled = true
@@ -511,7 +511,9 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             (self.view.frame.width - self.view.frame.width*0.8)/2, //x
             CGFloat(usedHeight), //y
             self.view.frame.width*0.8, 200)) //w, h
-        imageImageView.backgroundColor = textBackgroundColor
+        imageImageView.layer.cornerRadius = corRadius
+        imageImageView.layer.masksToBounds = true
+//        imageImageView.backgroundColor = textBackgroundColor
         imageImageView.userInteractionEnabled = true
         scrollView.addSubview(imageImageView)
         usedHeight += Int(imageImageView.frame.size.height)
@@ -531,39 +533,70 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, CGFloat(usedHeight + 10))
         
         //加入event
-        let tapGesture1 = UITapGestureRecognizer(target: self, action: "selectPhoto")
+        let tapGesture1 = UITapGestureRecognizer(target: self, action: "imageTouch")
         imageImageView.addGestureRecognizer(tapGesture1)
         
         let tapGesture2 = UITapGestureRecognizer(target: self, action: "scrollViewTouch")
         scrollView.addGestureRecognizer(tapGesture2)
         
         uploadButton.addTarget(self, action: "modifyMessage", forControlEvents: .TouchUpInside)
-        
-        //TextField
-        //        titleTextField.addTarget(self, action: "textFiledTouch:", forControlEvents: .EditingDidBegin)
-        //        subtitleTextField.addTarget(self, action: "textFiledTouch:", forControlEvents: .EditingDidBegin)
-        
-        //        myTextField.addTarget(self, action: "myTargetFunction:", forControlEvents: UIControlEvents.TouchDown)
-        
-        //隱藏的TableView模擬下選單
-        //        storeTableView = UITableView(frame: CGRectMake(
-        //            (self.view.frame.width - self.view.frame.width*0.8)/2, //x
-        //            storeLabel.frame.origin.y + storeLabel.frame.size.height, //y
-        //            self.view.frame.width*0.8, 120))
-        //        storeTableView.delegate = self
-        //        storeTableView.dataSource = self
-        //        storeTableView.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
-        //        self.view.addSubview(storeTableView)
-        //        storeTableView.hidden = true
     }
     
+    func imageTouch() {
+        //takePicture
+        //selectPhoto
+        //cancel
+        messageGoPhoto = true //不清空畫面上的資料
+        
+        let alertController = UIAlertController(title: "請選擇", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alertController.addAction(UIAlertAction(title: "拍照", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            self.msgTakePicture()
+        }))
+        alertController.addAction(UIAlertAction(title: "選擇照片", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            self.selectPhoto()
+        }))
+        alertController.addAction(UIAlertAction(title: "取消", style: UIAlertActionStyle.Destructive,handler: nil))
+        
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func msgTakePicture() {
+        let ipc: UIImagePickerController = UIImagePickerController()
+        //檢查是否支援相機
+        let checkSourceType: Bool = UIImagePickerController.isSourceTypeAvailable(.Camera)
+        let checkCameraRear: Bool = UIImagePickerController.isCameraDeviceAvailable(.Rear)
+        if checkSourceType && checkCameraRear {
+            ipc.sourceType = .Camera
+            ipc.cameraDevice = .Rear
+            ipc.cameraCaptureMode = .Photo
+            //        ipc.wantsFullScreenLayout = YES;
+            ipc.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera)!
+            ipc.allowsEditing = true
+            ipc.delegate = self
+            self.presentViewController(ipc, animated: true, completion: { _ in })
+            print("yyy")
+        }
+        print("hello")
+    }
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
+    {
+        print("didFinishPickingImage")
+        picker.dismissViewControllerAnimated(true) { () -> Void in
+            //
+        }
+        
+        if ((editingInfo![UIImagePickerControllerEditedImage]) != nil) {
+            imageImageView.image = image
+            imageImageView.image = editingInfo![UIImagePickerControllerEditedImage] as? UIImage
+        }
+        else {
+//            imageImageView.image = (editingInfo![UIImagePickerControllerOriginalImage] as! String)
+            imageImageView.image = editingInfo![UIImagePickerControllerOriginalImage] as? UIImage
+        }
+    }
 }
-
-//extension UITextView {
-//    func increaseFontSize () {
-//        self.font =  UIFont(name: "", size: self.frame.size.height / 4)!
-//    }
-//}
 
 //6plus 271
 //6     258
