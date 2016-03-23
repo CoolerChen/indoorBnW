@@ -40,7 +40,10 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
             btnAry.append(Sup.addBtn(self, frame: CGRectMake(10, 20 + 120 * CGFloat(i), self.view.frame.size.width - 20, 100), str: "", tag: i))
             btnAry[i].backgroundColor = UIColor(red: 0.14, green: 0.51, blue: 0.9, alpha: 0.7)
             scroller.addSubview(btnAry[i])
-            scroller.addSubview(Sup.addLabel(CGRectMake(90, 10 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品名稱: \(json[i]["productName"] as! String)" ))
+            let lab1:UILabel = Sup.addLabel(CGRectMake(90, 10 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品名稱: \(json[i]["productName"] as! String)" )
+            lab1.textColor = UIColor.blackColor()
+            scroller.addSubview(lab1)
+            
             scroller.addSubview(Sup.addLabel(CGRectMake(90, 40 + 120 * CGFloat(i), self.view.frame.size.width - 20, 50), str:"商品價格: \(json[i]["productPrice"] as! String)元"))
             
             imageAry.append(Sup.addImageView(CGRectMake(20, 40 + 120 * CGFloat(i), 60, 60)))

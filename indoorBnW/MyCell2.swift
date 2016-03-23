@@ -35,7 +35,7 @@ class MyCell2: UITableViewCell {
 
         //lab2.font = UIFont.boldSystemFontOfSize(20)
         lab2.font = UIFont.boldSystemFontOfSize(20)//UIFont(name: "Bradley Hand", size: 20)
-        lab2.textColor = UIColor.blueColor()
+        lab2.textColor = UIColor.lightGrayColor()
         lab2.shadowOffset = CGSizeMake(1, 1)
         lab2.adjustsFontSizeToFitWidth = true
         self.addSubview(lab2)
@@ -80,6 +80,7 @@ class MyCell2: UITableViewCell {
     //準備被拿出來重用
     override func prepareForReuse() {
         super.prepareForReuse()
+        imgView.image = nil
         view.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width, 100)
         textView.frame = CGRectMake(self.frame.size.width, 110, self.frame.size.width, 100)
         imgView.frame = CGRectMake(self.frame.size.width, 10, 90, 90)

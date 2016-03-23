@@ -17,11 +17,15 @@ class MyImageView2: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     func setTarget(Target:UIViewController){
-        let m_longPressRecognizer:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: Target, action: Selector("handleLongPressFrom:"))
-        m_longPressRecognizer.minimumPressDuration = 0.1//長按時間
-        m_longPressRecognizer.allowableMovement = 1.0 //移動的更新速率  手指開合的瞬間開始觸發
-        m_longPressRecognizer.cancelsTouchesInView = false//被外來因素取消
-        self.addGestureRecognizer(m_longPressRecognizer)
+        //長按手勢
+//        let m_longPressRecognizer:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: Target, action: Selector("handleLongPressFrom:"))
+//        m_longPressRecognizer.minimumPressDuration = 0.1//長按時間
+//        m_longPressRecognizer.allowableMovement = 1.0 //移動的更新速率  手指開合的瞬間開始觸發
+//        m_longPressRecognizer.cancelsTouchesInView = false//被外來因素取消
+//        self.addGestureRecognizer(m_longPressRecognizer)
+        //點擊手勢
+        let tapGesture1 = UITapGestureRecognizer(target: Target, action: "handleLongPressFrom:")
+        self.addGestureRecognizer(tapGesture1)
     }
     
 

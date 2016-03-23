@@ -30,6 +30,7 @@ class ProductDetail: UIViewController,UIScrollViewDelegate ,UITextViewDelegate{
             labAry.append(Sup.addLabel(CGRectMake(5, imageView.frame.origin.y + imageviewW + CGFloat(i) * 50, self.view.frame.size.width, 50), str: ""))
             scroll.addSubview(labAry[i])
             labAry[i].textColor = UIColor.blueColor()
+            
         }
         
         textView = Sup.addTextView(self, frame: CGRectMake(5, imageView.frame.origin.y + imageviewW + CGFloat(6) * 50, self.view.frame.size.width, imageviewW))

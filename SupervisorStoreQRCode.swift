@@ -16,7 +16,7 @@ class SupervisorStoreQRCode: UIViewController {
     }
     override func viewDidAppear(animated: Bool) {
         setQRCode()
-        self.navigationItem.title = "\(Sup.Supervisor.storeDic["storeName"]!)的QRCode"
+        self.navigationItem.title = "QRCode"//\(Sup.Supervisor.storeDic["storeName"]!)的
         print(Sup.Supervisor.storeDic["storeID"]!)
     }
     override func didReceiveMemoryWarning() {
