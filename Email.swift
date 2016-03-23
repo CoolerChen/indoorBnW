@@ -37,8 +37,8 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         scrollerView.addSubview(lab)
         
         //imageView = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 160, textFieldW, textFieldW), img:img )
-        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 160, textFieldW, textFieldW), Taraget: self)
-        textView = Sup.addTextView(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, lab.frame.origin.y + 40, textFieldW, textFieldW))
+        imageView = Sup.addMyImageView(CGRectMake(self.view.frame.size.width*0.1/2, textView.frame.origin.y + self.view.frame.size.width*0.9 + 160, self.view.frame.size.width*0.9, self.view.frame.size.width*0.9), Taraget: self)
+        textView = Sup.addTextView(self, frame: CGRectMake(self.view.frame.size.width*0.1/2, lab.frame.origin.y + 40, self.view.frame.size.width*0.9, self.view.frame.size.width*0.9))
         scrollerView.addSubview(textView)
         //scrollerView.addSubview(Sup.addBtn(self, frame:  CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "選擇圖片", tag: 0))
         scrollerView.addSubview(Sup.addBtn(self, frame:  CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "確認", tag: 1))
