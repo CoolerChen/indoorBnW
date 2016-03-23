@@ -143,13 +143,44 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         
         let scrollView = UIScrollView(frame: CGRectMake(
             (pView.frame.width - pView.frame.width*0.9)/2, //x
-            (pView.frame.height - pView.frame.height*0.9)/2 + 10, //y
+            (pView.frame.height - pView.frame.height*0.95)/2, //y
             pView.frame.width*0.9, //w
-            pView.frame.height*0.9)) //h
+            pView.frame.height*0.95)) //h
         scrollView.backgroundColor = scrollviewBackColor
         scrollView.layer.cornerRadius = corRadius*2
         scrollView.layer.masksToBounds = true
         pView.addSubview(scrollView)
+        
+        //瀏覽訊息頁才有收藏按鈕
+        
+        //加入收藏按鈕
+        let buttonH = CGFloat(60) //pView.frame.height*0.09
+        let buttonW = CGFloat(70)
+        let favImage = UIImageView(frame: CGRectMake(
+            pView.frame.width - pView.frame.width*0.05 - buttonW , //x
+            scrollView.frame.origin.y, //y
+            buttonW, //w
+            buttonH)) //h
+        favImage.backgroundColor = scrollviewBackColor //UIColor(red: 209/255.0, green: 235/255.0, blue: 25/255.0, alpha: 1)
+        favImage.layer.cornerRadius = 10
+        favImage.layer.masksToBounds = true
+        if data?.count > 0 {
+            if (data![index]["addFavorite"] as? String) == "yes" {
+                favImage.image = UIImage(named: "FavoriteStarO") //橘色
+            } else {
+                favImage.image = UIImage(named: "FavoriteStarG") //灰色
+            }
+        }
+        favImage.contentMode = UIViewContentMode.ScaleAspectFit
+        favImage.userInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: "imageTapped")
+        favImage.addGestureRecognizer(tapGesture)
+        favImage.tag = index + 1
+        if whichPage == "browse" {
+            pView.addSubview(favImage)
+        } else {
+            favImage.frame = CGRectMake(0, 0, scrollView.frame.width*0.1/2, 0)
+        }
         
         let alignX = (pView.frame.width - pView.frame.width*0.9)/2
         
@@ -158,7 +189,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
             let storeLabel = UILabel(frame: CGRectMake(
                 (scrollView.frame.width - scrollView.frame.width*0.9)/2, //x
                 usedHeight, //y
-                scrollView.frame.width*0.9, 35)) //w, h
+                scrollView.frame.width*0.95 - favImage.frame.width, 35)) //w, h
             storeLabel.backgroundColor = textBackgroundColor
             storeLabel.layer.cornerRadius = corRadius
             storeLabel.layer.masksToBounds = true
@@ -240,33 +271,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(imageImageView)
         usedHeight += imageImageView.frame.height + interval
         
-        //瀏覽訊息頁才有收藏按鈕
-        if whichPage == "browse" {
-            //加入收藏按鈕
-            let buttonH = pView.frame.height*0.09
-            let buttonW = CGFloat(70)
-            let favImage = UIImageView(frame: CGRectMake(
-                pView.frame.width - pView.frame.width*0.05 - buttonW , //x
-                pView.frame.height*0.06 - buttonH/2, //y
-                buttonW, //w
-                buttonH)) //h
-            favImage.backgroundColor = scrollviewBackColor //UIColor(red: 209/255.0, green: 235/255.0, blue: 25/255.0, alpha: 1)
-            favImage.layer.cornerRadius = 10
-            favImage.layer.masksToBounds = true
-            if data?.count > 0 {
-                if (data![index]["addFavorite"] as? String) == "yes" {
-                    favImage.image = UIImage(named: "FavoriteStarO") //橘色
-                } else {
-                    favImage.image = UIImage(named: "FavoriteStarG") //灰色
-                }
-            }
-            favImage.contentMode = UIViewContentMode.ScaleAspectFit
-            favImage.userInteractionEnabled = true
-            let tapGesture = UITapGestureRecognizer(target: self, action: "imageTapped")
-            favImage.addGestureRecognizer(tapGesture)
-            favImage.tag = index + 1
-            pView.addSubview(favImage)
-        }
+        
     }
     
     func imageTapped() {
