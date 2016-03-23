@@ -9,6 +9,8 @@
 import UIKit
 
 class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NSURLSessionDownloadDelegate, UITextFieldDelegate {
+    let scrollviewBackColor = UIColor(red: 154/255.0, green: 208/255.0, blue: 248/255.0, alpha: 1)
+    let textBackgroundColor = UIColor(red: 209/255.0, green: 235/255.0, blue: 254/255.0, alpha: 1)
     var json = []
     
     var uploadMode = ""
@@ -395,7 +397,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         //        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height)
         //        scrollView.delegate = self
         //        scrollView.userInteractionEnabled = true
-        scrollView.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.58, alpha: 1)
+        scrollView.backgroundColor = scrollviewBackColor
         self.view.addSubview(scrollView)
         
         usedHeight = 0+5
@@ -445,7 +447,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             (self.view.frame.width - self.view.frame.width*0.8)/2, //x
             CGFloat(usedHeight), //y
             self.view.frame.width*0.8, 35)) //w, h
-        titleTextField.backgroundColor = UIColor.whiteColor()
+        titleTextField.backgroundColor = textBackgroundColor
         titleTextField.delegate = self
         scrollView.addSubview(titleTextField)
         usedHeight += Int(titleTextField.frame.size.height)
@@ -463,7 +465,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             (self.view.frame.width - self.view.frame.width*0.8)/2, //x
             CGFloat(usedHeight), //y
             self.view.frame.width*0.8, 35)) //w, h
-        subtitleTextField.backgroundColor = UIColor.whiteColor()
+        subtitleTextField.backgroundColor = textBackgroundColor
         subtitleTextField.delegate = self
         scrollView.addSubview(subtitleTextField)
         usedHeight += Int(subtitleTextField.frame.size.height)
@@ -481,7 +483,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             (self.view.frame.width - self.view.frame.width*0.8)/2, //x
             CGFloat(usedHeight), //y
             self.view.frame.width*0.8, 70)) //w, h
-        contentTextView.backgroundColor = UIColor.whiteColor()
+        contentTextView.backgroundColor = textBackgroundColor
         contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 17) //改變textview字型大小
         scrollView.addSubview(contentTextView)
         usedHeight += Int(contentTextView.frame.size.height)
@@ -509,7 +511,7 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             (self.view.frame.width - self.view.frame.width*0.8)/2, //x
             CGFloat(usedHeight), //y
             self.view.frame.width*0.8, 200)) //w, h
-        //        imageImageView.backgroundColor = UIColor.lightGrayColor()
+        imageImageView.backgroundColor = textBackgroundColor
         imageImageView.userInteractionEnabled = true
         scrollView.addSubview(imageImageView)
         usedHeight += Int(imageImageView.frame.size.height)
