@@ -47,7 +47,7 @@ class CreateProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDe
         
         //送出
         scorll.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "送出", tag: 1))
-        scorll.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + self.view.frame.size.height/4)
+        scorll.contentSize = CGSizeMake(self.view.frame.size.width, imageView.frame.origin.y + textFieldW + textFieldH + 20)
     }
     func onBtnAction(sender:UIButton){
         if textFieldAry[0].text == "" {
