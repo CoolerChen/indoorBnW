@@ -22,7 +22,6 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     let viewStartY=CGFloat(64)
     var usedHeight:Int = 0
-    var m_checkStr:String = String() //切換鈕
     //    var storeTableView:UITableView!
     var scrollView:UIScrollView!
     var segm:UISegmentedControl!
@@ -32,6 +31,9 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     var contentTextView:UITextView!
     var imageImageView:UIImageView!
     var uploadButton:UIButton!
+    
+    var msgActiView:UIView = UIView()
+    var msgActi:UIActivityIndicatorView = UIActivityIndicatorView()
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -70,40 +72,6 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             }
         }
     }
-    
-    //    func onSegmAction(sender:UISegmentedControl)
-    //    {
-    //        switch sender.selectedSegmentIndex {
-    //        case 0:
-    //            m_checkStr = "member"
-    //        case 1:
-    //            m_checkStr = "normal"
-    //        default :
-    //            break
-    //        }
-    //    }
-    
-    
-    //    //MARK: - TableView
-    //    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    //        //
-    //        return 1
-    //    }
-    //    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    //        //
-    //        return 3
-    //    }
-    //    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    //        //        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-    //        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
-    //
-    //        cell.textLabel?.text = "test"
-    //
-    //        return cell
-    //    }
-    //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    //        return 40
-    //    }
     
     //MARK: - didFinish
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL)
@@ -167,10 +135,9 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         default:
             print("default")
         }
-        //        let resp = String(data: NSData(contentsOfURL: location)!, encoding: NSUTF8StringEncoding)
-        //        if resp! == "OK" {
-        //
-        //        }
+        
+        msgActiView.hidden = true
+        msgActi.stopAnimating()
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
@@ -184,6 +151,12 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     //MARK: - Methods
     //下載訊息
     func loadMessage() {
+        msgActiView = Sup.addView(self.view.frame)
+        self.view.addSubview(msgActiView)
+        msgActi = Sup.addActivityIndicatorView(self.view.frame)
+        msgActi.startAnimating()
+        self.view.addSubview(msgActi)
+        
         getWhatData = "MessageLoad"
         //寫入資料至資料庫
         let url = NSURL(string: "http://bing0112.100hub.net/bing/MessageLoad.php")
@@ -205,6 +178,12 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     }
     func modifyMessage() {
         scrollViewTouch() //若沒有加這行，鍵盤隱藏之後，下面又多一個ScrollView
+        
+        msgActiView = Sup.addView(self.view.frame)
+        self.view.addSubview(msgActiView)
+        msgActi = Sup.addActivityIndicatorView(self.view.frame)
+        msgActi.startAnimating()
+        self.view.addSubview(msgActi)
         
         getWhatData = "uploadMessage"
         //寫入資料至資料庫
@@ -281,80 +260,6 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         //scroll to top
         //        self.scrollView.setContentOffset(CGPointMake(self.scrollView.contentOffset.x, -64), animated: true)
     }
-    
-//    //MARK: - upload image
-//    func myImageUploadRequest()
-//    {
-//        getWhatData = "MessageUploadImage"
-//        
-//        let myUrl = NSURL(string: "http://bing0112.100hub.net/bing/MessageUploadImage.php")
-////        let myUrl = NSURL(string: "http://sashihara.100hub.net/vip/img/imgUpload.php")
-//        
-//        let request = NSMutableURLRequest(URL:myUrl!)
-//        request.HTTPMethod = "POST"
-//        
-//        let param = [
-//            "firstName" : "leo",
-//            "lastName"  : "leo",
-//            "userId"    : "0"
-//        ]
-//        
-//        let boundary = generateBoundaryString()
-//        
-//        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-//        
-//        let imageData = UIImageJPEGRepresentation(imageImageView.image!, 1)
-//        
-//        if(imageData==nil)  { return; }
-//        
-//        request.HTTPBody = createBodyWithParameters(param, filePathKey: "file", imageDataKey: imageData!, boundary: boundary)
-//        
-//        indicator.hidden = false
-//        indicator.startAnimating();
-//        
-//        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
-//            data, response, error in
-//            
-//            if error != nil {
-//                print("Message: error=\(error)")
-//                return
-//            }
-//            
-//            dispatch_async(dispatch_get_main_queue(),{
-//                self.indicator.stopAnimating()
-//                self.indicator.hidden = true
-//            });
-//        }
-//        task.resume()
-//    }
-//    func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData, boundary: String) -> NSData {
-//        var body = NSMutableData()
-//        
-//        if parameters != nil {
-//            for (key, value) in parameters! {
-//                body.appendString("--\(boundary)\r\n")
-//                body.appendString("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
-//                body.appendString("\(value)\r\n")
-//            }
-//        }
-//        
-//        let filename = "\(Sup.Supervisor.supervisor)-\(Sup.Supervisor.storeID).jpg"
-//        
-//        let mimetype = "image/jpg"
-//        
-//        body.appendString("--\(boundary)\r\n")
-//        body.appendString("Content-Disposition: form-data; name=\"\(filePathKey!)\"; filename=\"\(filename)\"\r\n")
-//        body.appendString("Content-Type: \(mimetype)\r\n\r\n")
-//        body.appendData(imageDataKey)
-//        body.appendString("\r\n")
-//        
-//        body.appendString("--\(boundary)--\r\n")
-//        
-//        return body
-//    }
-//    func generateBoundaryString() -> String {
-//        return "Boundary-\(NSUUID().UUIDString)"
-//    }
     
     //MARK: - textField
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -526,6 +431,9 @@ class Message: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             self.view.frame.width*0.8, 35)) //w, h
         uploadButton.setTitle("建立", forState: .Normal)
         uploadButton.backgroundColor = UIColor.blueColor()
+        uploadButton.layer.cornerRadius = corRadius
+        uploadButton.layer.masksToBounds = true
+        uploadButton.titleLabel?.font = UIFont(name: (uploadButton.titleLabel?.font?.fontName)!, size: 26)
         scrollView.addSubview(uploadButton)
         usedHeight += Int(uploadButton.frame.size.height)
         

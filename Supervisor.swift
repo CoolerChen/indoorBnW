@@ -105,7 +105,7 @@ class Supervisor: UIViewController {
         btnAry[4].frame = CGRectMake(10, btnW*2+110, btnW, btnW)
         UIView.setAnimationDuration(0.7)
 //        btnAry[5].frame = CGRectMake(20+btnW, btnW*2+110, btnW, btnW)
-        ibeacon.frame = CGRectMake(self.view.frame.size.width/2+10, 460, btnW, btnW)
+        ibeacon.frame = CGRectMake(20+btnW, btnW*2+110, btnW, btnW)
         UIView.commitAnimations()
         myView.frame = CGRectMake(0, 0, 0, 0)
     }

@@ -20,20 +20,20 @@ class EditStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelega
         self.view.backgroundColor = UIColor.whiteColor()
         
         let textFieldW:CGFloat = 250
-        let textFieldH:CGFloat = 30
+        let textFieldH:CGFloat = 40
         let Fieltext:[String] = [storeDic["storeName"]!,storeDic["storeCategory"]!,storeDic["storeSlogan"]!,storeDic["storeLogo"]!]
         let textFieldtext:[String] = ["商店名稱","分類","Slogan","簡介"]
         for var i:CGFloat = 0;i < 4 ; i++ {
-            textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 40.0 * i + 110.0, textFieldW, textFieldH), placeholdString: textFieldtext[Int(i)]))
+            textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 50.0 * i + 110.0, textFieldW, textFieldH), placeholdString: textFieldtext[Int(i)]))
             self.view.addSubview(textFieldAry[Int(i)])
             textFieldAry[Int(i)].text = Fieltext[Int(i)]
         }
         
         //確認
-        self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 300, textFieldW, textFieldH), str: "確認", tag: 1))
+        self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 340, textFieldW, textFieldH), str: "確認", tag: 1))
         
         //刪除
-        self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 350, textFieldW, textFieldH), str: "刪除商店", tag: 2))
+        self.view.addSubview(Sup.addBtn(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 390, textFieldW, textFieldH), str: "刪除商店", tag: 2))
     }
     func onBtnAction(sender:UIButton){
         actiView = Sup.addView(self.view.frame)
@@ -65,7 +65,7 @@ class EditStore: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelega
     }
     func setStoreDictionary(dic:Dictionary<String,String>){
         storeDic = dic
-        print(dic)
+//        print(dic)
         self.navigationItem.title = "編輯商店：\(storeDic["storeName"]!)"
         let Fieltext:[String] = [storeDic["storeName"]!,storeDic["storeCategory"]!,storeDic["storeSlogan"]!,storeDic["storeLogo"]!]
         for var i = 0;i<textFieldAry.count;i++ {

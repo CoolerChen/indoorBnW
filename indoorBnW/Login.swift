@@ -65,6 +65,9 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         segm.selectedSegmentIndex = 0
         segm.addTarget(self, action: "onSegmAction:", forControlEvents: .ValueChanged)
         segm.tintColor = UIColor(red: 0.14, green: 0.51, blue: 0.9, alpha: 1)
+        //改變UISegmentController字型
+        let attr = NSDictionary(object: UIFont(name: ".SFUIText-Regular", size: 26.0)!, forKey: NSFontAttributeName)
+        segm.setTitleTextAttributes(attr as [NSObject : AnyObject] , forState: .Normal)
         self.view.addSubview(segm)
         
         ibeacon = Sup.addImageView(CGRectMake(self.view.frame.size.width/2-100, -100, 200, 200))
@@ -183,7 +186,16 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
             textFieldAry[i].frame = CGRectMake(self.view.frame.size.width/2-300 / 2, 55.0 * CGFloat(i) + 85.0, 300, 40)
         }
         segm.frame = CGRectMake(self.view.frame.size.width/2-300 / 2, 200, 300,40)
-        ibeacon.frame = CGRectMake(self.view.frame.size.width/2-90, 460, 180, 180)
+        
+        let lastY = (btnAry.last?.frame.origin.y)! + (btnAry.last?.frame.height)!
+        ibeacon.frame = CGRectMake(
+            self.view.frame.size.width/2-(self.view.frame.size.height - lastY - 20)/2,
+            lastY + 10,
+            (self.view.frame.size.height - lastY - 20),
+            (self.view.frame.size.height - lastY - 20) )
+        print(ibeacon.frame.height)
+        print("\(btnAry.last?.frame.origin.y)  \(self.view.frame.size.height)")
+
         UIView.commitAnimations()
         
         textFieldAry[0].text = "Bing"

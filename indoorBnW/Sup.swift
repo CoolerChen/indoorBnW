@@ -44,6 +44,7 @@ class Sup {
         btn.addTarget(VC, action: Selector("onBtnAction:"), forControlEvents: UIControlEvents.TouchUpInside)
         btn.setTitle(str, forState: UIControlState.Normal)
         btn.tag = tag
+        btn.titleLabel?.font = UIFont(name: (btn.titleLabel?.font.fontName)!, size: 30)
         
         btn.layer.cornerRadius = 10;
         btn.layer.masksToBounds = true;
