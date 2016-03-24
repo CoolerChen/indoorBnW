@@ -31,7 +31,7 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         
         let textFieldW:CGFloat = 350
         let textFieldH:CGFloat = 40
-        textField = Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 20, textFieldW, textFieldH), placeholdString: "標題")
+        textField = Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width*0.1/2, 20, self.view.frame.size.width*0.9, textFieldH), placeholdString: "標題")
         
         let lab:UILabel = Sup.addLabel(CGRectMake(10, textView.frame.origin.y + 65, 200, 30), str: "內文：")
         scrollerView.addSubview(lab)
@@ -41,7 +41,7 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         textView = Sup.addTextView(self, frame: CGRectMake(self.view.frame.size.width*0.1/2, lab.frame.origin.y + 40, self.view.frame.size.width*0.9, self.view.frame.size.width*0.9))
         scrollerView.addSubview(textView)
         //scrollerView.addSubview(Sup.addBtn(self, frame:  CGRectMake(self.view.frame.size.width/2-textFieldW/2, textView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "選擇圖片", tag: 0))
-        scrollerView.addSubview(Sup.addBtn(self, frame:  CGRectMake(self.view.frame.size.width/2-textFieldW/2, imageView.frame.origin.y + textFieldW + 10, textFieldW, textFieldH), str: "確認", tag: 1))
+        scrollerView.addSubview(Sup.addBtn(self, frame:  CGRectMake(self.view.frame.size.width*0.1/2, imageView.frame.origin.y + textFieldW + 10, self.view.frame.size.width*0.9, textFieldH), str: "確認", tag: 1))
         scrollerView.addSubview(textField)
         scrollerView.addSubview(imageView)
         

@@ -193,8 +193,6 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
             lastY + 10,
             (self.view.frame.size.height - lastY - 20),
             (self.view.frame.size.height - lastY - 20) )
-        print(ibeacon.frame.height)
-        print("\(btnAry.last?.frame.origin.y)  \(self.view.frame.size.height)")
 
         UIView.commitAnimations()
         
