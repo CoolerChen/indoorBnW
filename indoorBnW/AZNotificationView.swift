@@ -96,7 +96,8 @@ class AZNotificationView : UIView
         switch notificationType
         {
         case .Success:
-            backgroundColor = UIColor(fromHexString: NotificationColors.Success.rawValue)
+//            backgroundColor = UIColor(fromHexString: NotificationColors.Success.rawValue)
+            backgroundColor = UIColor(red: 64/255.0, green: 194/255.0, blue: 66/255.0, alpha: 0.95)
             
         case .Error:
             backgroundColor = UIColor(fromHexString: NotificationColors.Error.rawValue)

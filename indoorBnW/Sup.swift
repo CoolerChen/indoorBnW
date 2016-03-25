@@ -45,6 +45,7 @@ class Sup {
         btn.setTitle(str, forState: UIControlState.Normal)
         btn.tag = tag
         btn.titleLabel?.font = UIFont(name: (btn.titleLabel?.font.fontName)!, size: 30)
+        btn.showsTouchWhenHighlighted = true
         
         btn.layer.cornerRadius = 10;
         btn.layer.masksToBounds = true;
