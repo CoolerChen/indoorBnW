@@ -181,6 +181,8 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
         UIView.setAnimationDuration(1)
         for var i = 0 ; i < btnAry.count ; i++ {
             btnAry[i].frame = CGRectMake(self.view.frame.size.width/2-300/2, 70.0 * CGFloat(i) + 250.0, 300, 60)
+//            btnAry[i].addTarget(self, action: "btnTouchDown:", forControlEvents: UIControlEvents.TouchDown)
+//            btnAry[i].addTarget(self, action: "btnTouchUpinside:", forControlEvents: UIControlEvents.TouchUpInside)
         }
         for var i = 0 ; i < textFieldAry.count ; i++ {
             textFieldAry[i].frame = CGRectMake(self.view.frame.size.width/2-300 / 2, 55.0 * CGFloat(i) + 85.0, 300, 40)
@@ -221,6 +223,11 @@ class Login: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDelegate,B
     //        }
     //    }
     
-    
+//    func btnTouchDown(button:UIButton) {
+//        button.backgroundColor = UIColor(red: 20/255.0, green: 76/255.0, blue: 135/255.0, alpha: 0.7)
+//    }
+//    func btnTouchUpinside(button:UIButton) {
+//        button.backgroundColor = UIColor(red: 0.14, green: 0.51, blue: 0.9, alpha: 0.7)
+//    }
 }
 
