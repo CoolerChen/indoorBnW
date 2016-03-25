@@ -33,7 +33,7 @@ class EditProduct: UIViewController,UITextFieldDelegate,NSURLSessionDownloadDele
         let textFieldW:CGFloat = 250
         let textFieldH:CGFloat = 40
         let textFieldtext:[String] = ["商品名稱","價格"]
-        let Fieldtext:[String] = [Sup.Supervisor.productDic["productName"]!,Sup.Supervisor.productDic["productInfo"]!,Sup.Supervisor.productDic["productPrice"]!]
+        let Fieldtext:[String] = [Sup.Supervisor.productDic["productName"]!,Sup.Supervisor.productDic["productPrice"]!]
         for var i:CGFloat = 0;i < 2 ; i++ {
             textFieldAry.append(Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width/2-textFieldW/2, 45.0 * i + 10.0, textFieldW, textFieldH), placeholdString: textFieldtext[Int(i)]))
             scroller.addSubview(textFieldAry[Int(i)])

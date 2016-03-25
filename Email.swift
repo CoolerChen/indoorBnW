@@ -32,7 +32,7 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         let textFieldW:CGFloat = 350
         let textFieldH:CGFloat = 40
         textField = Sup.addTextField(self, frame: CGRectMake(self.view.frame.size.width*0.1/2, 20, self.view.frame.size.width*0.9, textFieldH), placeholdString: "標題")
-        
+        textField.text = "家樂福特價囉"
         let lab:UILabel = Sup.addLabel(CGRectMake(10, textView.frame.origin.y + 65, 200, 30), str: "內文：")
         scrollerView.addSubview(lab)
         
@@ -47,6 +47,9 @@ class Email: UIViewController ,UITextFieldDelegate,UITextViewDelegate,UIImagePic
         
         scrollerView.contentSize = CGSizeMake(self.view.frame.size.width, imageView.frame.origin.y + textFieldW + 80)
         scrollerView.backgroundColor = UIColor.blackColor()
+        
+        textView.text = "結帳金額再打一折！！"
+        
     }
     func onBtnAction(sender:UIButton){
         switch sender.tag {
