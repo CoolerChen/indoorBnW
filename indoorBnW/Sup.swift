@@ -193,5 +193,35 @@ class Sup {
         view.frame = frame
         return view
     }
+    //千位數加逗號
+    static func getSeparatedString(let orgStr: String) -> String {
+        
+        let length = orgStr.utf16.count
+        if length < 4 {
+            return orgStr
+        }
+        
+        var dstStr = String()
+        var orgChars = orgStr.characters
+        let startIndex = orgChars.startIndex
+        var counter = 0
+        var i = length - 1
+        
+        repeat  {
+            counter += 1
+            dstStr.insert(orgChars.popLast()!, atIndex: startIndex)
+            if counter == 3 {
+                dstStr.insert(",", atIndex: startIndex)
+                counter = 0;
+            }
+            
+            i -= 1  // Swift 2.2已经废弃使用++、--了，请注意！
+        }
+            while i > 0
+        
+        dstStr.insert(orgChars.popLast()!, atIndex: startIndex)
+        
+        return dstStr;
+    }
     
 }
