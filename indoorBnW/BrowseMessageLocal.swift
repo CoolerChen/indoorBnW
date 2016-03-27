@@ -208,6 +208,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         titleLabel.backgroundColor = textBackgroundColor
         titleLabel.layer.cornerRadius = corRadius
         titleLabel.layer.masksToBounds = true
+        titleLabel.font = UIFont(name: ".SFUIText-Regular", size: 15)
 //        titleLabel.layer.borderWidth = 1
 //        titleLabel.layer.borderColor = UIColor.blackColor().CGColor
         if data?.count > 0 {titleLabel.text = data![index].objectForKey("messageTitle") as? String}
@@ -223,6 +224,7 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         subtitleLabel.backgroundColor = textBackgroundColor
         subtitleLabel.layer.cornerRadius = corRadius
         subtitleLabel.layer.masksToBounds = true
+        subtitleLabel.font = UIFont(name: ".SFUIText-Regular", size: 15)
 //        subtitleLabel.layer.borderWidth = 1
 //        subtitleLabel.layer.borderColor = UIColor.blackColor().CGColor
         scrollView.addSubview(subtitleLabel)
@@ -232,8 +234,8 @@ class BrowseMessageLocal: UIViewController, UIScrollViewDelegate {
         let contentTextView = UITextView(frame: CGRectMake(
             alignX, //x
             usedHeight, //y
-            scrollView.frame.width*0.9, 70)) //w, h
-        contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 17) //改變textview字型大小
+            scrollView.frame.width*0.9, 100)) //w, h
+        contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 15) //改變textview字型大小
         if data?.count > 0 {contentTextView.text = data![index].objectForKey("messageContent") as? String}
         contentTextView.backgroundColor = textBackgroundColor
         contentTextView.layer.cornerRadius = corRadius

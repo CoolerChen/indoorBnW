@@ -106,6 +106,7 @@ class MessageUIView: UIView {
         titleLabel.backgroundColor = txtBackgroundColor
         titleLabel.layer.cornerRadius = corRadius
         titleLabel.layer.masksToBounds = true
+        titleLabel.font = UIFont(name: ".SFUIText-Regular", size: 15)
         //        titleLabel.text = json[0].objectForKey("messageTitle") as? String
         titleLabel.text = data.count>0 ? data[0]["messageTitle"] as! String : ""
         //        print(data[0]["messageTitle"] as! String)
@@ -121,6 +122,7 @@ class MessageUIView: UIView {
         subtitleLabel.backgroundColor = txtBackgroundColor
         subtitleLabel.layer.cornerRadius = corRadius
         subtitleLabel.layer.masksToBounds = true
+        subtitleLabel.font = UIFont(name: ".SFUIText-Regular", size: 15)
         //        subtitleLabel.text = json[0].objectForKey("messageSubtitle") as? String
         subtitleLabel.text = data.count>0 ? data[0]["messageSubtitle"] as! String : ""
 //print("subtitleLabel.text \(subtitleLabel.text)")
@@ -131,11 +133,11 @@ class MessageUIView: UIView {
         let contentTextView = UITextView(frame: CGRectMake(
             titleLabel.frame.origin.x, //x
             usedY, //y
-            scrollView.frame.width*0.9, 70)) //w, h
+            scrollView.frame.width*0.9, 100)) //w, h
         contentTextView.backgroundColor = txtBackgroundColor
         contentTextView.layer.cornerRadius = corRadius
         contentTextView.layer.masksToBounds = true
-        contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 17) //改變textview字型大小
+        contentTextView.font = UIFont(name: ".SFUIText-Regular", size: 15) //改變textview字型大小
         //        contentTextView.text = json[0].objectForKey("messageContent") as? String
         contentTextView.text = data.count>0 ? data[0]["messageContent"] as! String : ""
         //        print(data[0]["messageContent"] as! String)
@@ -163,7 +165,7 @@ class MessageUIView: UIView {
             }
         }
         scrollView.addSubview(imageImageView)
-        usedY += imageImageView.frame.height + interval + 200
+        usedY += imageImageView.frame.height + interval
         
         //ScrollView ContentSize
         scrollView.contentSize = CGSizeMake(scrollView.frame.width, usedY)
