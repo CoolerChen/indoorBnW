@@ -66,7 +66,7 @@ class Product: UIViewController,UITableViewDelegate,UITableViewDataSource ,NSURL
             //cell!.showsReorderControl = true  //是否可以排序
         }
         cell!.lab1.text =  "商品名:\(json[indexPath.row].objectForKey("productName") as! String)"//主標題
-        cell!.lab2.text = "價格: \(json[indexPath.row].objectForKey("productPrice") as! String) 元"
+        cell!.lab2.text = "價格: \(Sup.getSeparatedString(json[indexPath.row].objectForKey("productPrice") as! String)) 元"
         //cell!.lab3.text = "我是史丹利"
         cell!.textView.text = "介紹: \(json[indexPath.row].objectForKey("productInfo") as! String)"
         
