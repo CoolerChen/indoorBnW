@@ -35,8 +35,9 @@ class BrowseProduct: UIViewController,UIScrollViewDelegate,NSURLSessionDownloadD
         }catch{
             print("解json失敗")
         }
+        //json[i]["storeName"] as! String
         
-        for var i = 0  ; i < json.count ; i++ {//json[i]["storeName"] as! String
+        for var i = 0  ; i < json.count ; i++ {
             btnAry.append(Sup.addBtn(self, frame: CGRectMake(10, 20 + 120 * CGFloat(i), self.view.frame.size.width - 20, 100), str: "", tag: i))
             btnAry[i].backgroundColor = UIColor(red: 0.14, green: 0.51, blue: 0.9, alpha: 0.7)
             scroller.addSubview(btnAry[i])

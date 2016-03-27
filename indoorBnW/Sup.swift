@@ -38,7 +38,6 @@ class Sup {
     //新增Btn
     static func addBtn(VC:UIViewController,frame:CGRect,str:String,tag:Int) -> UIButton{
         let btn:UIButton = UIButton()
-        btn.backgroundColor = UIColor(red: 0.36, green: 0.68, blue: 1, alpha: 0.7)
         btn.backgroundColor = UIColor(red: 0.14, green: 0.51, blue: 0.9, alpha: 0.7)
         btn.frame = frame
         btn.addTarget(VC, action: Selector("onBtnAction:"), forControlEvents: UIControlEvents.TouchUpInside)
@@ -46,10 +45,8 @@ class Sup {
         btn.tag = tag
         btn.titleLabel?.font = UIFont(name: (btn.titleLabel?.font.fontName)!, size: 30)
         btn.showsTouchWhenHighlighted = true
-        
         btn.layer.cornerRadius = 10;
         btn.layer.masksToBounds = true;
-        
         return btn
     }
     //新增textFile
