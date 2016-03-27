@@ -128,7 +128,7 @@ class AZNotificationView : UIView
 //        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "hideStatusbar", userInfo: nil, repeats: false)
         
         //隱藏通知
-        NSTimer.scheduledTimerWithTimeInterval(12.0, target: self, selector: "hideNotification", userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(8.0, target: self, selector: "hideNotification", userInfo: nil, repeats: false)
     }
     func hideNotification()
     {
