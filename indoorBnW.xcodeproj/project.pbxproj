@@ -270,7 +270,7 @@
 				TargetAttributes = {
 					B33E72E71C98E97800923F7E = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 482N23KZ42;
+						DevelopmentTeam = C5DGZJU43C;
 					};
 				};
 			};
@@ -458,7 +458,7 @@
 				INFOPLIST_FILE = indoorBnW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnW;
+				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnWb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "indoorBnW-Bridging-Header.h";
@@ -476,7 +476,7 @@
 				INFOPLIST_FILE = indoorBnW/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnW;
+				PRODUCT_BUNDLE_IDENTIFIER = Swift.indoorBnWb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "indoorBnW-Bridging-Header.h";
