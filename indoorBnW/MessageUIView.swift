@@ -66,9 +66,9 @@ class MessageUIView: UIView {
         //內ScrollView
         scrollView = UIScrollView(frame: CGRectMake(
             (viewW - viewW*0.9)/2, //x
-            (( viewH-viewStartY ) - ( viewH-viewStartY )*0.85)/2 + viewStartY, //y
+            (( viewH-viewStartY ) - ( viewH-viewStartY )*0.9)/2 + viewStartY, //y
             viewW*0.9,
-            ( viewH-viewStartY )*0.85)) //w, h
+            ( viewH-viewStartY )*0.9)) //w, h
         //        scrollView = UIScrollView(frame: CGRectMake(
         //            (viewW - viewW*0.9)/2, //x
         //            (viewH - viewH*0.85)/2 + viewStartY, //y
@@ -219,7 +219,7 @@ class MessageUIView: UIView {
                         let closeW:CGFloat = 35
                         self.closeImageView = UIImageView(frame: CGRectMake(
                             (viewW - viewW*0.1/2) - closeW/2 - 2, //x
-                            (( viewH-viewStartY ) - ( viewH-viewStartY )*0.85)/2 + viewStartY - closeW/2 + 2, //y
+                            (( viewH-viewStartY ) - ( viewH-viewStartY )*0.9)/2 + viewStartY - closeW/2 + 2, //y
                             35, 35)) //w, h
                         //        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \(closeImageView.frame.origin.x) \(closeImageView.frame.origin.y)")
                         self.closeImageView.userInteractionEnabled = true

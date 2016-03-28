@@ -79,7 +79,7 @@ class AZNotificationView : UIView
         titleTextView = UITextView(frame: labelRect!)
         titleTextView?.text = title
         titleTextView?.font = UIFont(name: "HelveticaNeue-Light", size: 17)
-        titleTextView?.textColor = UIColor.whiteColor()
+        titleTextView?.textColor = UIColor.blackColor()
         titleTextView?.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0)
         titleTextView?.editable = false
         titleTextView?.selectable = false
